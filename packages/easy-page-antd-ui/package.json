@@ -1,0 +1,35 @@
+{
+  "name": "@easy-page/antd-ui",
+  "version": "1.0.1",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    },
+    "./style.css": {
+      "import": "./style.css",
+      "require": "./style.css"
+    }
+  },
+  "peerDependencies": {
+    "@ant-design/icons": ">=5.2.6",
+    "antd": ">=5.12.6",
+    "mobx": "^6.12.0",
+    "dayjs": "^1.11.1",
+    "mobx-react": "^9.1.0"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "lodash": "^4.17.21",
+    "@easy-page/react-ui": "^1.0.3"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "@types/lodash": "^4.14.202",
+    "antd": "^5.12.6",
+    "mobx": "^6.12.0",
+    "mobx-react": "^9.1.0"
+  }
+}

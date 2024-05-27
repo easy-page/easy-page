@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@easy-page/antd-ui/style.css": [
+        "dist/packages/easy-page-antd-ui/style.css"
+      ],
+      "@easy-page/antd-ui": ["packages/easy-page-antd-ui/src/index.ts"],
+      "@easy-page/core": ["packages/easy-page-core/src/index.ts"],
+      "@easy-page/react-ui": ["packages/easy-page-react-ui/src/index.ts"],
+      "@easy-page/react-ui/interface": [
+        "packages/easy-page-react-ui/src/interface.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@easy-page/react-ui",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    },
+    "./interface": {
+      "import": "./interface.js",
+      "default": "./interface.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "interface": [
+        "./interface.d.ts"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "mobx": "^6.12.0",
+    "mobx-react": "^9.1.0",
+    "react": ">=16.12.0",
+    "react-dom": ">=16.12.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202",
+    "mobx": "^6.12.0",
+    "mobx-react": "^9.1.0",
+    "tslib": "^2.6.2"
+  },
+  "dependencies": {
+    "@easy-page/core": "^1.0.1",
+    "lodash": "^4.17.21"
+  }
+}
