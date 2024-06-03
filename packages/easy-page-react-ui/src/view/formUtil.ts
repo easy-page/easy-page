@@ -72,7 +72,7 @@ export abstract class FormUtil<PageState> {
   ): Promise<FieldValidateRes[]>;
 
   /** 验证所有字段 */
-  abstract validateAll(): Promise<ValidateRes>;
+  abstract validateAll(): Promise<any>;
 
   protected forEachVisibleNode(
     curNode: Schema<any>,

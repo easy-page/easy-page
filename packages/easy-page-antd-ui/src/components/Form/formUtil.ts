@@ -132,7 +132,10 @@ export class AntdFormUtil extends FormUtil<any> {
     this.forEachVisibleNode(rootSchema, ({ schema, context }) => {
       const { value } = context;
       const newVal = schema.postprocess
-        ? schema.postprocess(context)
+        ? schema.postprocess({
+          ...context,
+          processedFormData: data
+        })
         : { [schema.id]: value };
       data = {
         ...data,

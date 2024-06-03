@@ -50,7 +50,12 @@ export type ChildFormItem = {
   icon?: React.ReactNode;
 };
 
-export interface ChildFormState<FormData = Record<string, any>> {
+export interface ChildFormState<FormData = Record<string, any>>
+  extends BaseChildFormState<FormData> {
+  [key: string]: any;
+}
+
+interface BaseChildFormState<FormData = Record<string, any>> {
   childForms: ChildFormItem[];
   /** 当前选中的 MenuItem 的 ID */
   choosedItemId: string;
@@ -62,6 +67,8 @@ export interface ChildFormState<FormData = Record<string, any>> {
 
   /** 用于通知外界，此表单内部发生变化 */
   timestamp?: number;
+
+  [key: string]: any;
 }
 
 /** 用户配置的属性 */
@@ -166,13 +173,29 @@ export const ChildForm = connector(
         childFormContextData={childFormContextData}
         onRemove={(id) => {
           const curValue = store.getState(nodeInfo.id);
-          const { childForms, formUtils = {} } = curValue as ChildFormState;
-          const newForms = childForms.filter((e) => e.id !== id);
+          const {
+            childForms,
+            formUtils = {},
+            choosedItemId,
+          } = curValue as ChildFormState;
+          let deleteIdx = -1;
+          const newForms = childForms.filter((e, idx) => {
+            const isDeleteRecord = e.id === id;
+            if (isDeleteRecord) {
+              deleteIdx = idx;
+            }
+            return !isDeleteRecord;
+          });
+          const newChoosedId =
+            choosedItemId === id
+              ? newForms[deleteIdx - 1 < 0 ? 0 : deleteIdx - 1]?.id
+              : choosedItemId;
           delete formUtils[id];
           onChange({
             ...value,
             childForms: newForms,
             formUtils,
+            choosedItemId: newChoosedId,
           });
         }}
         onAdd={() => {

@@ -150,6 +150,14 @@ export type WhenType<
 };
 
 
+export type PostprocessContext<
+  FieldType,
+  PageState = Record<string, unknown>,
+  PageProps = Record<string, unknown>,
+> = DataContext<FieldType, PageState, PageProps> & {
+  // 已经处理过的 formData
+  processedFormData: Record<string, any>
+}
 
 /** extends info */
 export type Schema<
@@ -167,7 +175,7 @@ export type Schema<
   children?: Schema<unknown, PageState, PageProps, unknown>[];
   /** before submit handle data */
   postprocess?: (
-    context: DataContext<FieldType, PageState, PageProps>
+    context: PostprocessContext<FieldType, PageState, PageProps>
   ) => Record<string, unknown>;
   /** inject data in form  */
   preprocess?: (

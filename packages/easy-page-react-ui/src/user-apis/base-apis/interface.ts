@@ -3,6 +3,7 @@ import {
   DataContext,
   EffectActionType,
   EffectKeys,
+  PostprocessContext,
   Schema,
   SchemaNodeOption,
   Validate,
@@ -113,10 +114,10 @@ export type WrapperNodeOption<
   >;
   postprocess?: (
     oldPostprocess?: (
-      context: DataContext<FieldType, PageState, PageProps>
+      context: PostprocessContext<FieldType, PageState, PageProps>
     ) => Record<string, unknown>
   ) => (
-    context: DataContext<FieldType, PageState, PageProps>
+    context: PostprocessContext<FieldType, PageState, PageProps>
   ) => Record<string, unknown>;
   preprocess?: (
     oldPreprocess?: (
