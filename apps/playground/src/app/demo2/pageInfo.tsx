@@ -15,17 +15,17 @@ const pageUtil = new PageUtil({
 });
 
 pageUtil.addFields([
-  goods,
-  name,
-  hobby,
-  age,
-  sex,
-  myswitch,
-  time1,
-  time2,
-  sex,
-  desc,
-  friend,
+  // goods,
+  // name,
+  // hobby,
+  // age,
+  // sex,
+  // myswitch,
+  // time1,
+  // time2,
+  // sex,
+  // desc,
+  // friend,
   childForm,
   nodeUtil.createCustomNode(
     'submit',
@@ -54,8 +54,13 @@ pageUtil.addFields([
           className="ml-2"
           onClick={async () => {
             const formUtil = getFormUtil?.();
-            // const res = await formUtil?.validateAll();
-            console.log('data:', formUtil?.getFormData());
+            try {
+              const res = await formUtil?.validateAll();
+              console.log('123123123:', res);
+            } catch (error) {
+              console.log('cccccass:', error);
+            }
+            // console.log('data:', formUtil?.getFormData());
           }}
         >
           验证

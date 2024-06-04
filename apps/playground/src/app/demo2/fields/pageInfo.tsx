@@ -11,9 +11,16 @@ const pageUtil = new PageUtil({
 pageUtil.addFields([
   nodeUtil.createField<string, Empty, { name: string }>('test', '测试', {
     value: '',
+    validate: ({ value }) => {
+      if (!value) {
+        return { success: false, errorMsg: 'xcxvxcx' };
+      }
+      return { success: true };
+    },
     actions: [
       {
         effectedKeys: ['name'],
+
         action: ({ effectedData }) => {
           console.log(
             '=======> result effectedData:',

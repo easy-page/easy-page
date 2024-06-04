@@ -43,6 +43,7 @@ const convertValidator = ({
   defaultValues,
   store,
   nodeInfo,
+  handleChange,
 }: {
   rules?: Rule[];
   validate?: Validate<any, any, any>;
@@ -71,7 +72,7 @@ const convertValidator = ({
         defaultValues: defaultValues || {},
         pageProps: store?.getPageProps(),
         pageState: store?.getAllState(),
-        onChange(value, options) {},
+        onChange: handleChange,
       });
       if (!res.success) {
         throw Error(res.errorMsg);
@@ -221,10 +222,14 @@ export const FormItem = connector(
           store,
           handleChange: (value, options) => {
             const formUtil = getFormUtil?.();
+            console.log('change tabbb:', options);
             if (options?.asValueObj) {
               /** 未遇场景，暂未测试过，有再说 */
+              store.setStates(value);
               formUtil?.setFieldsValue(value);
             } else {
+              console.log('change tabbb');
+              store.setState(nodeInfo.id, value);
               formUtil?.setField(nodeInfo.id, value, {
                 validate: options?.validate,
               });

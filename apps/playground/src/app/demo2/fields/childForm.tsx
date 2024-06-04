@@ -53,9 +53,10 @@ export const childForm = nodeUtil.createChildForm<
         }),
       };
     },
-    validate: async ({ value }) => {
-      const results = await validateAllChildForm(value);
+    validate: async ({ value, onChange }) => {
+      const results = await validateAllChildForm(value, { onChange });
       const hasError = results.find((e) => Boolean(e.errors));
+      console.log('1232131:', results);
       return { success: !hasError };
     },
     childFormContainer: ({

@@ -8,7 +8,12 @@
  *  - 父、子表单验证问题
  */
 
-import { ComponentProps, FormUtil, connector } from '@easy-page/react-ui';
+import {
+  ComponentProps,
+  FormUtil,
+  ValidateOnChange,
+  connector,
+} from '@easy-page/react-ui';
 import { reaction } from 'mobx';
 import { EditableConfig } from '@easy-page/react-ui/interface';
 import React, { FC, useEffect, useState } from 'react';
@@ -68,6 +73,12 @@ interface BaseChildFormState<FormData = Record<string, any>> {
   /** 用于通知外界，此表单内部发生变化 */
   timestamp?: number;
 
+  /** 子表单的错误 */
+  childFormErrors?: ChildFormValidateResult[];
+
+  /** 子表单默认值，key: 为子表单 ID，value：为子表单默认值 */
+  childFormDefaultValues?: Record<string, Record<string, any>>;
+
   [key: string]: any;
 }
 
@@ -95,9 +106,13 @@ export type ChildFormValidateResult = {
   errors?: any;
 };
 export const validateAllChildForm = (
-  value: ChildFormState
+  value: ChildFormState,
+  options: {
+    onChange?: ValidateOnChange;
+  }
 ): Promise<ChildFormValidateResult[]> => {
   const { childForms, formUtils } = value;
+  const { onChange } = options;
   return Promise.all(
     childForms.map(async (e) => {
       const util = formUtils?.[e.id];
@@ -112,7 +127,30 @@ export const validateAllChildForm = (
         };
       }
     })
-  );
+  ).then((res) => {
+    const hasError = res.find((e) => Boolean(e.errors));
+    if (hasError) {
+      // 切换到对应错误 Tab
+      onChange?.(
+        {
+          ...value,
+          choosedItemId: hasError.id,
+          childFormErrors: res,
+        },
+        { validate: false }
+      );
+    } else {
+      // 清空 Error
+      onChange?.(
+        {
+          ...value,
+          childFormErrors: [],
+        },
+        { validate: false }
+      );
+    }
+    return res;
+  });
 };
 
 export const ChildForm = connector(
