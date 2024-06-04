@@ -6,6 +6,7 @@ import {
   EasyPageStore,
   SchemaNodeInfo,
   Validate,
+  ValidateOnChange,
   connector,
 } from '@easy-page/react-ui';
 import { FormItemProps as AntdFormItemProps, Form, Tooltip } from 'antd';
@@ -50,6 +51,7 @@ const convertValidator = ({
   required?: boolean;
   defaultValues?: Record<string, any>;
   validateTrigger?: 'onChange' | 'onBlur';
+  handleChange: ValidateOnChange;
 }): Rule[] | undefined => {
   if (!validate) {
     return userRule;
@@ -69,6 +71,7 @@ const convertValidator = ({
         defaultValues: defaultValues || {},
         pageProps: store?.getPageProps(),
         pageState: store?.getAllState(),
+        onChange(value, options) {},
       });
       if (!res.success) {
         throw Error(res.errorMsg);
@@ -161,8 +164,14 @@ export const FormItem = connector(
       disabled,
       ...baseProps
     } = props;
-    const { nodeInfo, effectedResult, effectedLoading, upt, store } =
-      frameworkProps;
+    const {
+      nodeInfo,
+      effectedResult,
+      effectedLoading,
+      upt,
+      store,
+      getFormUtil,
+    } = frameworkProps;
 
     const label = nodeInfo.name || baseProps.label;
     const extraText = extra || nodeInfo.desc;
@@ -210,6 +219,17 @@ export const FormItem = connector(
           validate: nodeInfo.validate,
           validateTrigger,
           store,
+          handleChange: (value, options) => {
+            const formUtil = getFormUtil?.();
+            if (options?.asValueObj) {
+              /** 未遇场景，暂未测试过，有再说 */
+              formUtil?.setFieldsValue(value);
+            } else {
+              formUtil?.setField(nodeInfo.id, value, {
+                validate: options?.validate,
+              });
+            }
+          },
         })}
         name={nodeInfo.id}
       >

@@ -6,6 +6,15 @@ import React, { useEffect, useState } from 'react';
 export type InputBaseProps = AntdInputProps & {
   /** 字段变化时间：onBlur 表示 onBlur 时才提交变化, 默认 onBlur */
   trigger?: 'onChange' | 'onBlur';
+  /** 自定义 onChange 处理 onChange */
+  handleChange?: (options: {
+    onChange: AntdInputProps['onChange'];
+    /** 当前最新值 */
+    value: string;
+    /** 上一次的值 */
+    preValue: string;
+    frameworkProps: InputProps['frameworkProps'];
+  }) => void;
 };
 
 export type InputEffectedType = {
@@ -34,11 +43,25 @@ export const Input = connector(
     const {
       frameworkProps: { effectedResult, effectedLoading },
       value,
-      onChange,
+      onChange: _onChange,
       onBlur,
       trigger = 'onChange',
+      handleChange,
       ...baseProps
     } = props;
+    const onChange = (e: { target: { value: any } }) => {
+      const val = e.target.value;
+      if (!handleChange) {
+        _onChange(val);
+        return;
+      }
+      handleChange({
+        onChange: _onChange,
+        preValue: value,
+        value: val,
+        frameworkProps: props.frameworkProps,
+      });
+    };
     const [fieldValue, setFieldValue] = useState(value);
     useEffect(() => {
       if (value && value !== fieldValue) {

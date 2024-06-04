@@ -16,6 +16,7 @@ export {
   diffObjects,
   UI_OPTION_MAP,
   CommonPageUtil,
+  ValidateOnChange,
   useChildrenOptions,
   EasyPageStore
 } from '@easy-page/react-ui';

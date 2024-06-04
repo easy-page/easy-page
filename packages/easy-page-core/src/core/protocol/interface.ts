@@ -61,6 +61,12 @@ export type ValidateResult = {
   errorMsg?: string;
 };
 
+export type ValidateOnChange = (value: any, options?: {
+  asValueObj?: boolean
+  /** 是否变更时候需要验证，默认不验证，只针对：asValueObj：false 生效 */
+  validate?: boolean
+}) => void;
+
 /** field validate type */
 export type Validate<
   FieldType,
@@ -70,6 +76,12 @@ export type Validate<
   context: Omit<Context<FieldType, PageState, PageProps>, 'effectedData'> & {
     pageState: PageState;
     pageProps: PageProps;
+    /** 
+     * 不传递 asValueObj 默认改变自己，如果：asValueObj = true，则默认将 value 作为改变的值对象
+     * - 如：传递对象：{b: 1, c: 2}, 设置：asValueObj = true，则更新：b,c 2 个字段
+     * - 如：传递对象：{b: 1, c: 2}, 设置：asValueObj = false，则把当前字段更新为：{b: 1, c: 2}
+     *  */
+    onChange?: ValidateOnChange;
   }
 ) => ValidateResult | Promise<ValidateResult>;
 
