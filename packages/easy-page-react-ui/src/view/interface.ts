@@ -39,11 +39,11 @@ export type EasyPageOnChangeContext<PageState> = {
   formUtil?: FormUtil<PageState> | null
 }
 
-export type ShowChildrenMap<PageState> = Record<keyof PageState, (context: {
+export type ShowChildrenMap<PageState> = Partial<Record<keyof PageState, (context: {
   fieldValue: any;
   parentNode: Schema<any>
   curNode: Schema<any>
-}) => boolean>
+}) => boolean>>
 
 
 export type EasyPageProps<

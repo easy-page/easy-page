@@ -43,6 +43,8 @@ export type ChildFormBaseProps = {
   /** 子表单容器 */
   childFormContainer: FC<ComponentProps<ChildFormContainerProps, any>>;
   childFormIdPrefix: string;
+
+  disabled?: boolean;
 };
 
 export type DisableOperations = ('add' | 'delete' | 'copy')[];
@@ -113,6 +115,7 @@ export const validateAllChildForm = (
 ): Promise<ChildFormValidateResult[]> => {
   const { childForms, formUtils } = value;
   const { onChange } = options;
+
   return Promise.all(
     childForms.map(async (e) => {
       const util = formUtils?.[e.id];
@@ -135,7 +138,7 @@ export const validateAllChildForm = (
         {
           ...value,
           choosedItemId: hasError.id,
-          childFormErrors: res,
+          childFormErrors: res.filter((e) => Boolean(e.errors)),
         },
         { validate: false }
       );
@@ -202,7 +205,6 @@ export const ChildForm = connector(
           const curValue = store.getState(nodeInfo.id);
           const formUtils = curValue.formUtils || {};
           formUtils[id] = formRef;
-          console.log('setChildFormRef:', Object.keys(formUtils), id);
           onChange({
             ...value,
             formUtils,

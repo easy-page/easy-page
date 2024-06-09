@@ -169,13 +169,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                   if (changedKeys.length === 0) {
                     return;
                   }
-                  // console.log(
-                  //   '=======>  first reaction:',
-                  //   nodeInfo.id,
-                  //   args,
-                  //   preArgs,
-                  //   changedKeys
-                  // );
+
                   return doEffectAction({
                     changedKeys,
                     effectedData: args,

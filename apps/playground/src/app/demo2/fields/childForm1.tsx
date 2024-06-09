@@ -21,56 +21,14 @@ export const Text111 = ({ id }: { id: string }) => {
   return <div>ttt{id}</div>;
 };
 
-export const childForm = nodeUtil.createChildForm<
+export const childForm1 = nodeUtil.createChildForm<
   ChildFormState,
   PageState,
   { actId: string }
 >(
-  'child-form',
+  'child-form1',
   {
     childFormContext: ['name', 'actId'],
-    value: {
-      childForms: [],
-      choosedItemId: '',
-    },
-    // actions: [
-    //   {
-    //     effectedKeys: ['child-form1'],
-    //     initRun: true,
-    //     action: ({ value, effectedData }) => {
-    //       const { childForms, formUtils, ...rest } = value;
-    //       console.log('iddddd ccccccc', formUtils);
-    //       const childForm1 = effectedData['child-form1'];
-    //       if (!childForm1) {
-    //         return {};
-    //       }
-    //       const newChildForms = [...childForms];
-
-    //       // 商家实际补贴价格-被删除的
-    //       let needToRemoveIds = Object.keys(formUtils || {});
-
-    //       (childForm1.childForms || []).forEach((each, idx) => {
-    //         // 如果还存在，则无需删除
-    //         needToRemoveIds = needToRemoveIds.filter((e) => e !== each.id);
-
-    //         const curMtUtil = formUtils?.[each.id];
-    //         if (!curMtUtil) {
-    //           // 新增表单，并设置默认值
-    //           newChildForms.push({ label: '', id: each.id });
-    //         }
-    //       });
-    //       console.log('valuecccc vvvvv:', value);
-    //       return {
-    //         fieldValue: {
-    //           childForms: newChildForms,
-    //           formUtils,
-    //           ...rest,
-    //         },
-    //         validate: false,
-    //       };
-    //     },
-    //   },
-    // ],
     preprocess({ defaultValues }) {
       const acts = defaultValues.activities || [];
       const defaultActId1 = generateId(TAB_PREFIX);
@@ -96,11 +54,11 @@ export const childForm = nodeUtil.createChildForm<
     },
     validate: async ({ value, onChange }) => {
       const results = await validateAllChildForm(
-        { ...value, id: 0 },
+        { ...value, id: 1 },
         { onChange }
       );
       const hasError = results.find((e) => Boolean(e.errors));
-      console.log('iddddd ccccccc validate:', results);
+      console.log('1232131:', results);
       return { success: !hasError };
     },
     childFormContainer: ({

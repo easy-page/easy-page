@@ -11,5 +11,6 @@ export type PageState = {
   time1: DatePickerProps['value'];
   time2: RangePickerProps['value'];
   sex: string;
+  'child-form1': any;
   desc: string;
 };

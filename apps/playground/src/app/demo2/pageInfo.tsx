@@ -10,6 +10,8 @@ import { sex } from './fields/sex';
 import { myswitch } from './fields/switch';
 import { time1, time2 } from './fields/time';
 import { goods } from './fields/goods';
+import { childForm1 } from './fields/childForm1';
+import { testC } from './fields/testC';
 const pageUtil = new PageUtil({
   pageId: 'demo1',
 });
@@ -26,7 +28,9 @@ pageUtil.addFields([
   // sex,
   // desc,
   // friend,
+  testC,
   childForm,
+  // childForm1,
   nodeUtil.createCustomNode(
     'submit',
     ({ frameworkProps: { getFormUtil } }) => {
