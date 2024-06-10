@@ -5,9 +5,12 @@ import { pageInfo } from './pageInfo';
 import { useEffect, useState } from 'react';
 
 export const Demo2 = () => {
-  const [context, setContext] = useState([1]);
+  const [userInfo, setUserInfo] = useState<any>();
+
   useEffect(() => {
-    setTimeout(() => setContext([11, 22222]), 2000);
+    setTimeout(() => {
+      setUserInfo({ id: '1', name: '22', avatar: '' });
+    });
   }, []);
   return (
     <EasyPage<PageState, any>
@@ -27,7 +30,7 @@ export const Demo2 = () => {
         ],
       }}
       context={{
-        t: context,
+        t: userInfo,
       }}
       pageType="form"
       {...pageInfo}

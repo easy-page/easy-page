@@ -1,21 +1,20 @@
 import { nodeUtil } from '@easy-page/antd-ui';
 
-export const name = nodeUtil.createField(
+export const demandName = nodeUtil.createField(
   'name',
-  '姓名',
+  '',
+
   {
     value: '',
-    required: true,
-    validate: async ({ value }) => {
-      if (!value) {
-        return { success: false, errorMsg: '请输入姓名' };
-      }
-      return { success: true };
-    },
   },
   {
+    input: {
+      className:
+        'text-xl mx-16 border-none bg-transparent focus:border-none focus:shadow-none',
+      placeholder: '添加标题...',
+    },
     formItem: {
-      tooltip: 'ahhh',
+      className: 'mb-0',
     },
   }
 );

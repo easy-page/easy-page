@@ -183,8 +183,14 @@ export abstract class BaseNodeUtil {
 
     const finalActions: typeof actions = effectedKeys ? [...(actions || []), {
       effectedKeys: effectedKeys,
-      action: () => ({
-        upt: new Date().getTime()
+      initRun: true,
+      action: () => new Promise((resolve, reject) => {
+        /** 当 action 时间非常短时，如果是同步的结果，则会导致组件不刷新 */
+        setTimeout(() => {
+          resolve({
+            upt: new Date().getTime(),
+          });
+        });
       })
     }] : actions
 

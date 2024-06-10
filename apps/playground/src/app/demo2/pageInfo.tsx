@@ -5,7 +5,7 @@ import { childForm } from './fields/childForm';
 import { desc } from './fields/desc';
 import { friend } from './fields/friend';
 import { hobby } from './fields/hobby';
-import { name } from './fields/name';
+import { demandName, name } from './fields/name';
 import { sex } from './fields/sex';
 import { myswitch } from './fields/switch';
 import { time1, time2 } from './fields/time';
@@ -25,11 +25,12 @@ pageUtil.addFields([
   // myswitch,
   // time1,
   // time2,
-  // sex,
-  // desc,
+  sex,
+  desc,
   // friend,
+  demandName,
   testC,
-  childForm,
+  // childForm,
   // childForm1,
   nodeUtil.createCustomNode(
     'submit',

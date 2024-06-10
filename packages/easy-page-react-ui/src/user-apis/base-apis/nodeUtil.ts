@@ -83,6 +83,7 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
     if (effectedKeys) {
       node.schema.actions.push({
         effectedKeys,
+        initRun: true,
         action: () => new Promise((resolve, reject) => {
           /** 当 action 时间非常短时，如果是同步的结果，则会导致组件不刷新 */
           setTimeout(() => {

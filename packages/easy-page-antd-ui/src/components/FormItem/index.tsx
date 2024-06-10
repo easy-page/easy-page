@@ -203,7 +203,7 @@ export const FormItem = connector(
         };
         return React.cloneElement(child, childProps);
       });
-    }, [effectedLoading, effectedResult]);
+    }, [effectedLoading, effectedResult, upt]);
 
     return (
       <Form.Item
