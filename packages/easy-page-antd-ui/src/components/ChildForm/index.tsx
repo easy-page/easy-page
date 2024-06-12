@@ -33,6 +33,7 @@ export type ChildFormContainerProps = {
   }) => void;
   onAdd: () => string; // 返回添加的表单 Id
   onRemove: (id: string) => void;
+  disabled?: boolean;
   /** 添加 子表单 REF */
   setChildFormRef: (formRef: FormUtil<any>, id: string) => void;
   childFormContextData: Record<string, any>;

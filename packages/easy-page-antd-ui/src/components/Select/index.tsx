@@ -39,6 +39,8 @@ export const Select = connector(
       ...restProps
     } = props;
 
+    const { getFormUtil, nodeInfo } = frameworkProps;
+
     // 获得 appendChildren 中的选项
     const childrenOptions = useChildrenOptions({
       children: children || [],
@@ -46,19 +48,32 @@ export const Select = connector(
       frameworkProps,
     });
 
+    /**
+     * - 如果有副作用更新 options 则副作用的执行在下方：useEffect 之后，因此不会合并下方的结果
+     * - 如果没有副作用，只有 options 和 appendChildren，则会走下方的 useEffect
+     */
+
     useEffect(() => {
       // childrenOptions 中的选项和 selectProps 中的选项合并
       const _options = childrenOptions.length > 0 ? childrenOptions : options;
       const curOptions = combineOptions
         ? [...childrenOptions, ...options]
         : _options;
-      onChange({
-        choosed: value.choosed,
-        keyword: '',
-        options: (curOptions as DefaultOptionType[]).concat(
-          value.options || []
-        ),
-      });
+      if (curOptions.length > 0) {
+        const formUtil = getFormUtil?.();
+        // 有选项时才更新，一般是静态的，所以不会动态变化了，如果有变化，走副作用更新即可
+        formUtil?.setField(
+          nodeInfo.id,
+          {
+            choosed: value.choosed,
+            keyword: '',
+            options: (curOptions as DefaultOptionType[]).concat(
+              value.options || []
+            ),
+          },
+          { validate: false }
+        );
+      }
     }, [childrenOptions.map((e) => e.value).join(',')]);
 
     const debounceSeach = debounce((keyword?: string) => {
@@ -71,12 +86,6 @@ export const Select = connector(
     return (
       <AntdSelect
         value={value.choosed}
-        // onChange={(val) => {
-        // onChange?.({
-        //   ...value,
-        //   choosed: val,
-        // });
-        // }}
         onChange={(val) => {
           if (!handleChange) {
             onChange?.({

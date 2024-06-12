@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Form, Select } from 'antd';
 import { DemoTemplate } from '../components/DemoTemplate';
 import { Demo2 } from '../demo2';
 
@@ -24,3 +25,29 @@ export const Home = () => {
     </div>
   );
 };
+
+// <Form initialValues={{ xx: 1 }}>
+// <Form.Item
+//   name={'xx'}
+//   rules={[
+//     {
+//       validateTrigger: 'onChange',
+//       validator(rule, value, callback) {
+//         console.log('rrrrrrun:');
+//         if (!value) {
+//           callback('xxx');
+//         } else {
+//           callback('');
+//         }
+//       },
+//     },
+//   ]}
+// >
+//   <Select
+// options={[
+//   { label: '1', value: 1 },
+//   { label: '2', value: 2 },
+// ]}
+//   />
+// </Form.Item>
+// </Form>;

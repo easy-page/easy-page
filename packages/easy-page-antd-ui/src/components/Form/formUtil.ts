@@ -112,7 +112,7 @@ export class AntdFormUtil extends FormUtil<any> {
   ): void {
     /** 这句 Store 是修复 form 的 setField 不刷新状态问题 */
     this.store.setState(key, value);
-    this.formRef.current?.setFieldValue(key, value);
+    this.formRef.current?.setFieldValue(key, value)
     if (options?.validate) {
       this.formRef.current?.validateFields([key]);
     }

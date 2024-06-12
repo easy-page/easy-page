@@ -55,45 +55,48 @@ export const useChildrenOptions = (options: {
         any,
         any
       >;
+      console.log('nodeInfo:', nodeInfo)
       const effectedKeys = nodeInfo.when?.effectedKeys || [];
-      showDisposer.push(
-        reaction(
-          () => store?.getEffectedData(effectedKeys as string[]),
-          (args, preArgs) => {
-            const show =
-              !nodeInfo.when ||
-              (nodeInfo.when &&
-                !nodeInfo.when.show(getShowParams(args, store)));
-            console.log('childrenOptions:', childrenOptions);
-            let hasChanged = false;
-            const hasOpt = childrenOptions.find((e) => e.value === nodeInfo.id);
-            const curOpts = childrenOptions.filter((e) => {
-              if (e.value !== nodeInfo.id) {
-                return true;
-              }
-              if (!show) {
-                /** 存在但现在不展示了，则表示变化了 */
-                hasChanged = true;
-              }
-              return show;
-            });
-
-            if (!hasOpt && show) {
-              /** 之前不存在，现在需要展示 */
-              hasChanged = true;
-              curOpts.splice(idx, 0, {
-                value: nodeInfo.id,
-                label: nodeInfo.name,
-                disabled: each.props?.disabled,
-                children: each.props?.children,
+      if (nodeInfo?.when) {
+        showDisposer.push(
+          reaction(
+            () => store?.getEffectedData(effectedKeys as string[]),
+            (args, preArgs) => {
+              const show =
+                !nodeInfo.when ||
+                (nodeInfo.when &&
+                  !nodeInfo.when.show(getShowParams(args, store)));
+              console.log('childrenOptions:', childrenOptions);
+              let hasChanged = false;
+              const hasOpt = childrenOptions.find((e) => e.value === nodeInfo.id);
+              const curOpts = childrenOptions.filter((e) => {
+                if (e.value !== nodeInfo.id) {
+                  return true;
+                }
+                if (!show) {
+                  /** 存在但现在不展示了，则表示变化了 */
+                  hasChanged = true;
+                }
+                return show;
               });
+
+              if (!hasOpt && show) {
+                /** 之前不存在，现在需要展示 */
+                hasChanged = true;
+                curOpts.splice(idx, 0, {
+                  value: nodeInfo.id,
+                  label: nodeInfo.name,
+                  disabled: each.props?.disabled,
+                  children: each.props?.children,
+                });
+              }
+              if (hasChanged) {
+                setChildrenOptions(curOpts);
+              }
             }
-            if (hasChanged) {
-              setChildrenOptions(curOpts);
-            }
-          }
-        )
-      );
+          )
+        );
+      }
       const show =
         !nodeInfo.when ||
         (nodeInfo.when && !nodeInfo.when.show(getShowParams(nodeInfo, store)));

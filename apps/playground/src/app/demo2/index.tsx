@@ -5,13 +5,13 @@ import { pageInfo } from './pageInfo';
 import { useEffect, useState } from 'react';
 
 export const Demo2 = () => {
-  const [userInfo, setUserInfo] = useState<any>();
+  // const [userInfo, setUserInfo] = useState<any>();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setUserInfo({ id: '1', name: '22', avatar: '' });
-    });
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUserInfo({ id: '1', name: '22', avatar: '' });
+  //   });
+  // }, []);
   return (
     <EasyPage<PageState, any>
       components={{
@@ -29,9 +29,11 @@ export const Demo2 = () => {
           },
         ],
       }}
-      context={{
-        t: userInfo,
-      }}
+      context={
+        {
+          // t: userInfo,
+        }
+      }
       pageType="form"
       {...pageInfo}
     />
