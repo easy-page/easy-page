@@ -17,7 +17,7 @@ export {
   UI_OPTION_MAP,
   CommonPageUtil,
   useChildrenOptions,
-  EasyPageStore
+  EasyPageStore,
 } from '@easy-page/react-ui';
 
 export type {
@@ -74,10 +74,11 @@ export type {
   EffectActionOptions,
   EffectInfo,
   EffectOptions,
-  ChildrenOption
+  ChildrenOption,
+  PostprocessContext,
 } from '@easy-page/react-ui'
 
-export type { FieldUIConfig } from '@easy-page/react-ui/interface';
+export type { FieldUIConfig, EditableConfig } from '@easy-page/react-ui/interface';
 export * from './common/constant';
 export * from './components';
 export * from './user-apis';

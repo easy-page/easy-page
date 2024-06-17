@@ -170,6 +170,8 @@ export const childForm = nodeUtil.createChildForm<
               const smallPoint = ((defaultValues || {}) as any).activities?.[
                 idx
               ];
+              const formUtil = value.formUtils?.[e.id]?.getOriginFormData();
+              console.log('ffffff:', formUtil);
               return {
                 id: e.id,
                 icon: e.icon,
@@ -186,6 +188,7 @@ export const childForm = nodeUtil.createChildForm<
                     pageId={e.id}
                     onChange={() => onChildFormChanged()}
                     setFormUtil={(ref) => {
+                      console.log('set reff', ref.getOriginFormData());
                       setChildFormRef(ref, ref.store.pageId);
                     }}
                     {...childFormInfo}

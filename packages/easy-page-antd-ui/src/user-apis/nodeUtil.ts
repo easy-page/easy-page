@@ -108,7 +108,7 @@ class NodeUtil extends CommonNodeUtil {
   >(
     id: string,
     name: string,
-    component: FC<Omit<CustomProps<FieldType>, 'component'>>,
+    component: FC<Omit<CustomProps<FieldType, EffectResultType, PageState, PageProps>, 'component'>>,
     options: NodeWithChildrenOption<
       FieldType,
       PageState,
