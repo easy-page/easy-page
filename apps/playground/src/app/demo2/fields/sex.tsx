@@ -1,59 +1,41 @@
 import { Empty, RadioEffectedType, nodeUtil } from '@easy-page/antd-ui';
 
 export const sex = nodeUtil
-  .createField<string, { name: string }, Empty, RadioEffectedType>(
-    'sex',
-    '性别',
+  .createField<string, any>(
+    'inputIdsWay',
+    '录入方式',
     {
-      value: '',
+      value: `1`,
       mode: 'single',
-    },
-    {
-      radioGroup: {
-        className: 'flex flex-row items-center',
+      required: true,
+      validate: ({ value }) => {
+        if (!value) {
+          return { success: false, errorMsg: '必选' };
+        }
+        return { success: true };
       },
-      layout: {
-        disableLayout: true,
-        indentation: false,
-        childrenContainerClassName: '',
+      when: {
+        // effectedKeys: ['chooseOperation'],
+        show({ effectedData }) {
+          return false;
+          // if ([`${ActionTypeEnum.NoChange}`].includes(effectedData?.['chooseOperation'])) {
+          //   console.log('不展示ssss')
+          //   return false;
+          // }
+          // return true;
+        },
       },
     }
+    // {
+    //   layout: {
+    //     disableLayout: true,
+    //     indentation: false,
+    //     childrenContainerClassName: '',
+    //   },
+    // }
   )
   .appendChildren([
     nodeUtil
-      .createNode(
-        'man',
-        {
-          name: '男12321321213',
-        },
-        {
-          radio: {
-            tips: '123213123',
-          },
-          // layout: {
-          //   disableLayout: true,
-          // },
-        }
-      )
-      .appendChildren([
-        nodeUtil.createField(
-          'like',
-          '看书',
-          { value: '' },
-          {
-            formItem: {
-              noStyle: true,
-            },
-          }
-        ),
-      ]),
-    nodeUtil.createNode(
-      'female',
-      { name: '女' },
-      {
-        radio: {
-          className: 'ml-2',
-        },
-      }
-    ),
+      .createNode('1', { name: '录入 ID' })
+      .appendChildren([nodeUtil.createField('122', '1', {})]),
   ]);

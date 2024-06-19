@@ -3,8 +3,10 @@ import { connector, useChildrenOptions } from '@easy-page/react-ui';
 import { Select as AntdSelect } from 'antd';
 import type { DefaultOptionType } from 'antd/es/select';
 import { debounce } from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SelectBaseProps, SelectProps } from './interface';
+import { FormItemInputContext } from 'antd/es/form/context';
+import classNames from 'classnames';
 
 export type {
   SelectState,
@@ -83,6 +85,8 @@ export const Select = connector(
       });
     }, 400);
 
+    // const { status } = useContext(FormItemInputContext);
+    // const hasError = status === 'error';
     return (
       <AntdSelect
         value={value.choosed}
@@ -110,6 +114,9 @@ export const Select = connector(
         loading={frameworkProps?.effectedLoading || loading}
         options={(value.options || []).map((e) => ({ ...e }))}
         {...restProps}
+        // className={classNames(restProps.className || '', {
+        //   'select-status-error': hasError,
+        // })}
         {...(frameworkProps?.effectedResult || {})}
       ></AntdSelect>
     );

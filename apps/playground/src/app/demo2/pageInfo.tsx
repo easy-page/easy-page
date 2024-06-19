@@ -2,7 +2,7 @@ import { PageUtil, nodeUtil } from '@easy-page/antd-ui';
 import { Button, Modal } from 'antd';
 import { age } from './fields/age';
 import { childForm } from './fields/childForm';
-import { desc } from './fields/desc';
+import { desc, desc1, desc2 } from './fields/desc';
 import { friend } from './fields/friend';
 import { hobby } from './fields/hobby';
 import { demandName, name } from './fields/name';
@@ -21,16 +21,17 @@ pageUtil.addFields([
   // name,
   // hobby,
   // age,
-  // sex,
   // myswitch,
   // time1,
   // time2,
-  // sex,
+  sex,
   // desc,
   // friend,
   // demandName,
   // testC,
-  childForm,
+  // childForm,
+  // desc2,
+  // desc1(),
   // childForm1,
   nodeUtil.createCustomNode(
     'submit',

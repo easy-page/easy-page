@@ -3,6 +3,7 @@ import {
   DataContext,
   EffectActionType,
   EffectKeys,
+  Empty,
   PostprocessContext,
   Schema,
   SchemaNodeOption,
@@ -133,3 +134,55 @@ export type WrapperNodeOption<
     >
   ) => FieldType;
 };
+
+
+
+
+export type ExtendsOptions<
+  FieldType = string,
+  PageState = Record<string, any>,
+  PageProps = Empty,
+  EffectResultType = any
+> = WrapperNodeOption<
+  FieldType,
+  PageState,
+  PageProps,
+  EffectResultType
+> & {
+  name?: string;
+  id?: string;
+  fieldUIConfig?: (oldFieldUIConfig?: FieldUIConfig) => FieldUIConfig;
+  /** 收敛一个通用逻辑，当需要监听变化，刷新自己时使用 */
+  effectedKeys?: EffectKeys<PageState, PageProps>
+}
+
+
+export type CreateNodeOptions<
+  FieldType = string,
+  PageState = Record<string, any>,
+  PageProps = Empty,
+  EffectResultType = any
+> = NodeWithChildrenOption<
+  FieldType,
+  PageState,
+  PageProps,
+  EffectResultType
+> & {
+  name?: string;
+}
+
+
+export type AnyNodeInfoType<
+  FieldType = any,
+  PageState = any,
+  PageProps = any,
+  EffectResultType = any
+> = NodeInfo<FieldType, PageState, PageProps, EffectResultType> | NodeInfoWithChildren<FieldType, PageState, PageProps, EffectResultType>
+
+
+export type AnyNodesInfoType<
+  FieldType = any,
+  PageState = any,
+  PageProps = any,
+  EffectResultType = any
+> = Array<NodeInfo<FieldType, PageState, PageProps, EffectResultType> | NodeInfoWithChildren<FieldType, PageState, PageProps, EffectResultType>>

@@ -76,6 +76,11 @@ export type {
   EffectOptions,
   ChildrenOption,
   PostprocessContext,
+  ForEachOptions,
+  AnyNodeInfoType,
+  AnyNodesInfoType,
+  CreateNodeOptions,
+  ExtendsOptions,
 } from '@easy-page/react-ui'
 
 export type { FieldUIConfig, EditableConfig } from '@easy-page/react-ui/interface';

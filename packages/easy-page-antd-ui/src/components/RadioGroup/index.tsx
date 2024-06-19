@@ -2,7 +2,9 @@
 
 import { ComponentProps, connector } from '@easy-page/react-ui';
 import { RadioGroupProps as AntdRadioGroupProps, Radio } from 'antd';
-import React from 'react';
+import { FormItemInputContext } from 'antd/es/form/context';
+import classNames from 'classnames';
+import React, { useContext } from 'react';
 
 export type BaseRadioGroupProps = AntdRadioGroupProps & {
   /** 自定义 onChange 处理 onChange */
@@ -15,10 +17,16 @@ export type BaseRadioGroupProps = AntdRadioGroupProps & {
     frameworkProps: RadioGroupProps['frameworkProps'];
   }) => void;
 };
+
+export type RadioGroupEffectType = BaseRadioGroupProps;
 /**
  * - 1. 定义组件 Props，一般由：UI 库组件本身 Props + 框架通用组件 Props + 自定义组件 Props 构成
  */
-export type RadioGroupProps = ComponentProps<BaseRadioGroupProps, any>;
+export type RadioGroupProps = ComponentProps<
+  BaseRadioGroupProps,
+  any,
+  RadioGroupEffectType
+>;
 
 /**
  * - 2. 重写 FieldUIConfig，增加组件配置提示
@@ -40,11 +48,17 @@ export const RadioGroup = connector(
       onChange,
       value,
       handleChange,
+      // className,
       ...baseProps
     } = props;
+    // const { status } = useContext(FormItemInputContext);
+    // const hasError = status === 'error';
     return (
       <Radio.Group
         value={value}
+        // className={classNames(className, {
+        //   'radio-groud-status-error': hasError,
+        // })}
         onChange={(checkValue) => {
           if (!handleChange) {
             onChange(checkValue);

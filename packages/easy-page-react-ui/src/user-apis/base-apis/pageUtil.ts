@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AnyNodesInfoType,
   CommonPageUtilProps,
   NodeInfo,
-  NodeInfoWithChildren,
   PageInfo,
 } from './interface';
 
@@ -36,7 +36,7 @@ export abstract class CommonPageUtil<T> {
   }
 
   abstract addFields(
-    nodes: Array<NodeInfo<any, any, any> | NodeInfoWithChildren<any, any, any>>
+    nodes: AnyNodesInfoType
   ): void;
 
 

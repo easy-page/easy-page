@@ -25,6 +25,10 @@ export type BaseFormItemProps = AntdFormItemProps & {
   // customView?: React.FC<Omit<FormItemProps, 'customExtra'>>
   disabled?: boolean;
 };
+
+export type FormItemEffectType = {
+  formItem: { label: string };
+};
 export type FormItemProps = ComponentProps<BaseFormItemProps, any>;
 
 /**
@@ -121,6 +125,10 @@ const getFormItemDisabled = (
     disabled,
   } = options;
   const { editable } = store.getPageProps() || {};
+  if (disabled !== undefined) {
+    /** 优先判断这个 disabled */
+    return disabled;
+  }
   if (editable === undefined) {
     return disabled;
   }
@@ -174,7 +182,9 @@ export const FormItem = connector(
       getFormUtil,
     } = frameworkProps;
 
-    const label = nodeInfo.name || baseProps.label;
+    const effectedLabel = effectedResult?.formItem?.label;
+
+    const label = effectedLabel || nodeInfo.name || baseProps.label;
     const extraText = extra || nodeInfo.desc;
     const customExtraText = customExtra
       ? customExtra({ frameworkProps, ...baseProps })

@@ -1,28 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CommonNodeUtil,
-  ComponentProps,
-  DefaultPageProps,
-  EffectKeys,
   Empty,
   NodeInfo,
   NodeInfoWithChildren,
-  NodeOption,
   NodeWithChildrenOption,
 } from '@easy-page/react-ui';
 import { FieldUIConfig } from '@easy-page/react-ui/interface';
-import { FC } from 'react';
 import { UI_COMPONENTS } from '../common/constant';
 import {
   ChildFormBaseProps,
-  ChildFormContainerProps,
-  ChildFormState,
 } from '../components';
-import { CustomProps } from '../components/Custom';
+import { CreateChildFormOptions, CreateContainerOption, CustomComponent } from './interface';
 
 class NodeUtil extends CommonNodeUtil {
   private getCustomNodeUIConfig(
-    component: React.FC<Omit<CustomProps<any, any, any, any>, 'component'>>,
+    component: CustomComponent<any, any, any, any>,
     fieldUIConfig?: FieldUIConfig
   ) {
     const curFieldUIConfig = fieldUIConfig || {};
@@ -38,7 +31,7 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    component: FC<Omit<CustomProps<any, EffectResultType, PageState, PageProps>, 'component'>>,
+    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
     options: NodeWithChildrenOption<
       FieldType,
       PageState,
@@ -68,13 +61,8 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    component: React.FC<Omit<CustomProps<any>, 'component'>>,
-    options?: Omit<
-      NodeWithChildrenOption<FieldType, PageState, PageProps, EffectResultType>,
-      'value'
-    > & {
-      fieldUIConfig?: FieldUIConfig;
-    }
+    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
+    options?: CreateContainerOption<FieldType, PageState, PageProps, EffectResultType>
   ) {
     const {
       childrenUIConfig,
@@ -108,7 +96,7 @@ class NodeUtil extends CommonNodeUtil {
   >(
     id: string,
     name: string,
-    component: FC<Omit<CustomProps<FieldType, EffectResultType, PageState, PageProps>, 'component'>>,
+    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
     options: NodeWithChildrenOption<
       FieldType,
       PageState,
@@ -149,19 +137,7 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    options: NodeOption<FieldType, PageState, PageProps, EffectResultType> & {
-      name?: string;
-      childFormContext?: EffectKeys<PageState, PageProps>;
-      childFormContainer: FC<
-        ComponentProps<
-          ChildFormContainerProps,
-          ChildFormState,
-          any,
-          PageState,
-          PageProps & DefaultPageProps<PageState>
-        >
-      >;
-    },
+    options: CreateChildFormOptions<FieldType, PageState, PageProps, EffectResultType>,
     fieldUIConfig?: FieldUIConfig
   ): NodeInfo<FieldType, PageState, PageProps, EffectResultType> {
     const { childFormContext, childFormContainer, name, ...restOptions } = options;

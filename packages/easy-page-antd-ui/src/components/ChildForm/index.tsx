@@ -17,6 +17,8 @@ import {
 import { reaction } from 'mobx';
 import { EditableConfig } from '@easy-page/react-ui/interface';
 import React, { FC, useEffect, useState } from 'react';
+import { generateId } from './utils';
+import { ChildFormItem } from './interface';
 
 export type AddComponentProps = {
   /** 当前表单 ID */
@@ -49,14 +51,6 @@ export type ChildFormBaseProps = {
 };
 
 export type DisableOperations = ('add' | 'delete' | 'copy')[];
-
-export type ChildFormItem = {
-  /** 每个 Form 唯一 ID */
-  id: string;
-  /** Label 标题 */
-  label: string;
-  icon?: React.ReactNode;
-};
 
 export interface ChildFormState<FormData = Record<string, any>>
   extends BaseChildFormState<FormData> {
@@ -98,10 +92,6 @@ declare module '@easy-page/react-ui/interface' {
 }
 
 export type ChildFormProps = ComponentProps<ChildFormBaseProps, ChildFormState>;
-
-export const generateId = (prefix: string) => {
-  return prefix + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-};
 
 export type ChildFormValidateResult = {
   id: string;
@@ -263,3 +253,6 @@ export const ChildForm = connector(
     );
   })
 );
+
+export * from './utils';
+export * from './interface';

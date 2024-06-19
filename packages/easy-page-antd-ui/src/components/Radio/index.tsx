@@ -75,7 +75,6 @@ export const Radio = connector(
       layoutClassName,
       ...baseProps
     } = props;
-    console.log('eeee1111:', children);
     const { name, id } = nodeInfo;
     const curName = effectedResult?.radioProps?.name || name;
     return (

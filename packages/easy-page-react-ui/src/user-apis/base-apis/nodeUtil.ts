@@ -3,12 +3,13 @@ import { cloneDeep } from 'lodash';
 import { FieldUIConfig } from '../../interface';
 import { BaseNodeUtil } from './baseNodeUtil';
 import {
+  AnyNodeInfoType,
+  CreateNodeOptions,
+  ExtendsOptions,
   NodeInfo,
   NodeInfoWithChildren,
   NodeWithChildrenOption,
-  WrapperNodeOption,
 } from './interface';
-import { EffectKeys } from '@easy-page/core';
 
 /**
  * - 用于创建单个字段节点
@@ -23,21 +24,8 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
     PageProps = Empty,
     EffectResultType = any
   >(
-    curNode:
-      | NodeInfo<any, any, any, any>
-      | NodeInfoWithChildren<any, any, any, any>,
-    options: WrapperNodeOption<
-      FieldType,
-      PageState,
-      PageProps,
-      EffectResultType
-    > & {
-      name?: string;
-      id?: string;
-      fieldUIConfig?: (oldFieldUIConfig?: FieldUIConfig) => FieldUIConfig;
-      /** 收敛一个通用逻辑，当需要监听变化，刷新自己时使用 */
-      effectedKeys?: EffectKeys<PageState, PageProps>
-    }
+    curNode: AnyNodeInfoType<any, any, any, any>,
+    options: ExtendsOptions<FieldType, PageState, PageProps, EffectResultType>
   ): NodeInfoWithChildren<FieldType, PageState, PageProps, EffectResultType> {
     const isNodeInfoWithChildren =
       typeof (
@@ -162,14 +150,12 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    options: NodeWithChildrenOption<
+    options: CreateNodeOptions<
       FieldType,
       PageState,
       PageProps,
       EffectResultType
-    > & {
-      name?: string;
-    },
+    >,
     fieldUIConfig?: FieldUIConfig
   ): NodeInfoWithChildren<FieldType, PageState, PageProps, EffectResultType> {
     const { childrenUIConfig, childrenActions, childrenWhen, ...rest } =
