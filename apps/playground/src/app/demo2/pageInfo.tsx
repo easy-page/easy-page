@@ -17,6 +17,8 @@ const pageUtil = new PageUtil({
 });
 
 pageUtil.addFields([
+  desc,
+  desc1(),
   // goods,
   // name,
   // hobby,
@@ -24,7 +26,7 @@ pageUtil.addFields([
   // myswitch,
   // time1,
   // time2,
-  sex,
+  // sex,
   // desc,
   // friend,
   // demandName,

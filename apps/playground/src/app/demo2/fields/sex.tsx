@@ -5,7 +5,7 @@ export const sex = nodeUtil
     'inputIdsWay',
     '录入方式',
     {
-      value: `1`,
+      value: `test_1`,
       mode: 'single',
       required: true,
       validate: ({ value }) => {
@@ -13,17 +13,6 @@ export const sex = nodeUtil
           return { success: false, errorMsg: '必选' };
         }
         return { success: true };
-      },
-      when: {
-        // effectedKeys: ['chooseOperation'],
-        show({ effectedData }) {
-          return false;
-          // if ([`${ActionTypeEnum.NoChange}`].includes(effectedData?.['chooseOperation'])) {
-          //   console.log('不展示ssss')
-          //   return false;
-          // }
-          // return true;
-        },
       },
     }
     // {
@@ -35,7 +24,12 @@ export const sex = nodeUtil
     // }
   )
   .appendChildren([
-    nodeUtil
-      .createNode('1', { name: '录入 ID' })
-      .appendChildren([nodeUtil.createField('122', '1', {})]),
+    nodeUtil.createNode('test_1', {
+      name: '录入 ID',
+      when: {
+        show(context) {
+          return false;
+        },
+      },
+    }),
   ]);

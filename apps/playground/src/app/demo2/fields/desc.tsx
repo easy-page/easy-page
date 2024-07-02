@@ -14,8 +14,8 @@ export const desc = nodeUtil.createField(
 
 export const desc1 = () =>
   nodeUtil.createCustomField(
-    'desc',
-    '介绍',
+    'desc111',
+    '介绍2222',
     ({ value, onChange }) => {
       /** 自定义输入框组件 */
       return (
@@ -29,6 +29,12 @@ export const desc1 = () =>
     },
     {
       value: '',
+      when: {
+        effectedKeys: ['desc'],
+        show({ effectedData }) {
+          return effectedData['desc'] === 'pk';
+        },
+      },
       // actions: [
       //   {
       //     initRun: true,
@@ -43,12 +49,3 @@ export const desc1 = () =>
       // ],
     }
   );
-
-export const desc2 = nodeUtil.extends(desc1(), {
-  postprocess(oldPostprocess) {
-    return ({ value }) => {
-      console.log('1112323321:');
-      return { desc: value };
-    };
-  },
-});

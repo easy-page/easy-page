@@ -55,7 +55,6 @@ export const useChildrenOptions = (options: {
         any,
         any
       >;
-      console.log('nodeInfo:', nodeInfo)
       const effectedKeys = nodeInfo.when?.effectedKeys || [];
       if (nodeInfo?.when) {
         showDisposer.push(
@@ -66,7 +65,6 @@ export const useChildrenOptions = (options: {
                 !nodeInfo.when ||
                 (nodeInfo.when &&
                   !nodeInfo.when.show(getShowParams(args, store)));
-              console.log('childrenOptions:', childrenOptions);
               let hasChanged = false;
               const hasOpt = childrenOptions.find((e) => e.value === nodeInfo.id);
               const curOpts = childrenOptions.filter((e) => {

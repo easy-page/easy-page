@@ -149,8 +149,6 @@ export abstract class FormUtil<PageState> {
             })
           }
 
-          console.log('curFieldValue:', curFieldValue, options)
-
           return ((curFieldValue as string[]) || ([] as string[])).includes(each.id)
         }
         );

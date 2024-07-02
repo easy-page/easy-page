@@ -18,7 +18,6 @@ export type SelectOptionProps = ComponentProps<SelectOptionBaseProps, any>;
 export const SelectOption = connector(
   React.memo((props: SelectOptionProps) => {
     const { frameworkProps, value, ...restProps } = props;
-    console.log('vvv:', value, restProps);
     return <Select.Option {...restProps}></Select.Option>;
   })
 );

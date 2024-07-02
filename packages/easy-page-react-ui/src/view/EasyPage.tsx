@@ -124,14 +124,12 @@ export class EasyPage<
   }
 
   componentDidMount(): void {
-    console.log('rrrrrr: => ', this.props.pageId);
     // setTimeout(() => {
     //   console.warn(
     //     '解析组件时间-开始：',
     //     new Date().getTime(),
     //     new Date().toLocaleString()
     //   );
-
     //   this.setState({ ...this.state, timeStamp: new Date().getTime() });
     //   console.warn(
     //     '解析组件时间-结束：',

@@ -17,8 +17,20 @@ export const execAction = async ({
   'effectedData' | 'changedKeys' | 'frameworkProps' | 'initRun'
 >): Promise<EffectActionResult<unknown, unknown>> => {
   const { actions = [], id } = nodeInfo;
-  const action = actions.find((e) =>
-    changedKeys.some((k) => e.effectedKeys?.includes(k)) || e.initRun
+  /**
+   * - 如果 keys 配置了：[a,b]，且配置了: initRun
+   * - 则如果 c 变化，也会执行 initRun
+   */
+  const action = actions.find((e) => {
+    // 如果是 initRun，则首先匹配 initRun
+    const isInitRunAction = e.initRun || !e.effectedKeys || e.effectedKeys.length === 0
+    if (initRun && isInitRunAction) {
+      // 首次执行 initRun 的
+      return true;
+    }
+    /** 如果不是 initRun，再找匹配的 key 执行 */
+    return changedKeys.some((k) => e.effectedKeys?.includes(k))
+  }
   );
   try {
     if (action) {

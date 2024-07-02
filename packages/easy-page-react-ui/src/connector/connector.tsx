@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { CORE_COMPONENTS, EffectsManager, getChangedKeys } from '../utils';
 import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
+import { getDefaultVisible } from './getDefaultVisible';
 
 /**
  * - 处理一些通用逻辑
@@ -41,19 +42,22 @@ export function connector(Element: React.JSXElementConstructor<any>) {
        */
       value: store?.pageState[id],
     };
+    /** 布局组件和字段组件都应该执行副作用 */
     const isField = uiType === 'ui';
     const isFormItemComponent = uiType === 'formItemUI';
+    const isLayout = uiType === 'layoutUI';
     /**
      * - 注册和使用副作用
      *  - 在表单页面中，副作用的注册和使用都在：FormItem 上
      *  - 在表单页面中，非 FormItem 包裹元素（isFormItem: false）：在组件本身上
-     *  - 在非表单页面中，副作用的注册和使用都在：组件本身上
-     *
+     *  - 在非表单页面中，副作用的注册和使用都在：组件本身或者 layout 身上。
+     *  - 在表单中 layout 组件，也需要执行副作用
      */
     const canUseEffects =
       (isForm && isFormItemComponent) ||
-      (!isForm && isField) ||
-      (isForm && !nodeInfo.isFormField && isField);
+      (!isForm && (isField || isLayout)) ||
+      (isForm && !nodeInfo.isFormField && isField) ||
+      (isForm && !nodeInfo.isFormField && isLayout);
     if (
       isField &&
       ![(CORE_COMPONENTS.FORM, CORE_COMPONENTS.FORMITEM)].includes(
@@ -92,7 +96,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     }, []);
 
     /** 是否展示 */
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(
+      getDefaultVisible(nodeInfo, {
+        isForm,
+        uiType,
+      })
+    );
     useEffect(() => {
       const effectManager = new EffectsManager(nodeInfo.id);
       /**
@@ -156,6 +165,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           );
         }
       };
+
       if (canUseEffects) {
         const effectActionKeys = (actions || [])
           .map((e) => e.effectedKeys || [])
@@ -210,6 +220,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
               effectedData: store?.getEffectedData(effectWhenKeys),
               defaultValues: store?.getDefaultValues(),
             });
+
             if (res !== undefined) {
               setVisible(res);
             }
@@ -221,7 +232,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           (e) => e.initRun || !e.effectedKeys || e.effectedKeys.length === 0
         );
         if (action) {
-          console.log('=======>  first init:', nodeInfo.id);
           const effectedData = store.getEffectedData(action.effectedKeys || []);
           doEffectAction({
             changedKeys: action.effectedKeys || [],
@@ -283,6 +293,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       () => ({ ...extraProps }),
       [store?.getState(id)]
     );
+
     if (!visible) {
       return <></>;
     }
