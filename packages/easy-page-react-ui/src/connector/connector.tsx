@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { CORE_COMPONENTS, EffectsManager, getChangedKeys } from '../utils';
 import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
+import { getDefaultVisible } from './getDefaultVisible';
 
 /**
  * - 处理一些通用逻辑
@@ -92,7 +93,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     }, []);
 
     /** 是否展示 */
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(getDefaultVisible(nodeInfo));
     useEffect(() => {
       const effectManager = new EffectsManager(nodeInfo.id);
       /**
@@ -221,7 +222,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           (e) => e.initRun || !e.effectedKeys || e.effectedKeys.length === 0
         );
         if (action) {
-          console.log('=======>  first init:', nodeInfo.id);
           const effectedData = store.getEffectedData(action.effectedKeys || []);
           doEffectAction({
             changedKeys: action.effectedKeys || [],
@@ -283,6 +283,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       () => ({ ...extraProps }),
       [store?.getState(id)]
     );
+
     if (!visible) {
       return <></>;
     }

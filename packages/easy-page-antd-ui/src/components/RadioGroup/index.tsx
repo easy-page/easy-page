@@ -2,9 +2,7 @@
 
 import { ComponentProps, connector } from '@easy-page/react-ui';
 import { RadioGroupProps as AntdRadioGroupProps, Radio } from 'antd';
-import { FormItemInputContext } from 'antd/es/form/context';
-import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React from 'react';
 
 export type BaseRadioGroupProps = AntdRadioGroupProps & {
   /** 自定义 onChange 处理 onChange */
