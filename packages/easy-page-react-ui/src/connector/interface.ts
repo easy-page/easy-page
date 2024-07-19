@@ -3,6 +3,8 @@ import { ComponentProps } from '../view';
 
 export type ConnectProps = ComponentProps<unknown, unknown> & {
   __internal_props_handleChange: (value: Record<string, unknown>) => void;
+  /** formItem 会给子元素传 props */
+  disabled?: boolean;
 };
 
 export type EffectActionOptions = {
