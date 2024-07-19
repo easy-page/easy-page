@@ -97,8 +97,14 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     const effectedInfoRef = useRef<EffectInfo>(effectedInfo);
 
     const handleSetEffectInfo = useCallback((newInfo: EffectInfo) => {
-      setEffectedInfo(newInfo);
-      effectedInfoRef.current = newInfo;
+      const newInfoWithUpt = {
+        ...newInfo,
+        upt: newInfo.upt || effectedInfoRef.current?.upt,
+      };
+      setEffectedInfo(newInfoWithUpt);
+
+      // 如果没有的话，保留上一次的 upt，避免被覆盖掉
+      effectedInfoRef.current = newInfoWithUpt;
     }, []);
 
     /** 是否展示 */
@@ -131,7 +137,19 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             });
             return;
           }
-          handleSetEffectInfo({ ...commonEffectInfo, loading: true });
+
+          /** 用于解决 editable 不生效的问题 */
+          const updateUpt = changedKeys.includes('editable')
+            ? {
+                upt: new Date().getTime(),
+              }
+            : {};
+
+          handleSetEffectInfo({
+            ...commonEffectInfo,
+            loading: true,
+            ...updateUpt,
+          });
 
           const result = await effectManager.executePromise(
             execAction({
@@ -161,12 +179,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             changedKeys.includes('editable') && !result.upt
               ? new Date().getTime()
               : result.upt;
-          console.log(
-            'has editable changed:',
-            changedKeys.includes('editable'),
-            upt,
-            nodeInfo.id
-          );
 
           /** 更新 action 执行结果 */
           handleSetEffectInfo({
@@ -178,21 +190,11 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             upt: upt,
           });
         } catch (error: any) {
-          /**
-           * - 被取消的 action 中，如果包含 editable 属性，则需要刷新组件：upt
-           * - 让 formItem 刷新其子组件，解决 editable 变更不生效的问题
-           */
-          if (changedKeys.includes('editable')) {
-            handleSetEffectInfo({
-              ...commonEffectInfo,
-              upt: new Date().getTime(),
-            });
-          }
-          // console.warn(
-          //   'exec effects action error:',
-          //   nodeInfo.id,
-          //   error?.message
-          // );
+          console.warn(
+            'exec effects action error:',
+            nodeInfo.id,
+            error?.message
+          );
         }
       };
 

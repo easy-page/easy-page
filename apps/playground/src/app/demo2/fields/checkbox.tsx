@@ -18,7 +18,6 @@ export const baseCheck = () =>
     mode: 'single',
     required: true,
     // effectedKeys: ['editable'],
-
     postprocess: ({ value }) => {
       if (!value) {
         return {};
