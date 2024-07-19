@@ -182,7 +182,6 @@ export const FormItem = connector(
       store,
       getFormUtil,
     } = frameworkProps;
-    console.log('nodddddd: 222222', nodeInfo.id, upt, disabled);
     const effectedLabel = effectedResult?.formItem?.label;
 
     const label = effectedLabel || nodeInfo.name || baseProps.label;

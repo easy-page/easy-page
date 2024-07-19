@@ -11,7 +11,10 @@ export const Demo2 = () => {
       setEditable(true);
     }, 1000);
   }, []);
+<<<<<<< HEAD
   console.log('ididididid:  init:', editable);
+=======
+>>>>>>> 3432caadb196a961e3913fbbfd6accc8df048ac6
   return (
     <EasyPage<PageState, any>
       components={{

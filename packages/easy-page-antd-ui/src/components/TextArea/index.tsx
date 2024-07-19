@@ -25,7 +25,6 @@ declare module '@easy-page/react-ui/interface' {
 export const TextArea = connector(
   React.memo((props: TextAreaProps) => {
     const { frameworkProps: _, ...baseProps } = props;
-    console.log('baseProps: TextArea', baseProps);
     return <Input.TextArea {...baseProps} />;
   })
 );

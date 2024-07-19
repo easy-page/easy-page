@@ -128,7 +128,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           };
           // console.log('setEffectedInfo:', setEffectedInfo);
           if (!actions || actions.length === 0) {
-            console.log('无 actions:', nodeInfo.id);
             /** 没有 actions 则基于变化，刷新组件即可 */
             handleSetEffectInfo({
               ...commonEffectInfo,
@@ -190,7 +189,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                 () => store?.getEffectedData([...new Set(effectActionKeys)]),
                 (args, preArgs) => {
                   const changedKeys = getChangedKeys(args, preArgs);
-                  console.log('changedKeys:', changedKeys, nodeInfo.id);
                   if (changedKeys.length === 0) {
                     return;
                   }
@@ -304,8 +302,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       () => ({ ...restProps }),
       [restProps.value, restProps.disabled]
     );
-
-    console.log('mnnnnnn:', nodeInfo.id, parentPropsMemo);
 
     /** connector 额外新增 Props */
     const extraPropsMemo = useMemo(
