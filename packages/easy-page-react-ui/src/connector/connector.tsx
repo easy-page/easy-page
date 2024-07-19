@@ -7,7 +7,9 @@ import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
 import { getDefaultVisible } from './getDefaultVisible';
 import { TriggerChangeSence } from '../devStateDebugger/const';
+import { DefaultPageProps } from '../types';
 
+const DefaultEffectedKeys: Array<keyof DefaultPageProps<any>> = ['editable'];
 /**
  * - 处理一些通用逻辑
  * - 处理一些特化逻辑
@@ -125,9 +127,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             initRun,
           };
           // console.log('setEffectedInfo:', setEffectedInfo);
-          if (!actions) {
+          if (!actions || actions.length === 0) {
             /** 没有 actions 则基于变化，刷新组件即可 */
-            handleSetEffectInfo(commonEffectInfo);
+            handleSetEffectInfo({
+              ...commonEffectInfo,
+              upt: new Date().getTime(),
+            });
             return;
           }
           handleSetEffectInfo({ ...commonEffectInfo, loading: true });
@@ -155,6 +160,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             });
           }
 
+          /** 如果 editable 变化了，需要刷新 upt */
+          const upt =
+            changedKeys.includes('editable') && !result.upt
+              ? new Date().getTime()
+              : result.upt;
+
           /** 更新 action 执行结果 */
           handleSetEffectInfo({
             ...commonEffectInfo,
@@ -162,7 +173,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
               /** 此次没有结果，就使用上一次的结果 */
               result?.effectResult || effectedInfoRef.current?.effectedResult,
             loading: false,
-            upt: result.upt,
+            upt: upt,
           });
         } catch (error: any) {
           console.warn(
@@ -176,7 +187,8 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       if (canUseEffects) {
         const effectActionKeys = (actions || [])
           .map((e) => e.effectedKeys || [])
-          .flat();
+          .flat()
+          .concat(DefaultEffectedKeys);
         stateDisposer =
           effectActionKeys.length > 0
             ? reaction(
@@ -195,7 +207,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                 }
               )
             : null;
-        const effectWhenKeys = when?.effectedKeys || [];
+        const effectWhenKeys = (when?.effectedKeys || []).concat(
+          DefaultEffectedKeys
+        );
         showDisposer =
           effectWhenKeys.length > 0
             ? reaction(
@@ -292,7 +306,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     /** 父亲节点传递的普通属性 */
     const parentPropsMemo = useMemo(
       () => ({ ...restProps }),
-      [restProps.value]
+      [restProps.value, restProps.disabled]
     );
 
     /** connector 额外新增 Props */

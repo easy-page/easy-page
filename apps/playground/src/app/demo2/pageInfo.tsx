@@ -19,10 +19,9 @@ const pageUtil = new PageUtil({
 
 pageUtil.addFields([
   check,
-  // desc,
+  desc,
   // desc1(),
   // goods,
-  // name,
   // hobby,
   // age,
   // myswitch,
@@ -34,8 +33,6 @@ pageUtil.addFields([
   // demandName,
   // testC,
   // childForm,
-  // desc2,
-  // desc1(),
   // childForm1,
   nodeUtil.createCustomNode(
     'submit',

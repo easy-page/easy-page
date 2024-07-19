@@ -5,13 +5,12 @@ import { pageInfo } from './pageInfo';
 import { useEffect, useState } from 'react';
 
 export const Demo2 = () => {
-  // const [userInfo, setUserInfo] = useState<any>();
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setUserInfo({ id: '1', name: '22', avatar: '' });
-  //   });
-  // }, []);
+  const [editable, setEditable] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setEditable(true);
+    }, 1000);
+  }, []);
   return (
     <EasyPage<PageState, any>
       components={{
@@ -20,7 +19,6 @@ export const Demo2 = () => {
       }}
       key={'asda'}
       pageId="cssss"
-      debugger={true}
       defaultValues={{
         activities: [
           {
@@ -31,11 +29,10 @@ export const Demo2 = () => {
           },
         ],
       }}
-      context={
-        {
-          // t: userInfo,
-        }
-      }
+      context={{
+        // t: userInfo,
+        editable,
+      }}
       pageType="form"
       {...pageInfo}
     />

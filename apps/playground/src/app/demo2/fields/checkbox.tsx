@@ -5,6 +5,18 @@ export const baseCheck = () =>
     value: '1',
     mode: 'single',
     required: true,
+    // effectedKeys: ['editable'],
+    actions: [
+      {
+        effectedKeys: ['desc'],
+        action: () => {
+          console.log('1112321321: 执行 action');
+          return {
+            fieldValue: '1',
+          };
+        },
+      },
+    ],
     postprocess: ({ value }) => {
       if (!value) {
         return {};
@@ -16,8 +28,8 @@ export const baseCheck = () =>
   });
 
 export const commonCheck = baseCheck().appendChildren([
-  nodeUtil.createNode('1', { name: 'aa' }, { radio: { disabled: true } }),
-  nodeUtil.createNode('2', { name: 'bb' }, { radio: { disabled: true } }),
+  nodeUtil.createNode('1', { name: 'aa' }),
+  nodeUtil.createNode('2', { name: 'bb' }),
 ]);
 
 export const check = nodeUtil.extends(commonCheck, {
