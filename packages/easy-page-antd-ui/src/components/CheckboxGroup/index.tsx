@@ -53,6 +53,7 @@ export const CheckBoxGroup = connector(
       handleChange,
       ...baseProps
     } = props;
+
     return (
       <Checkbox.Group
         value={value}

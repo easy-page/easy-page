@@ -179,7 +179,6 @@ export class EasyPage<
        * - 感觉是不是用 mobx reaction 监控变化，进行调整比较好？
        * */
       this.store.setPageProps(nextProps.context || {});
-      console.log('set new context:', new Date().getTime());
       return true;
     }
     if (nextProps.loading !== this.props.loading) {

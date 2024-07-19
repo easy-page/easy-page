@@ -7,7 +7,9 @@ import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
 import { getDefaultVisible } from './getDefaultVisible';
 import { TriggerChangeSence } from '../devStateDebugger/const';
+import { DefaultPageProps } from '../types';
 
+const DefaultEffectedKeys: Array<keyof DefaultPageProps<any>> = ['editable'];
 /**
  * - 处理一些通用逻辑
  * - 处理一些特化逻辑
@@ -125,9 +127,13 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             initRun,
           };
           // console.log('setEffectedInfo:', setEffectedInfo);
-          if (!actions) {
+          if (!actions || actions.length === 0) {
+            console.log('无 actions:', nodeInfo.id);
             /** 没有 actions 则基于变化，刷新组件即可 */
-            handleSetEffectInfo(commonEffectInfo);
+            handleSetEffectInfo({
+              ...commonEffectInfo,
+              upt: new Date().getTime(),
+            });
             return;
           }
           handleSetEffectInfo({ ...commonEffectInfo, loading: true });
@@ -176,13 +182,15 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       if (canUseEffects) {
         const effectActionKeys = (actions || [])
           .map((e) => e.effectedKeys || [])
-          .flat();
+          .flat()
+          .concat(DefaultEffectedKeys);
         stateDisposer =
           effectActionKeys.length > 0
             ? reaction(
                 () => store?.getEffectedData([...new Set(effectActionKeys)]),
                 (args, preArgs) => {
                   const changedKeys = getChangedKeys(args, preArgs);
+                  console.log('changedKeys:', changedKeys, nodeInfo.id);
                   if (changedKeys.length === 0) {
                     return;
                   }
@@ -195,7 +203,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                 }
               )
             : null;
-        const effectWhenKeys = when?.effectedKeys || [];
+        const effectWhenKeys = (when?.effectedKeys || []).concat(
+          DefaultEffectedKeys
+        );
         showDisposer =
           effectWhenKeys.length > 0
             ? reaction(
@@ -292,8 +302,10 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     /** 父亲节点传递的普通属性 */
     const parentPropsMemo = useMemo(
       () => ({ ...restProps }),
-      [restProps.value]
+      [restProps.value, restProps.disabled]
     );
+
+    console.log('mnnnnnn:', nodeInfo.id, parentPropsMemo);
 
     /** connector 额外新增 Props */
     const extraPropsMemo = useMemo(
