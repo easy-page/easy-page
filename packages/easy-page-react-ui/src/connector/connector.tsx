@@ -6,6 +6,7 @@ import { CORE_COMPONENTS, EffectsManager, getChangedKeys } from '../utils';
 import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
 import { getDefaultVisible } from './getDefaultVisible';
+import { TriggerChangeSence } from '../devStateDebugger/const';
 
 /**
  * - 处理一些通用逻辑
@@ -72,6 +73,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
         if (nodeInfo.isFormField && props.onChange) {
           props.onChange(e);
         }
+        store.debugger?.addOnChange(id, val, {
+          triggerSence: TriggerChangeSence.FromOnChange,
+        });
         store?.setState(id, val);
         /** 传递给 EasyPage 外部感知 */
         if (handleChange) {
@@ -140,6 +144,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           const formUtil = getFormUtil?.();
           if (result.fieldValue !== undefined) {
             store?.setState(id, result.fieldValue);
+            store.debugger?.addOnChange(id, result.fieldValue, {
+              triggerSence: TriggerChangeSence.FromAction,
+            });
             /**
              * - 表单状态变化，副作用触发验证
              * - 更改 form 中状态，并触发验证 */

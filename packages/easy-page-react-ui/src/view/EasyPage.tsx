@@ -20,6 +20,7 @@ import {
   EasyPageOnChangeContext,
   EasyPageProps,
 } from './interface';
+import { DefaultValueInfo, DefaultValueSource } from '../devStateDebugger';
 
 export class EasyPage<
   PageState = Record<string, unknown>,
@@ -51,6 +52,13 @@ export class EasyPage<
 
   private getDefaultValues(originData: Record<string, unknown> = {}) {
     const defaultValues: Record<string, unknown> = {};
+    const logsInfo: Record<string, DefaultValueInfo[]> = {};
+
+    const setNodesInfo = (id: string, info: DefaultValueInfo) => {
+      logsInfo[id] = logsInfo[id] || [];
+      logsInfo[id].push(info);
+    };
+
     forEachNode(this.props.schema, (node) => {
       const processValue = node.preprocess
         ? node.preprocess({
@@ -60,14 +68,31 @@ export class EasyPage<
         : undefined;
       const oriValue = get(originData, node.id);
       if (processValue !== undefined) {
+        setNodesInfo(node.id, {
+          id: node.id,
+          value: processValue,
+          source: DefaultValueSource.FromPreprocess,
+        });
         defaultValues[node.id] = processValue;
       } else if (oriValue !== undefined) {
+        setNodesInfo(node.id, {
+          id: node.id,
+          value: oriValue,
+          source: DefaultValueSource.FromProps,
+        });
+
         defaultValues[node.id] = oriValue;
       } else {
+        setNodesInfo(node.id, {
+          id: node.id,
+          value: node.value,
+          source: DefaultValueSource.FromNode,
+        });
+
         defaultValues[node.id] = node.value;
       }
     });
-    return defaultValues;
+    return { defaultValues, logsInfo };
   }
 
   constructor(
@@ -87,9 +112,11 @@ export class EasyPage<
     this.state = {} as PageState;
     /** 默认一些组件 + props 透传组件 */
     this.components = this.props.components || {};
+    const { defaultValues: calcDefaultValues, logsInfo } =
+      this.getDefaultValues(this.props.defaultValues || {});
     const defaultValues = {
       ...(this.props.defaultValues || {}),
-      ...this.getDefaultValues(this.props.defaultValues || {}),
+      ...calcDefaultValues,
     };
 
     this.store = new EasyPageStore<
@@ -103,6 +130,7 @@ export class EasyPage<
       pageState: defaultValues as PageState,
       defaultValues: defaultValues,
       schema,
+      logsInfo,
       showChildren: props.showChildren,
       pageId: this.props.pageId,
     });

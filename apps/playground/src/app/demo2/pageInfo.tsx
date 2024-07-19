@@ -12,13 +12,15 @@ import { time1, time2 } from './fields/time';
 import { goods } from './fields/goods';
 import { childForm1 } from './fields/childForm1';
 import { testC } from './fields/testC';
+import { check } from './fields/checkbox';
 const pageUtil = new PageUtil({
   pageId: 'demo1',
 });
 
 pageUtil.addFields([
-  desc,
-  desc1(),
+  check,
+  // desc,
+  // desc1(),
   // goods,
   // name,
   // hobby,

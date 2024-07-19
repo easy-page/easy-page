@@ -19,6 +19,8 @@ export const Demo2 = () => {
         ...EXTRA_COMPONENTS,
       }}
       key={'asda'}
+      pageId="cssss"
+      debugger={true}
       defaultValues={{
         activities: [
           {

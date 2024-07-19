@@ -27,24 +27,27 @@ export type EasyPageLayoutProps<PageState> = {
 
 /** 当 changedKeys 中的字段发生变化，执行对应 action */
 export type EasyPageEffect<PageState> = {
-  changedKeys: Array<keyof PageState>
+  changedKeys: Array<keyof PageState>;
   action: (context: EasyPageOnChangeContext<PageState>) => void;
-}
-
+};
 
 export type EasyPageOnChangeContext<PageState> = {
-  value: Partial<PageState>,
-  values: Record<string, any>,
-  oriFormData: Partial<PageState>
-  formUtil?: FormUtil<PageState> | null
-}
+  value: Partial<PageState>;
+  values: Record<string, any>;
+  oriFormData: Partial<PageState>;
+  formUtil?: FormUtil<PageState> | null;
+};
 
-export type ShowChildrenMap<PageState> = Partial<Record<keyof PageState, (context: {
-  fieldValue: any;
-  parentNode: Schema<any>
-  curNode: Schema<any>
-}) => boolean>>
-
+export type ShowChildrenMap<PageState> = Partial<
+  Record<
+    keyof PageState,
+    (context: {
+      fieldValue: any;
+      parentNode: Schema<any>;
+      curNode: Schema<any>;
+    }) => boolean
+  >
+>;
 
 export type EasyPageProps<
   PageState,
@@ -55,7 +58,7 @@ export type EasyPageProps<
   uiConfig: UIConfig;
   commonUIConfig?: CommonUIConfig;
   loading?: boolean;
-  LoadingComponent?: React.ReactNode
+  LoadingComponent?: React.ReactNode;
   /** 用户配置的 values */
   defaultValues?: DefaultValues;
   // pageKey?: string;
@@ -68,14 +71,16 @@ export type EasyPageProps<
   setFormUtil?: (formUtil: FormUtil<PageState>) => void;
   /** 用于挂载下拉框所在位置 */
   getPopContainer?: (...args: unknown[]) => Element;
-  /** 
+  /**
    * - value 为表单当前变化的字段值
    * - values 为表单当前最终提交时的数据结构
    * - oriFormData 为表单当前内部所有状态
    *  */
-  onChange?: (context: EasyPageOnChangeContext<PageState> & {
-    hasChanged: (key: Partial<keyof PageState>) => boolean
-  }) => void;
+  onChange?: (
+    context: EasyPageOnChangeContext<PageState> & {
+      hasChanged: (key: Partial<keyof PageState>) => boolean;
+    }
+  ) => void;
   /**
    * - 当某些 key 变化的时候，才执行相关的 action
    * - 如果所有 key 变化的时候，都希望执行的，就用 onChange
@@ -84,7 +89,7 @@ export type EasyPageProps<
   layout?: EasyPageLayout<PageState>;
 
   /** 当有些字段的是否展示子元素方式比较特殊，则可以使用这个方法进行特殊定义，如：下拉框组件，选择某个选项后是否展示子元素的判断 */
-  showChildren?: ShowChildrenMap<PageState>
+  showChildren?: ShowChildrenMap<PageState>;
 };
 
 /**
@@ -132,4 +137,4 @@ export type ComponentProps<
   PageState = Record<string, any>,
   PageProps extends DefaultPageProps<PageState> = DefaultPageProps<PageState>
 > = BaseProps &
-  FrameworkProps<FieldValueType, EffectedResultType, PageState, PageProps>
+  FrameworkProps<FieldValueType, EffectedResultType, PageState, PageProps>;
