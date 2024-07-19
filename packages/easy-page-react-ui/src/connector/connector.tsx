@@ -97,8 +97,14 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     const effectedInfoRef = useRef<EffectInfo>(effectedInfo);
 
     const handleSetEffectInfo = useCallback((newInfo: EffectInfo) => {
-      setEffectedInfo(newInfo);
-      effectedInfoRef.current = newInfo;
+      const newInfoWithUpt = {
+        ...newInfo,
+        upt: newInfo.upt || effectedInfoRef.current?.upt,
+      };
+      setEffectedInfo(newInfoWithUpt);
+
+      // 如果没有的话，保留上一次的 upt，避免被覆盖掉
+      effectedInfoRef.current = newInfoWithUpt;
     }, []);
 
     /** 是否展示 */
@@ -116,26 +122,34 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       let stateDisposer: IReactionDisposer | null = null;
       let showDisposer: IReactionDisposer | null = null;
       const doEffectAction = async (options: EffectActionOptions) => {
+        const { effectedData: curEffectedData, initRun, changedKeys } = options;
+        const commonEffectInfo: EffectInfo = {
+          ...(effectedInfoRef.current || {}),
+          initRun,
+        };
         try {
-          const {
-            effectedData: curEffectedData,
-            initRun,
-            changedKeys,
-          } = options;
-          const commonEffectInfo: EffectInfo = {
-            ...(effectedInfoRef.current || {}),
-            initRun,
-          };
           // console.log('setEffectedInfo:', setEffectedInfo);
           if (!actions || actions.length === 0) {
-            /** 没有 actions 则基于变化，刷新组件即可 */
+            /** 没有 actions 则基于变化，刷新组件，保障 editable 属性的更新 */
             handleSetEffectInfo({
               ...commonEffectInfo,
               upt: new Date().getTime(),
             });
             return;
           }
-          handleSetEffectInfo({ ...commonEffectInfo, loading: true });
+
+          /** 用于解决 editable 不生效的问题 */
+          const updateUpt = changedKeys.includes('editable')
+            ? {
+                upt: new Date().getTime(),
+              }
+            : {};
+
+          handleSetEffectInfo({
+            ...commonEffectInfo,
+            loading: true,
+            ...updateUpt,
+          });
 
           const result = await effectManager.executePromise(
             execAction({
@@ -160,6 +174,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             });
           }
 
+          /** 如果 editable 变化了，需要刷新 upt */
+          const upt =
+            changedKeys.includes('editable') && !result.upt
+              ? new Date().getTime()
+              : result.upt;
+
           /** 更新 action 执行结果 */
           handleSetEffectInfo({
             ...commonEffectInfo,
@@ -167,7 +187,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
               /** 此次没有结果，就使用上一次的结果 */
               result?.effectResult || effectedInfoRef.current?.effectedResult,
             loading: false,
-            upt: result.upt,
+            upt: upt,
           });
         } catch (error: any) {
           console.warn(

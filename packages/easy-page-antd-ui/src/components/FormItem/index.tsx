@@ -211,6 +211,7 @@ export const FormItem = connector(
             ...curFrameworkProps,
           },
         };
+        console.log('nodddddd:', nodeInfo.id, childProps);
         return React.cloneElement(child, childProps);
       });
     }, [effectedLoading, effectedResult, upt, disabled]);
