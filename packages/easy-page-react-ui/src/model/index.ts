@@ -4,6 +4,8 @@ import { computed, makeAutoObservable, toJS } from 'mobx';
 import { FieldUIConfig } from '../interface';
 import { DefaultPageProps } from '../types/page';
 import { ShowChildrenMap } from '../view';
+import { DefaultValueInfo, DevStateDeugger } from '../devStateDebugger';
+
 export type EasyPageStoreOptions<PageState, PageProps> = {
   pageState: PageState;
   defaultValues: Partial<PageState>;
@@ -11,8 +13,11 @@ export type EasyPageStoreOptions<PageState, PageProps> = {
   schema: Schema<unknown, PageState, PageProps>;
   pageId?: string;
   /** 当有些字段的是否展示子元素方式比较特殊，则可以使用这个方法进行特殊定义，如：下拉框组件，选择某个选项后是否展示子元素的判断 */
-  showChildren?: ShowChildrenMap<PageState>
+  showChildren?: ShowChildrenMap<PageState>;
+  logsInfo?: Record<string, DefaultValueInfo[]>;
 };
+
+export const DEBUGGER_SWITCH = 'easy_page_debugger';
 
 /**
  * - 每个表单或者页面单独一个 store，维护上下文状态
@@ -26,7 +31,7 @@ export class EasyPageStore<
   public pageId: string;
 
   /** 当有些字段的是否展示子元素方式比较特殊，则可以使用这个方法进行特殊定义，如：下拉框组件，选择某个选项后是否展示子元素的判断 */
-  public showChildren?: ShowChildrenMap<PageState>
+  public showChildren?: ShowChildrenMap<PageState>;
 
   /**
    * key: 不是 keyChain，存储的都是对象：{a: {b: {c: 1}}}
@@ -41,14 +46,49 @@ export class EasyPageStore<
   /** UI 配置 */
   private uiConfig: Record<string, FieldUIConfig> = {};
 
+  public debugger: DevStateDeugger | null = null;
+
+  private isDev() {
+    if (!window || !window.location || !window.location.href) {
+      return false;
+    }
+    if (window.location.href.includes('127.0.0.1')) {
+      return true;
+    }
+    if (window.location.href.includes('localhost')) {
+      return true;
+    }
+
+    /** 方便线上排查问题 */
+    const debuggerSwitch = window.localStorage.getItem(DEBUGGER_SWITCH);
+    if (debuggerSwitch === 'true') {
+      return true;
+    }
+
+    return false;
+  }
+
   constructor(options: EasyPageStoreOptions<PageState, PageProps>) {
-    const { pageProps, pageState, defaultValues, schema, pageId, showChildren } = options;
+    const {
+      pageProps,
+      pageState,
+      defaultValues,
+      schema,
+      pageId,
+      showChildren,
+    } = options;
     this.pageState = pageState;
     this.defaultValues = defaultValues || {};
     this.pageProps = pageProps || {};
     this.schema = schema;
-    this.pageId = pageId || ''
-    this.showChildren = showChildren
+    this.pageId = pageId || '';
+    this.showChildren = showChildren;
+    if (this.isDev()) {
+      this.debugger = new DevStateDeugger({ formId: this.pageId });
+      (window as any)[this.pageId] = this.debugger;
+      this.debugger.setValuesInfo(options.logsInfo || {});
+    }
+
     makeAutoObservable(this);
   }
 
@@ -62,7 +102,7 @@ export class EasyPageStore<
 
   /** 重置表单 */
   resetState() {
-    this.pageState = { ...this.defaultValues }
+    this.pageState = { ...this.defaultValues };
   }
 
   /**
@@ -83,7 +123,7 @@ export class EasyPageStore<
     keys.forEach((each) => {
       result[each] = toJS(
         this.pageState[each as keyof PageState] ??
-        this.pageProps[each as keyof PageProps]
+          this.pageProps[each as keyof PageProps]
       );
     });
 

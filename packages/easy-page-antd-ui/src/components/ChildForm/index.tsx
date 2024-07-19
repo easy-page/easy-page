@@ -19,6 +19,7 @@ import { EditableConfig } from '@easy-page/react-ui/interface';
 import React, { FC, useEffect, useState } from 'react';
 import { generateId } from './utils';
 import { ChildFormItem } from './interface';
+import { TriggerChangeSence } from '../../common/constant';
 
 export type AddComponentProps = {
   /** 当前表单 ID */
@@ -187,19 +188,27 @@ export const ChildForm = connector(
           if (options && newVal.childForms[options.idx]) {
             newVal.childForms[options.idx] = options.childForm;
           }
-          onChange({
+          const val = {
             ...newVal,
             timestamp: new Date().getTime(),
+          };
+          store.debugger?.addOnChange(nodeInfo.id, val, {
+            triggerSence: TriggerChangeSence.FromChildFormChange,
           });
+          onChange(val);
         }}
         setChildFormRef={(formRef: FormUtil<any>, id: string) => {
           const curValue = store.getState(nodeInfo.id);
           const formUtils = curValue.formUtils || {};
           formUtils[id] = formRef;
-          onChange({
+          const val = {
             ...value,
             formUtils,
+          };
+          store.debugger?.addOnChange(nodeInfo.id, val, {
+            triggerSence: TriggerChangeSence.FromChildFormRefChange,
           });
+          onChange(val);
         }}
         childFormContextData={childFormContextData}
         onRemove={(id) => {
@@ -222,18 +231,22 @@ export const ChildForm = connector(
               ? newForms[deleteIdx - 1 < 0 ? 0 : deleteIdx - 1]?.id
               : choosedItemId;
           delete formUtils[id];
-          onChange({
+          const val = {
             ...value,
             childForms: newForms,
             formUtils,
             choosedItemId: newChoosedId,
+          };
+          store.debugger?.addOnChange(nodeInfo.id, val, {
+            triggerSence: TriggerChangeSence.FromChildFormRemove,
           });
+          onChange(val);
         }}
         onAdd={() => {
           const curValue = store.getState(nodeInfo.id) as ChildFormState;
           const { childForms } = curValue;
           const newId = generateId(childFormIdPrefix);
-          onChange({
+          const val = {
             ...value,
             childForms: [
               ...childForms,
@@ -243,7 +256,11 @@ export const ChildForm = connector(
               },
             ],
             choosedItemId: newId,
+          };
+          store.debugger?.addOnChange(nodeInfo.id, val, {
+            triggerSence: TriggerChangeSence.FromChildFormRemove,
           });
+          onChange(val);
           return newId;
         }}
         value={value}

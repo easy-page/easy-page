@@ -6,7 +6,10 @@ import { CORE_COMPONENTS, EffectsManager, getChangedKeys } from '../utils';
 import { execAction } from './execAction';
 import { ConnectProps, EffectActionOptions, EffectInfo } from './interface';
 import { getDefaultVisible } from './getDefaultVisible';
+import { TriggerChangeSence } from '../devStateDebugger/const';
+import { DefaultPageProps } from '../types';
 
+const DefaultEffectedKeys: Array<keyof DefaultPageProps<any>> = ['editable'];
 /**
  * - 处理一些通用逻辑
  * - 处理一些特化逻辑
@@ -72,6 +75,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
         if (nodeInfo.isFormField && props.onChange) {
           props.onChange(e);
         }
+        store.debugger?.addOnChange(id, val, {
+          triggerSence: TriggerChangeSence.FromOnChange,
+        });
         store?.setState(id, val);
         /** 传递给 EasyPage 外部感知 */
         if (handleChange) {
@@ -121,9 +127,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             initRun,
           };
           // console.log('setEffectedInfo:', setEffectedInfo);
-          if (!actions) {
+          if (!actions || actions.length === 0) {
             /** 没有 actions 则基于变化，刷新组件即可 */
-            handleSetEffectInfo(commonEffectInfo);
+            handleSetEffectInfo({
+              ...commonEffectInfo,
+              upt: new Date().getTime(),
+            });
             return;
           }
           handleSetEffectInfo({ ...commonEffectInfo, loading: true });
@@ -140,6 +149,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           const formUtil = getFormUtil?.();
           if (result.fieldValue !== undefined) {
             store?.setState(id, result.fieldValue);
+            store.debugger?.addOnChange(id, result.fieldValue, {
+              triggerSence: TriggerChangeSence.FromAction,
+            });
             /**
              * - 表单状态变化，副作用触发验证
              * - 更改 form 中状态，并触发验证 */
@@ -169,7 +181,8 @@ export function connector(Element: React.JSXElementConstructor<any>) {
       if (canUseEffects) {
         const effectActionKeys = (actions || [])
           .map((e) => e.effectedKeys || [])
-          .flat();
+          .flat()
+          .concat(DefaultEffectedKeys);
         stateDisposer =
           effectActionKeys.length > 0
             ? reaction(
@@ -188,7 +201,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                 }
               )
             : null;
-        const effectWhenKeys = when?.effectedKeys || [];
+        const effectWhenKeys = (when?.effectedKeys || []).concat(
+          DefaultEffectedKeys
+        );
         showDisposer =
           effectWhenKeys.length > 0
             ? reaction(
@@ -285,7 +300,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
     /** 父亲节点传递的普通属性 */
     const parentPropsMemo = useMemo(
       () => ({ ...restProps }),
-      [restProps.value]
+      [restProps.value, restProps.disabled]
     );
 
     /** connector 额外新增 Props */

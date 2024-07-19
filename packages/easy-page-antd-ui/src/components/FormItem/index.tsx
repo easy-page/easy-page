@@ -12,6 +12,7 @@ import {
 import { FormItemProps as AntdFormItemProps, Form, Tooltip } from 'antd';
 import type { Rule } from 'antd/es/form';
 import React, { useMemo } from 'react';
+import { TriggerChangeSence } from '../../common/constant';
 /**
  * - 1. 定义组件 Props，一般由：UI 库组件本身 Props + 框架通用组件 Props + 自定义组件 Props 构成
  */
@@ -181,7 +182,6 @@ export const FormItem = connector(
       store,
       getFormUtil,
     } = frameworkProps;
-
     const effectedLabel = effectedResult?.formItem?.label;
 
     const label = effectedLabel || nodeInfo.name || baseProps.label;
@@ -213,7 +213,7 @@ export const FormItem = connector(
         };
         return React.cloneElement(child, childProps);
       });
-    }, [effectedLoading, effectedResult, upt]);
+    }, [effectedLoading, effectedResult, upt, disabled]);
 
     return (
       <Form.Item
@@ -237,6 +237,9 @@ export const FormItem = connector(
               store.setStates(value);
               formUtil?.setFieldsValue(value);
             } else {
+              store.debugger?.addOnChange(nodeInfo.id, value, {
+                triggerSence: TriggerChangeSence.FromValidate,
+              });
               store.setState(nodeInfo.id, value);
               formUtil?.setField(nodeInfo.id, value, {
                 validate: false,

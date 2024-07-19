@@ -15,7 +15,7 @@ import {
  * - 用于创建单个字段节点
  * -
  */
-interface Empty { }
+interface Empty {}
 export abstract class CommonNodeUtil extends BaseNodeUtil {
   /** 为节点添加配置 */
   extends<
@@ -38,13 +38,13 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
       ).appendChildren === 'function';
     const _curNode = isNodeInfoWithChildren
       ? (
-        curNode as NodeInfoWithChildren<
-          FieldType,
-          PageState,
-          PageProps,
-          EffectResultType
-        >
-      ).curNode
+          curNode as NodeInfoWithChildren<
+            FieldType,
+            PageState,
+            PageProps,
+            EffectResultType
+          >
+        ).curNode
       : curNode;
     const node = cloneDeep(
       _curNode as NodeInfo<FieldType, PageState, PageProps, EffectResultType>
@@ -72,15 +72,16 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
       node.schema.actions.push({
         effectedKeys,
         initRun: true,
-        action: () => new Promise((resolve, reject) => {
-          /** 当 action 时间非常短时，如果是同步的结果，则会导致组件不刷新 */
-          setTimeout(() => {
-            resolve({
-              upt: new Date().getTime(),
+        action: () =>
+          new Promise((resolve, reject) => {
+            /** 当 action 时间非常短时，如果是同步的结果，则会导致组件不刷新 */
+            setTimeout(() => {
+              resolve({
+                upt: new Date().getTime(),
+              });
             });
-          });
-        })
-      })
+          }),
+      });
     }
 
     if (id !== undefined) {
@@ -96,7 +97,9 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
       node.schema.childrenRelation = this.convertMode(mode);
     }
     if (when !== undefined) {
-      node.schema.when = when(node.schema.when ? cloneDeep(node.schema.when) : undefined);
+      node.schema.when = when(
+        node.schema.when ? cloneDeep(node.schema.when) : undefined
+      );
     }
     if (validate !== undefined) {
       node.schema.validate = validate(node.schema.validate);
@@ -109,7 +112,9 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
       node.schema.preprocess = preprocess(node.schema.preprocess);
     }
     if (actions !== undefined) {
-      node.schema.actions = actions(node.schema.actions ? cloneDeep(node.schema.actions) : undefined);
+      node.schema.actions = actions(
+        node.schema.actions ? cloneDeep(node.schema.actions) : undefined
+      );
     }
     /** Schema 处理 - end */
     /** 默认值处理 - start */
@@ -120,7 +125,9 @@ export abstract class CommonNodeUtil extends BaseNodeUtil {
     /** 默认值处理 - end */
     /** UI 配置处理 - start */
     if (fieldUIConfig) {
-      node.fieldUIConfig = fieldUIConfig(node.fieldUIConfig ? cloneDeep(node.fieldUIConfig) : {});
+      node.fieldUIConfig = fieldUIConfig(
+        node.fieldUIConfig ? cloneDeep(node.fieldUIConfig) : {}
+      );
     }
 
     // if (isNodeInfoWithChildren) {
