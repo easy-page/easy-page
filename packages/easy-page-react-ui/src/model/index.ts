@@ -92,6 +92,14 @@ export class EasyPageStore<
     makeAutoObservable(this);
   }
 
+  dispose() {
+    this.debugger?.dispose();
+    // this.pageState = {};
+    // this.pageProps = {};
+    // this.uiConfig = {};
+    // this.defaultValues = {};
+  }
+
   /**
    *
    * @returns 获取表单初始值
