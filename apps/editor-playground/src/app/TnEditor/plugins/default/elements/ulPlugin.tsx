@@ -29,6 +29,9 @@ const getIcon = (element: UlElement) => {
   return IconMap.Rect;
 };
 
+/**
+ * - select-none 可以阻止用户选择
+ */
 export const ulPlugin: TnEditorRenderPlugin = {
   elementType: UL_ELEMENT,
   render: ({ element, attributes, children }) => {
@@ -36,14 +39,16 @@ export const ulPlugin: TnEditorRenderPlugin = {
     console.log('handle done:', elementChildren);
     const Icon = getIcon(element as UlElement);
     return (
-      <div {...attributes} className="list-wrapper bullet-list">
+      <div className="list-wrapper bullet-list">
         <div className="list list-style-group-1 flex flex-row">
-          <div contentEditable="false" className="bullet mr-1">
+          <div contentEditable={false} className="mr-1 select-none">
             <div className="bullet-dot-style">{Icon}</div>
           </div>
-          <div className="list-content pr-1">{textChildren}</div>
+          <div className="list-content pr-1" {...attributes}>
+            {textChildren}
+          </div>
         </div>
-        <div className="list-children ml-[7px] pl-2">{elementChildren}</div>
+        <div className="list-children ml-[7px]">{elementChildren}</div>
       </div>
     );
   },
