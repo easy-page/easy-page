@@ -17,13 +17,13 @@ export const textPlugin: TnEditorRenderPlugin = {
   },
   id: 'text_plugin',
   name: '文本插件',
-  eventHandlers: {
-    [EventId.OnTabDown]: (editor, { event }) => {
-      if (!event.shiftKey) {
-        addIndent(editor);
-      } else {
-        removeIndent(editor);
-      }
-    },
-  },
+  // eventHandlers: {
+  //   [EventId.OnTabDown]: (editor, { event }) => {
+  //     if (!event.shiftKey) {
+  //       addIndent(editor);
+  //     } else {
+  //       removeIndent(editor);
+  //     }
+  //   },
+  // },
 };
