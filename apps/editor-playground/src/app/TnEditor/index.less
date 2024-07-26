@@ -1,0 +1,24 @@
+.empty-first-line {
+  position: relative;
+  .first-line-placeholder {
+    display: block;
+  }
+}
+
+.first-line-placeholder {
+  display: none;
+  position: absolute;
+  left: 36px;
+  top: 2rem;
+  width: 100%;
+  height: 26px;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 26px;
+  color: gray;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: text;
+  z-index: 1;
+}

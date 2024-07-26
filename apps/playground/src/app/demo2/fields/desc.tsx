@@ -6,9 +6,20 @@ export const desc = nodeUtil.createField(
   '介绍',
   {
     value: '',
+    required: true,
+    validate: ({ value }) => {
+      if (!value) {
+        return { success: false, errorMsg: '请输入' };
+      }
+      return { success: true };
+    },
   },
   {
     ui: UI_COMPONENTS.TEXTAREA,
+    formItem: {
+      extra: '常驻提示语',
+      tooltip: '问号提示语',
+    },
   }
 );
 

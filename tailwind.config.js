@@ -5,6 +5,8 @@ export default {
   content: [
     './apps/playground/index.html',
     './apps/playground/src/**/*.{js,ts,jsx,tsx}',
+    './apps/editor-playground/index.html',
+    './apps/editor-playground/src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     screens: {
