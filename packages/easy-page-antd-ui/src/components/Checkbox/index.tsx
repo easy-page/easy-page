@@ -37,10 +37,17 @@ declare module '@easy-page/react-ui/interface' {
  */
 export const CheckBox = connector(
   React.memo((props: CheckBoxProps) => {
-    const { frameworkProps, value, onChange, customLabel, ...baseProps } =
-      props;
+    const {
+      frameworkProps,
+      value,
+      onChange,
+      customLabel: configLabel,
+      ...baseProps
+    } = props;
     const { nodeInfo, effectedResult } = frameworkProps;
     const { name, id } = nodeInfo;
+    const customLabel =
+      effectedResult?.checkboxProps?.customLabel || configLabel;
     return (
       <AntdCheckBox
         value={id}

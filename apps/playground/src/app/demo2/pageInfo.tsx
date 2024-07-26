@@ -18,8 +18,8 @@ const pageUtil = new PageUtil({
 });
 
 pageUtil.addFields([
-  check,
-  // desc,
+  // check,
+  desc,
   // desc1(),
   // goods,
   // hobby,
