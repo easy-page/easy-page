@@ -4,6 +4,7 @@ import { UlElement as UlElementType } from '../../interface';
 import { UL_LIST_ICON } from '../../constants';
 import { useIndentTips } from '../../hooks';
 import classNames from 'classnames';
+import { Tips } from '../Tips';
 
 const IconMap: Record<UL_LIST_ICON, React.ReactNode> = {
   [UL_LIST_ICON.FilledCircle]: <>•</>,
@@ -33,7 +34,7 @@ export const UlElement = ({
   const { textChildren, elementChildren } = splitChildren(children);
   console.log('handle done:', elementChildren);
   const Icon = getIcon(element as UlElementType);
-  const { indentClass } = useIndentTips(element as UlElementType);
+  const { indentClass, showText } = useIndentTips(element as UlElementType);
   return (
     <div className="list-wrapper bullet-list relative">
       <div
@@ -47,6 +48,7 @@ export const UlElement = ({
         </div>
         <div className={classNames('list-content pr-1')} {...attributes}>
           {textChildren}
+          {showText && <Tips msg={'无法缩进当前内容块'} />}
         </div>
       </div>
       <div className="list-children ml-4">{elementChildren}</div>

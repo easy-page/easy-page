@@ -4,6 +4,7 @@ import { splitChildren } from '../../plugins/utils/splitChildren';
 import { Draggable } from '../Draggable';
 import { useIndentTips } from '../../hooks';
 import { TextElement } from '../../interface';
+import { Tips } from '../Tips';
 
 export const TextComponent = ({
   element,
@@ -11,22 +12,23 @@ export const TextComponent = ({
   children,
 }: RenderElementProps) => {
   const { elementChildren, textChildren } = splitChildren(children);
-  const { indent, indentTip, showAction } = useIndentTips(
+  const { indent, indentTip, showAction, showText } = useIndentTips(
     element as TextElement
   );
   return (
     <Draggable>
-      <div className="text-block-wrapper" {...attributes}>
+      <div className="text-block-wrapper relative" {...attributes}>
         <div
-          className={classNames('text-block relative', {
-            'ml-4': indent,
-            'ml-6': showAction,
-            'on-tab-animation': indentTip,
+          className={classNames('text-block', {
+            'ml-4': !indentTip && indent,
+            'tab-animation': showAction,
+            'on-tab-animation-text': indentTip,
           })}
         >
           {textChildren}
         </div>
         <div className="text-children ml-4">{elementChildren}</div>
+        {showText && <Tips msg={'无法缩进当前内容块'} />}
       </div>
     </Draggable>
   );
