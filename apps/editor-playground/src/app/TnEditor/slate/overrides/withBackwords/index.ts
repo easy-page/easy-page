@@ -26,6 +26,7 @@ const doBackwords = (
       /** 不然删除完，编辑器就没有聚焦了 */
       editor.select([]);
     }, 0);
+    console.log('走 111111');
     return;
   }
   const nodeText = Node.string(curNode);
@@ -47,9 +48,15 @@ const doBackwords = (
   const [parentNode, parentNodePath] =
     Editor.parent(editor as any, nodePath) || [];
   const parentElement = parentNode as CustomElement;
-  if (activeProperties.length > 0 || node.type !== DEFAULT_ELEMENT_TYPE) {
-    console.log('node has properties， rest properties');
-    console.log('走 33333333:', activeProperties);
+  console.log('走 6789098765： ===》', node.type);
+  if (activeProperties.length > 0 && node.type === DEFAULT_ELEMENT_TYPE) {
+    // 如果节点存在属性，则删除所有属性，即：除了 type 和 children 以外的所有属性、并且将类型改为默认的：p
+    unsetBlockProperties(editor, [...activeProperties], {
+      at: nodePath,
+    });
+    return deleteBackward(unit);
+  }
+  if (activeProperties.length > 0 && node.type !== DEFAULT_ELEMENT_TYPE) {
     // 如果节点存在属性，则删除所有属性，即：除了 type 和 children 以外的所有属性、并且将类型改为默认的：p
     unsetBlockProperties(editor, [...activeProperties], {
       at: nodePath,
@@ -60,12 +67,9 @@ const doBackwords = (
       },
       { at: nodePath }
     );
-
     return;
-  } else if (
-    activeProperties.length === 0 &&
-    node.type === DEFAULT_ELEMENT_TYPE
-  ) {
+  }
+  if (activeProperties.length === 0 && node.type === DEFAULT_ELEMENT_TYPE) {
     if (!parentNode || !parentNodePath) {
       console.log('no parent node');
       console.log('走 666666666');
@@ -122,7 +126,7 @@ const doBackwords = (
 };
 
 export const withBackwords = (editor: Editor) => {
-  const { deleteBackward } = editor;
+  const { deleteBackward, apply } = editor;
   editor.deleteBackward = (unit) => {
     console.log('uuuu:', unit);
     const [curNode, curNodePath] = getCurNode(editor);
@@ -131,6 +135,11 @@ export const withBackwords = (editor: Editor) => {
       unit,
       editor,
     });
+  };
+
+  editor.apply = (nodes) => {
+    console.log('adasdassdassdasdsa:', nodes);
+    apply(nodes);
   };
   return editor;
 };

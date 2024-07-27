@@ -10,6 +10,7 @@ import { onTabDown } from './plugins/default';
 import { withAutoformats, autoformatRules } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
+import { withInsertBreak } from './slate/overrides/withInsertBreak';
 
 export type TnEditorProps = {
   initialValue: Array<CustomTypes['Element']>;
@@ -35,6 +36,7 @@ export const TnEditor = ({
   const editor = useMemo(() => {
     const editor = createEditorWithHoc(
       [
+        withInsertBreak,
         withBackwords,
         withAutoformats({
           rules: autoformatRules,

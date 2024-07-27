@@ -15,6 +15,8 @@ export type CommonProperties = {
   indent?: boolean;
   /** 缩进提示，提示完成移除属性 */
   indentTip?: boolean;
+  /** 组件缩进层级 */
+  level?: number;
 };
 
 export type ParagraphElement = CommonProperties & {
@@ -24,7 +26,7 @@ export type ParagraphElement = CommonProperties & {
 
 export type HeadingElement = CommonProperties & {
   type: 'heading';
-  level: number;
+  size?: number;
   children: CustomText[];
 };
 
@@ -35,15 +37,11 @@ export type TextElement = CommonProperties & {
 };
 export type UlElement = CommonProperties & {
   type: 'ul';
-  /** 当前 ul 的层级 */
-  level: number;
   children: (CustomElement | CustomText)[];
 };
 
 export type OlElement = CommonProperties & {
   type: 'ol';
-  /** 当前 ol 的层级 */
-  level: number;
   children: (CustomElement | CustomText)[];
 };
 export type LiElement = {

@@ -335,7 +335,6 @@ export const withReact = <T extends BaseEditor>(
 
   e.insertTextData = (data: DataTransfer): boolean => {
     const text = data.getData('text/plain');
-
     if (text) {
       const lines = text.split(/\r\n|\r|\n/);
       let split = false;
