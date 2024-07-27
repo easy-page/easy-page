@@ -10,33 +10,37 @@ export type CustomEditor = BaseEditor &
     pluginManager: PluginManager;
   };
 
-export type ParagraphElement = {
+export type CommonProperties = {
+  /** 加此属性后可以缩进一次 */
+  indent?: boolean;
+  /** 缩进提示，提示完成移除属性 */
+  indentTip?: boolean;
+};
+
+export type ParagraphElement = CommonProperties & {
   type: 'paragraph';
   children: CustomText[];
 };
 
-export type HeadingElement = {
+export type HeadingElement = CommonProperties & {
   type: 'heading';
   level: number;
   children: CustomText[];
 };
 
-export type TextElement = {
+export type TextElement = CommonProperties & {
   type: 'p';
-  /** 加此属性后可以缩进一次 */
-  indent?: boolean;
-  /** 缩进提示，提示完成移除属性 */
-  indentTip?: boolean;
+
   children: (CustomText | CustomElement)[];
 };
-export type UlElement = {
+export type UlElement = CommonProperties & {
   type: 'ul';
   /** 当前 ul 的层级 */
   level: number;
   children: (CustomElement | CustomText)[];
 };
 
-export type OlElement = {
+export type OlElement = CommonProperties & {
   type: 'ol';
   /** 当前 ol 的层级 */
   level: number;
@@ -47,7 +51,7 @@ export type LiElement = {
   children: CustomText[];
 };
 
-export type CodeElement = {
+export type CodeElement = CommonProperties & {
   type: 'code';
   children: CustomText[];
 };

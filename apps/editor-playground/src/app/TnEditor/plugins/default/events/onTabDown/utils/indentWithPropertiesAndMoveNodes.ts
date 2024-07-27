@@ -18,18 +18,23 @@ export const indentWithPropertiesAndMoveNodes = ({
     return;
   }
 
-  const { lastNode, curNode } = curNodeInfo;
-
-  const [lastNodeElement, lastNodePath] =
-    Editor.above(editor, { at: lastNode?.path }) || [];
-
-  if (!lastNodeElement || !lastNodePath) {
+  const { lastNode, curNode, inLastNode } = curNodeInfo;
+  if (!lastNode || !curNode) {
     return;
   }
 
-  /** TODO: 下一次怎么知道已经移进去了 */
-  editor.moveNodes({
-    at: curNode?.path,
-    to: lastNodePath.concat(1) as Path,
-  });
+  if (!inLastNode) {
+    editor.moveNodes({
+      at: curNode?.path,
+      to: lastNode?.path.concat(1) as Path,
+    });
+    return;
+  } else {
+    console.log('添加提示属性');
+    // 给提示
+    addBlockProperties(editor, {
+      indentTip: true,
+    });
+    return;
+  }
 };
