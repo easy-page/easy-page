@@ -2,9 +2,10 @@ import classNames from 'classnames';
 import { RenderElementProps } from 'slate-react';
 import { splitChildren } from '../../plugins/utils/splitChildren';
 import { Draggable } from '../Draggable';
-import { useIndentTips } from '../../hooks';
+import { useEditorRef, useIndentTips } from '../../hooks';
 import { TextElement } from '../../interface';
 import { Tips } from '../Tips';
+import { getCurNodeInfo } from '../../plugins/default/events/onTabDown/utils/getCurNodeInfo';
 
 export const TextComponent = ({
   element,
@@ -15,6 +16,10 @@ export const TextComponent = ({
   const { indent, indentTip, showAction, showText } = useIndentTips(
     element as TextElement
   );
+  const editor = useEditorRef();
+  const { lastNode } = getCurNodeInfo(editor);
+  const msg = lastNode ? '当前已到达最大缩进层级' : '无法缩进当前内容块';
+
   return (
     <Draggable>
       <div className="text-block-wrapper relative" {...attributes}>
@@ -28,7 +33,7 @@ export const TextComponent = ({
           {textChildren}
         </div>
         <div className="text-children ml-4">{elementChildren}</div>
-        {showText && <Tips msg={'无法缩进当前内容块'} />}
+        {showText && <Tips msg={msg} />}
       </div>
     </Draggable>
   );

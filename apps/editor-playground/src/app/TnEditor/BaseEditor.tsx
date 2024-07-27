@@ -12,53 +12,53 @@ import { isEmptyContent } from './slate';
 import { CustomElement } from './interface';
 
 export type TnEditorProps = {
-	/** 每个编辑器实例有自己的 id */
-	editorId: string;
-	placeholder?: string;
-	initialValue: CustomElement[];
+  /** 每个编辑器实例有自己的 id */
+  editorId: string;
+  placeholder?: string;
+  initialValue: CustomElement[];
 };
 
 export const BaseTnEditor = ({
-	editorId,
-	placeholder,
-	initialValue,
+  editorId,
+  placeholder,
+  initialValue,
 }: TnEditorProps) => {
-	const editor = useEditorRef();
+  const editor = useEditorRef();
 
-	const renderLeaf = useCallback((props: any) => {
-		return <Leaf {...props} />;
-	}, []);
+  const renderLeaf = useCallback((props: any) => {
+    return <Leaf {...props} />;
+  }, []);
 
-	const { setIsEmpty, isEmpty } = useEditorEmpty(isEmptyContent(editor));
+  const { setIsEmpty, isEmpty } = useEditorEmpty(isEmptyContent(editor));
 
-	return (
-		<div
-			className={classNames('flex flex-col ', {
-				'empty-first-line': isEmpty,
-			})}
-		>
-			<div className="first-line-placeholder">
-				<span>{placeholder}</span>
-			</div>
-			<Slate
-				editor={editor}
-				onChange={() => {
-					setIsEmpty(isEmptyContent(editor));
-				}}
-				initialValue={initialValue}
-			>
-				<FloatingToolbar editorId={editorId} />
-				<Editable
-					renderElement={editor.pluginManager.renderElement}
-					renderLeaf={renderLeaf}
-					onKeyDown={(event) => {
-						editor.pluginManager.handleEvent(event, editor);
-						console.log('event:', event);
-					}}
-					className="w-[800px] h-[600px] border pb-2 pt-8 px-8"
-				/>
-				<EditorSelectionEffect id={editorId} />
-			</Slate>
-		</div>
-	);
+  return (
+    <div
+      className={classNames('flex flex-col ', {
+        'empty-first-line': isEmpty,
+      })}
+    >
+      <div className="first-line-placeholder">
+        <span>{placeholder}</span>
+      </div>
+      <Slate
+        editor={editor}
+        onChange={() => {
+          setIsEmpty(isEmptyContent(editor));
+        }}
+        initialValue={initialValue}
+      >
+        <FloatingToolbar editorId={editorId} />
+        <Editable
+          renderElement={editor.pluginManager.renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={(event) => {
+            editor.pluginManager.handleEvent(event, editor);
+            console.log('event:', event);
+          }}
+          className="w-[800px] h-[600px] border pb-2 pt-8 px-8"
+        />
+        <EditorSelectionEffect id={editorId} />
+      </Slate>
+    </div>
+  );
 };
