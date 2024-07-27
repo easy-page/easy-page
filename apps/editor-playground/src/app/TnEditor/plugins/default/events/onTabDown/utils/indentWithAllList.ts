@@ -1,4 +1,4 @@
-import { Editor, Path } from 'slate';
+import { Path } from 'slate';
 import { IndentOptions } from './interface';
 
 /**
@@ -6,20 +6,13 @@ import { IndentOptions } from './interface';
  * - 第二次缩进，不允许缩进，并且提示：无法继续缩进。
  * @param param0
  */
-export const indentWithAllList = ({
-  curNode,
-  curNodePath,
-  editor,
-  lastNode,
-}: IndentOptions) => {
-  const [lastNodeElement, lastNodePath] =
-    Editor.above(editor, { at: lastNode.path }) || [];
-
-  if (!lastNodeElement || !lastNodePath) {
+export const indentWithAllList = ({ curNodeInfo, editor }: IndentOptions) => {
+  const { lastNode, curNode } = curNodeInfo;
+  if (!lastNode || !curNode) {
     return;
   }
   editor.moveNodes({
-    at: curNodePath,
-    to: lastNodePath.concat(1) as Path,
+    at: curNode.path,
+    to: lastNode?.path.concat(1) as Path,
   });
 };

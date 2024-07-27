@@ -7,9 +7,7 @@ import { Editor, Path } from 'slate';
  * - 第二次缩进，当前节点加入到上一个节点 children 中，并提示：无法继续缩进。
  */
 export const indentWithPropertiesAndMoveNodes = ({
-  curNode,
-  curNodePath,
-  lastNode,
+  curNodeInfo,
   editor,
 }: IndentOptions) => {
   const activeProperties = getActiveProperties(editor);
@@ -20,8 +18,10 @@ export const indentWithPropertiesAndMoveNodes = ({
     return;
   }
 
+  const { lastNode, curNode } = curNodeInfo;
+
   const [lastNodeElement, lastNodePath] =
-    Editor.above(editor, { at: lastNode.path }) || [];
+    Editor.above(editor, { at: lastNode?.path }) || [];
 
   if (!lastNodeElement || !lastNodePath) {
     return;
@@ -29,7 +29,7 @@ export const indentWithPropertiesAndMoveNodes = ({
 
   /** TODO: 下一次怎么知道已经移进去了 */
   editor.moveNodes({
-    at: curNodePath,
+    at: curNode?.path,
     to: lastNodePath.concat(1) as Path,
   });
 };

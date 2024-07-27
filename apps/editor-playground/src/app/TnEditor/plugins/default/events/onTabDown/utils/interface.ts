@@ -1,8 +1,7 @@
-import { Ancestor, Path, Editor, BasePoint } from 'slate';
+import { Editor } from 'slate';
+import { CurNodeInfo } from './getCurNodeInfo';
 
 export type IndentOptions = {
-  curNode: Ancestor;
-  curNodePath: Path;
+  curNodeInfo: CurNodeInfo;
   editor: Editor;
-  lastNode: BasePoint;
 };
