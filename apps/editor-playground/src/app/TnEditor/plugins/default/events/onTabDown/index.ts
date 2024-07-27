@@ -56,6 +56,8 @@ export const onTabDown: TnEditorEventPlugin = {
     const [lastNodeInfo, lastNodePath] =
       Editor.above(editor, { at: lastNode.path }) || [];
 
+    console.log('laassssss:', lastNode, lastNodeInfo);
+
     // 1. 前一个元素不存在
     if (!lastNodeInfo || !lastNodePath) {
       stopEventAfterCallback(() =>
