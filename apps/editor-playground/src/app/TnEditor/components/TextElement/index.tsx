@@ -44,7 +44,7 @@ export const TextComponent = ({
   return (
     <Draggable>
       <div className="text-block-wrapper relative" {...attributes}>
-        {showText && <Tips msg={'无法缩进当前内容快'} />}
+        {showText && <Tips msg={'无法缩进当前内容块'} />}
         <div
           className={classNames('text-block ', {
             'indent-4': indent,
