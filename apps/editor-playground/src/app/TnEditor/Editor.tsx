@@ -11,6 +11,9 @@ import { withAutoformats, autoformatRules } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
 import { withInsertBreak } from './slate/overrides/withInsertBreak';
+import { onCtrlA } from './plugins/default/events/onCtrlA';
+import { withSelection } from './slate/overrides/withSelection';
+import { withApply } from './slate/overrides/withApply';
 
 export type TnEditorProps = {
   initialValue: Array<CustomTypes['Element']>;
@@ -36,6 +39,8 @@ export const TnEditor = ({
   const editor = useMemo(() => {
     const editor = createEditorWithHoc(
       [
+        withApply,
+        withSelection,
         withInsertBreak,
         withBackwords,
         withAutoformats({
@@ -48,7 +53,7 @@ export const TnEditor = ({
     editor.children = initialValue;
     editor.pluginManager = new PluginManager({
       elementPlugins,
-      eventPlugins: [onTabDown],
+      eventPlugins: [onTabDown, onCtrlA],
     });
     return editor;
   }, []);

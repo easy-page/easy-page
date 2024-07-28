@@ -1,3 +1,4 @@
 export enum EventId {
-	OnTabDown = 'onTabDown',
+  OnTabDown = 'onTabDown',
+  OnCtrlA = 'OnCtrlA',
 }

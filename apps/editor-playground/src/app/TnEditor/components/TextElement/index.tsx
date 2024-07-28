@@ -5,7 +5,7 @@ import { Draggable } from '../Draggable';
 import { useEditorRef, useIndentTips } from '../../hooks';
 import { TextElement } from '../../interface';
 import { Tips } from '../Tips';
-import { getCurNodeInfo } from '../../plugins/default/events/onTabDown/utils/getCurNodeInfo';
+import { getCurNodeInfo } from '../../plugins/default/events/utils/getCurNodeInfo';
 
 export const TextComponent = ({
   element,
@@ -13,16 +13,21 @@ export const TextComponent = ({
   children,
 }: RenderElementProps) => {
   const { elementChildren, textChildren } = splitChildren(children);
-  const { indent, indentTip, showAction, showText } = useIndentTips(
-    element as TextElement
-  );
+  const node = element as TextElement;
+  const { indent, indentTip, showAction, showText } = useIndentTips(node);
+
   const editor = useEditorRef();
   const { lastNode } = getCurNodeInfo(editor);
   const msg = lastNode ? '当前已到达最大缩进层级' : '无法缩进当前内容块';
 
   return (
     <Draggable>
-      <div className="text-block-wrapper relative" {...attributes}>
+      <div
+        className={classNames('text-block-wrapper relative mb-1 pl-1', {
+          'bg-[#D8E0FB] rounded': node.selected,
+        })}
+        {...attributes}
+      >
         <div
           className={classNames('text-block', {
             'ml-4': !indentTip && indent,

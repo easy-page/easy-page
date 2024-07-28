@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CommonProperties, CustomElement } from '../interface';
+import { CustomElement } from '../interface';
 import { unsetBlockProperties } from '../slate/transform';
 import { useEditorRef } from './useEditorRef';
 
@@ -9,8 +9,8 @@ export const useIndentTips = (element: CustomElement) => {
   /** 展示文本 */
   const [showText, setShowText] = useState(false);
   // const [shouldAnimate, setShouldAnimate] = useState(false);
-  const indentTip = (element as CommonProperties).indentTip;
-  const indent = (element as CommonProperties).indent;
+  const indentTip = (element as CustomElement).indentTip;
+  const indent = (element as CustomElement).indent;
   const editor = useEditorRef();
 
   useEffect(() => {

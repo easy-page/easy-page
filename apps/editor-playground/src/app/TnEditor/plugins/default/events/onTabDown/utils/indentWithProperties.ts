@@ -5,8 +5,10 @@ import { addBlockProperties } from '../../../../../slate/transform';
 /** 第一次添加缩进，第二次提示无法继续缩进 */
 export const indentWithProperties = ({
   editor,
-}: Omit<IndentOptions, 'lastNode'>) => {
+  curNodeInfo,
+}: IndentOptions) => {
   const activeProperties = getActiveProperties(editor);
+
   if (!activeProperties.includes('indent')) {
     addBlockProperties(editor, {
       indent: true,

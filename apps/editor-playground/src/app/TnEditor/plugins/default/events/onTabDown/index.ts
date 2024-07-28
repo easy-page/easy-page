@@ -9,7 +9,8 @@ import {
 } from './utils';
 import { isListElement, isTextElement } from '../../../../slate';
 import { indentWithAllList } from './utils/indentWithAllList';
-import { getCurNodeInfo } from './utils/getCurNodeInfo';
+import { getCurNodeInfo } from '../utils/getCurNodeInfo';
+import { stopEventAfterCallback } from '../utils/indx';
 
 export type IndentOptions = {
   curNode: Ancestor;
@@ -33,21 +34,13 @@ export const onTabDown: TnEditorEventPlugin = {
       return;
     }
 
-    const stopEventAfterCallback = (callback: () => void) => {
-      callback();
-      console.log('阻止事件冒泡');
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
     // TODO 0.当前元素是辅助提示块，不缩进，直接提示不允许。
 
     // 1. 前一个元素不存在
     if (!lastNode) {
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithProperties({ editor, curNodeInfo })
       );
-      console.log('缩进 1112221');
       return;
     }
 
@@ -57,7 +50,7 @@ export const onTabDown: TnEditorEventPlugin = {
        * - 第一次缩进，当前节点添加 indent:true 属性
        * - 第二次缩进，当前节点加入到上一个节点 children 中，并提示：无法继续缩进。
        */
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithPropertiesAndMoveNodes({
           editor,
           curNodeInfo,
@@ -69,7 +62,7 @@ export const onTabDown: TnEditorEventPlugin = {
 
     if (isTextElement(lastNode.node) && isListElement(curNode.node)) {
       // 3.上一个元素是文本，当前元素是列表
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithMoveNodes({ editor, curNodeInfo })
       );
       console.log('缩进 5555555555');
@@ -78,7 +71,7 @@ export const onTabDown: TnEditorEventPlugin = {
 
     if (!isListElement(curNode.node) && !isListElement(lastNode.node)) {
       // 4. 上一个不是列表，当前元素也不是列表
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithProperties({ editor, curNodeInfo })
       );
       console.log('缩进 66666666');
@@ -86,7 +79,7 @@ export const onTabDown: TnEditorEventPlugin = {
     }
     if (isListElement(lastNode.node) && isTextElement(curNode.node)) {
       // 上一个元素是列表，当前元素是文本
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithPropertiesAndMoveNodes({
           editor,
           curNodeInfo,
@@ -97,7 +90,7 @@ export const onTabDown: TnEditorEventPlugin = {
     }
     if (isListElement(lastNode.node) && isListElement(curNode.node)) {
       // 上一个元素是列表，当前元素是文本
-      stopEventAfterCallback(() =>
+      stopEventAfterCallback(event, () =>
         indentWithAllList({
           editor,
           curNodeInfo,
@@ -115,11 +108,13 @@ export const onTabDown: TnEditorEventPlugin = {
        * - 上一个元素非列表且非文本(超链接算文本)
        * - 当前元素是列表
        */
-      stopEventAfterCallback(() => indentWithTips({ editor, curNodeInfo }));
+      stopEventAfterCallback(event, () =>
+        indentWithTips({ editor, curNodeInfo })
+      );
       console.log('缩进 999999999');
       return;
     }
     console.log('未匹配到相关缩进场景');
-    stopEventAfterCallback(() => {});
+    stopEventAfterCallback(event, () => {});
   },
 };

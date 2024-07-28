@@ -1,8 +1,9 @@
 import { Editor } from 'slate';
-import { getCurNodeInfo } from '../../../plugins/default/events/onTabDown/utils/getCurNodeInfo';
+
 import { DEFAULT_ELEMENT_TYPE } from '../../../constants';
 import { isListElement } from '../../utils';
 import { isEmptyTextNode } from '../../utils/isEmptyTextNode';
+import { getCurNodeInfo } from '../../../plugins/default/events/utils/getCurNodeInfo';
 
 export const withInsertBreak = (editor: Editor) => {
   const { insertBreak } = editor;
@@ -25,5 +26,6 @@ export const withInsertBreak = (editor: Editor) => {
     }
     insertBreak();
   };
+
   return editor;
 };

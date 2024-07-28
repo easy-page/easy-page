@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
-import { CustomElement } from '../../../../../../TnEditor/interface';
-import { getCurNode } from '../../../../../slate/query/getCurNode';
+import { CustomElement } from '../../../../../TnEditor/interface';
+import { getCurNode } from '../../../../slate/query/getCurNode';
 import { Editor, Path } from 'slate';
 
 export type NodeInfo = {

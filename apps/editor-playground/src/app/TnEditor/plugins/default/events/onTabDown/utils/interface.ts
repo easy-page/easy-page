@@ -1,5 +1,5 @@
 import { Editor } from 'slate';
-import { CurNodeInfo } from './getCurNodeInfo';
+import { CurNodeInfo } from '../../utils/getCurNodeInfo';
 
 export type IndentOptions = {
   curNodeInfo: CurNodeInfo;

@@ -3,6 +3,7 @@ import { IPluginManager } from './interfaces/pluginManager';
 import { TnEditorRenderPlugin } from './interfaces/plugin';
 import { TnEditorEventPlugin } from './interfaces/event';
 import { Editor } from 'slate';
+import { SelectHoc } from '../components/HocComponents/SelectHoc';
 
 export type PluginManagerOptions = {
   /** key 为 element 的 type */

@@ -3,6 +3,7 @@ import { BaseEditor } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { HistoryEditor } from 'slate-history';
 import { PluginManager } from './plugins';
+import { ElementTypeEnum } from './constants';
 
 export type CustomEditor = BaseEditor &
   ReactEditor &
@@ -10,61 +11,20 @@ export type CustomEditor = BaseEditor &
     pluginManager: PluginManager;
   };
 
-export type CommonProperties = {
+export type CustomElement = {
   /** 加此属性后可以缩进一次 */
   indent?: boolean;
   /** 缩进提示，提示完成移除属性 */
   indentTip?: boolean;
-  /** 组件缩进层级 */
+  /** 组件缩进层级，默认为没有，表示：0 */
   level?: number;
-};
-
-export type ParagraphElement = CommonProperties & {
-  type: 'paragraph';
-  children: CustomText[];
-};
-
-export type HeadingElement = CommonProperties & {
-  type: 'heading';
-  size?: number;
-  children: CustomText[];
-};
-
-export type TextElement = CommonProperties & {
-  type: 'p';
-
-  children: (CustomText | CustomElement)[];
-};
-export type UlElement = CommonProperties & {
-  type: 'ul';
-  children: (CustomElement | CustomText)[];
-};
-
-export type OlElement = CommonProperties & {
-  type: 'ol';
-  children: (CustomElement | CustomText)[];
-};
-export type LiElement = {
-  type: 'li';
-  children: CustomText[];
-};
-
-export type CodeElement = CommonProperties & {
-  type: 'code';
-  children: CustomText[];
+  /** 元素是否被全选，添加此属性，标记选中 */
+  selected?: boolean;
+  type: ElementTypeEnum;
+  children: CustomElement[];
 };
 
 export type PropertiesKeys = keyof Omit<CustomElement, 'children' | 'type'>;
-export type ElementType = CustomElement['type'];
-
-export type CustomElement =
-  | OlElement
-  | ParagraphElement
-  | HeadingElement
-  | TextElement
-  | UlElement
-  | LiElement
-  | CodeElement;
 
 /** 文本组件的样式 */
 export type FormattedText = React.CSSProperties & {

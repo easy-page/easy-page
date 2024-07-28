@@ -1,6 +1,6 @@
 import { RenderElementProps } from 'slate-react';
 import { splitChildren } from '../../plugins/utils/splitChildren';
-import { UlElement as UlElementType } from '../../interface';
+import { CustomElement } from '../../interface';
 import { UL_LIST_ICON } from '../../constants';
 import { useIndentTips } from '../../hooks';
 import classNames from 'classnames';
@@ -12,7 +12,7 @@ const IconMap: Record<UL_LIST_ICON, React.ReactNode> = {
   [UL_LIST_ICON.Rect]: <>▪</>,
 };
 
-const getIcon = (element: UlElementType) => {
+const getIcon = (element: CustomElement) => {
   const level = element.level || 0;
   if (level % 3 === 0) {
     return IconMap.Rect;
@@ -32,19 +32,24 @@ export const UlElement = ({
   attributes,
 }: RenderElementProps) => {
   const { textChildren, elementChildren } = splitChildren(children);
-  console.log('handle done:', elementChildren);
-  const Icon = getIcon(element as UlElementType);
-  const { indentClass, showText } = useIndentTips(element as UlElementType);
+  console.log('elementelementelement handle done:', elementChildren);
+  const node = element as CustomElement;
+  const Icon = getIcon(node);
+  const { indentClass, showText } = useIndentTips(node);
   return (
-    <div className="list-wrapper bullet-list relative">
+    <div
+      className={classNames('list-wrapper bullet-list relative pl-1 mb-1', {
+        'bg-[#D8E0FB] rounded': node.selected,
+      })}
+    >
       <div
         className={classNames(
-          'list list-style-group-1 flex flex-row',
+          'list list-style-group-1 flex flex-row mb-2',
           indentClass
         )}
       >
         <div contentEditable={false} className="mr-1 select-none">
-          <div className="bullet-dot-style">{Icon}</div>
+          <div className="bullet-dot-style text-[#1456F0]">{Icon}</div>
         </div>
         <div className={classNames('list-content pr-1')} {...attributes}>
           {textChildren}
