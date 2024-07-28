@@ -124,26 +124,29 @@ export const validateAllChildForm = (
     })
   ).then((res) => {
     const hasError = res.find((e) => Boolean(e.errors));
-    if (hasError) {
-      // 切换到对应错误 Tab
-      onChange?.(
-        {
-          ...value,
-          choosedItemId: hasError.id,
-          childFormErrors: res.filter((e) => Boolean(e.errors)),
-        },
-        { validate: false }
-      );
-    } else {
-      // 清空 Error
-      onChange?.(
-        {
-          ...value,
-          childFormErrors: [],
-        },
-        { validate: false }
-      );
-    }
+    setTimeout(() => {
+      /** 当 childform 为 0 个的时候，会触发 antd 验证超时，切换下生命周期 */
+      if (hasError) {
+        // 切换到对应错误 Tab
+        onChange?.(
+          {
+            ...value,
+            choosedItemId: hasError.id,
+            childFormErrors: res.filter((e) => Boolean(e.errors)),
+          },
+          { validate: false }
+        );
+      } else if ((value.childFormErrors || []).length > 0) {
+        // 如果之前有错误，现在清空
+        onChange?.(
+          {
+            ...value,
+            childFormErrors: [],
+          },
+          { validate: false }
+        );
+      }
+    }, 0);
     return res;
   });
 };
