@@ -21,7 +21,7 @@ export type CustomElement = {
   /** 元素是否被全选，添加此属性，标记选中 */
   selected?: boolean;
   type: ElementTypeEnum;
-  children: CustomElement[];
+  children: (CustomElement | FormattedText)[];
 };
 
 export type PropertiesKeys = keyof Omit<CustomElement, 'children' | 'type'>;
