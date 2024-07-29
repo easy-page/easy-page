@@ -1,27 +1,12 @@
+import { ElementTypeEnum } from '../../../../constants';
 import { AutoformatHandler } from '../interface';
 
 export const autoformatRules: AutoformatHandler[] = [
   {
     match: '-',
     triggerChar: ' ',
-    type: 'ul',
+    type: ElementTypeEnum.Ul,
     properties: { level: 1 },
-  },
-  {
-    match: '#',
-    triggerChar: ' ',
-    properties: {
-      size: 1,
-    },
-    type: 'heading',
-  },
-  {
-    match: '##',
-    triggerChar: ' ',
-    properties: {
-      size: 2,
-    },
-    type: 'heading',
   },
   {
     match: '###',
@@ -29,6 +14,22 @@ export const autoformatRules: AutoformatHandler[] = [
     properties: {
       size: 3,
     },
-    type: 'heading',
+    type: ElementTypeEnum.Heading,
+  },
+  {
+    match: '##',
+    triggerChar: ' ',
+    properties: {
+      size: 2,
+    },
+    type: ElementTypeEnum.Heading,
+  },
+  {
+    match: '#',
+    triggerChar: ' ',
+    properties: {
+      size: 1,
+    },
+    type: ElementTypeEnum.Heading,
   },
 ];

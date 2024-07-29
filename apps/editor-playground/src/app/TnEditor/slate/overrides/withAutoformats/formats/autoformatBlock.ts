@@ -1,4 +1,4 @@
-import { Editor, Transforms } from 'slate';
+import { Editor, Transforms, Node } from 'slate';
 import { AutoformatHandler } from '../interface';
 import { getPointByMatchString } from '../../../query';
 import { isBlockElement } from '../../../utils';
@@ -18,6 +18,7 @@ export const autoformatBlock = (
   const { rules } = options;
 
   let stopInsert = false;
+
   rules.some((each) => {
     if ((each.triggerChar || DefaultTriggerChar) !== text) {
       return false;
@@ -25,12 +26,18 @@ export const autoformatBlock = (
     const matchPoint = getPointByMatchString(editor, {
       matchString: each.match,
     });
+    const currentNode = Editor.above(editor, { at: matchPoint?.path });
+    const nodeStr = currentNode ? Node.string(currentNode[0]) : '';
     if (!matchPoint) {
       return false;
     }
-    Transforms.delete(editor, {
-      at: matchPoint,
-    });
+
+    if (nodeStr.length > 0) {
+      Transforms.delete(editor, {
+        at: matchPoint,
+        distance: each.match.length,
+      });
+    }
 
     // 匹配到了，执行动作
     if (each.format) {

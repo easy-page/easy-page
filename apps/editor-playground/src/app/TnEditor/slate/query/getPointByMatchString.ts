@@ -33,6 +33,7 @@ export const getPointByMatchString = (
 			})
 		)
 			return null;
+ 
 
 		const beforeString = getEditorString(editor, {
 			anchor: beforePoint,
