@@ -48,7 +48,8 @@ export const onTabDown: TnEditorEventPlugin = {
       // 2. 上一个节点是文本，当前节点是文本
       /**
        * - 第一次缩进，当前节点添加 indent:true 属性
-       * - 第二次缩进，当前节点加入到上一个节点 children 中，并提示：无法继续缩进。
+       * - 第二次缩进，当前节点加入到上一个节点 children 中，
+       * - 第三次无法缩进，并提示：当前内容块已达最大缩进层级。
        */
       stopEventAfterCallback(event, () =>
         indentWithPropertiesAndMoveNodes({
