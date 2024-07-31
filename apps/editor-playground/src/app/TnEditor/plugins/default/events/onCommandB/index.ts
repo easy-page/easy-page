@@ -5,7 +5,7 @@ import { toggleLeafStyle } from '../../../../actions';
 // command + B 快捷键，将当前选中内容加粗
 export const onCommandB: TnEditorEventPlugin = {
   id: EventId.OnCommandB,
-  name: '加粗',
+  name: '粗体',
   match(event) {
     return event.code === 'KeyB' && event.metaKey;
   },

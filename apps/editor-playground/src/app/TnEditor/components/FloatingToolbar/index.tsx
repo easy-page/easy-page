@@ -126,7 +126,8 @@ export const FloatingToolbar = React.forwardRef<
 					value="italic"
 					aria-label="Italic"
 					onClick={() => {
-						toggleLeafStyle(editor, { textDecoration: 'line-through' });
+						// toggleLeafStyle(editor, { textDecoration: 'line-through' });
+						toggleLeafStyle(editor, { fontStyle: 'italic' });
 					}}
 				>
 					<FontItalicIcon />
