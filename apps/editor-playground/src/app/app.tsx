@@ -16,6 +16,7 @@ import {
 } from './TnEditor';
 import './app.less';
 import { HEADING_ELEMENT, headingPlugin } from './TnEditor/plugins/default/elements/headingPlugin';
+import { TODO_ELEMENT, todoPlugin } from './TnEditor/plugins/default/elements/todoPlugin';
 
 export function App() {
   const initialValue: CustomElement[] = [
@@ -41,6 +42,7 @@ export function App() {
           [OL_ELEMENT]: olPlugin,
           [CODE_ELEMENT]: codePlugin,
           [HEADING_ELEMENT]: headingPlugin,
+          [TODO_ELEMENT]: todoPlugin,
         }}
         editorId={'editor'}
       />

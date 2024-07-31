@@ -1,4 +1,3 @@
-import { Ancestor, Editor, NodeEntry, Node, BasePoint } from 'slate';
 import { RenderElementProps } from 'slate-react';
 
 export interface TnBasePlugin {
