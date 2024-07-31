@@ -4,4 +4,5 @@ export enum EventId {
   OnCommandB = 'OnCommandB',
   OnCommandI = 'OnCommandI',
   OnCommandU = 'OnCommandU',
+  OnCommandShiftX = 'OnCommandShiftX',
 }
