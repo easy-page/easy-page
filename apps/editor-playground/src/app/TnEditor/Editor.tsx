@@ -5,7 +5,7 @@ import { PluginManager, TnEditorRenderPlugin } from './plugins';
 import { TnProvider } from './store';
 import { BaseTnEditor } from './BaseEditor';
 import './index.less';
-import { onCommandI, onTabDown, onCommandB, onCtrlA } from './plugins/default';
+import { onCommandI, onTabDown, onCommandB, onCtrlA, onCommandU } from './plugins/default';
 import { withAutoformats, autoformatRules } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
@@ -51,7 +51,7 @@ export const TnEditor = ({
     editor.children = initialValue;
     editor.pluginManager = new PluginManager({
       elementPlugins,
-      eventPlugins: [onTabDown, onCtrlA, onCommandB, onCommandI],
+      eventPlugins: [onTabDown, onCtrlA, onCommandB, onCommandI, onCommandU],
     });
     return editor;
   }, []);
