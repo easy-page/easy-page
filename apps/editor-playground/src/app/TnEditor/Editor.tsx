@@ -12,6 +12,7 @@ import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
 import { withInsertBreak } from './slate/overrides/withInsertBreak';
 import { onCtrlA } from './plugins/default/events/onCtrlA';
+import { onCommandB } from './plugins/default/events/onCommandB';
 import { withSelection } from './slate/overrides/withSelection';
 import { withApply } from './slate/overrides/withApply';
 
@@ -53,7 +54,7 @@ export const TnEditor = ({
     editor.children = initialValue;
     editor.pluginManager = new PluginManager({
       elementPlugins,
-      eventPlugins: [onTabDown, onCtrlA],
+      eventPlugins: [onTabDown, onCtrlA, onCommandB],
     });
     return editor;
   }, []);
