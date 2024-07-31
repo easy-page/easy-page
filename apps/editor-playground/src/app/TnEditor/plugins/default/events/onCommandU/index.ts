@@ -2,7 +2,7 @@ import { TnEditorEventPlugin } from '../../../interfaces';
 import { EventId } from '../../constant';
 import { toggleLeafStyle } from '../../../../actions';
 
-// command + I 快捷键，将当前选中内容设置为斜体
+// command + U 快捷键，将当前选中内容添加下划线
 export const onCommandU: TnEditorEventPlugin = {
   id: EventId.OnCommandU,
   name: '下划线',

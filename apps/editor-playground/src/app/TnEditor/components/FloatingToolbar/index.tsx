@@ -15,6 +15,7 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
   UnderlineIcon,
+  Link2Icon
 } from '@radix-ui/react-icons';
 import './index.less';
 import {
@@ -132,7 +133,6 @@ export const FloatingToolbar = React.forwardRef<
             value="italic"
             aria-label="Italic"
             onClick={() => {
-              // toggleLeafStyle(editor, { textDecoration: 'line-through' });
               toggleLeafStyle(editor, { fontStyle: 'italic' });
             }}
           >
@@ -146,27 +146,42 @@ export const FloatingToolbar = React.forwardRef<
             value="underline"
             aria-label="下划线"
             onClick={() => {
-							toggleLeafStyle(editor, { textDecoration: 'underline', textUnderlineOffset: '0.2em', textDecorationSkipInk: 'none' });
+              toggleLeafStyle(editor, { textDecoration: 'underline', textUnderlineOffset: '0.2em', textDecorationSkipInk: 'none' });
             }}
           >
             <UnderlineIcon />
           </RUToolbar.ToggleItem>
         </Tooltip>
 
-        <RUToolbar.ToggleItem
-          className="ToolbarToggleItem"
-          value="strikethrough"
-          aria-label="无序列表"
-          onClick={() => {
-            toggleProperties(editor, {
-              url: 'https://www.baidu.com',
-            });
+        <Tooltip title="删除线（⌘ + Shift + X）">
+          <RUToolbar.ToggleItem
+            className="ToolbarToggleItem"
+            value="deleteline"
+            aria-label="删除线"
+            onClick={() => {
+              toggleLeafStyle(editor, { textDecoration: 'line-through' });
+              // toggleProperties(editor, {
+              //   url: 'https://www.baidu.com',
+              // });
+            }}
+          >
+            <StrikethroughIcon />
+          </RUToolbar.ToggleItem>
+        </Tooltip>
 
-            // toggleType()
-          }}
-        >
-          <StrikethroughIcon />
-        </RUToolbar.ToggleItem>
+
+        <Tooltip title="链接（⌘ + K）">
+          <RUToolbar.ToggleItem
+            className="ToolbarToggleItem"
+            value="link"
+            aria-label="链接"
+            onClick={() => {
+              // toggleLeafStyle(editor, { textDecoration: 'underline', textUnderlineOffset: '0.2em', textDecorationSkipInk: 'none' });
+            }}
+          >
+            <Link2Icon />
+          </RUToolbar.ToggleItem>
+        </Tooltip>
       </RUToolbar.ToggleGroup>
       <RUToolbar.Separator className="ToolbarSeparator" />
       <RUToolbar.ToggleGroup
