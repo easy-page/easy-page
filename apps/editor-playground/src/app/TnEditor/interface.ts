@@ -1,15 +1,20 @@
 // This example is for an Editor with `ReactEditor` and `HistoryEditor`
-import { BaseEditor } from 'slate';
+import { BaseEditor, Location } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { HistoryEditor } from 'slate-history';
 import { PluginManager } from './plugins';
 import { ElementTypeEnum } from './constants';
 
-export type CustomEditor = BaseEditor &
-  ReactEditor &
-  HistoryEditor & {
-    pluginManager: PluginManager;
-  };
+export interface CustomEditor extends BaseEditor, ReactEditor, HistoryEditor {
+  pluginManager: PluginManager;
+  select: (
+    path: Location,
+    options?: {
+      /** 禁止清除全选属性 */
+      disableClearSelected?: boolean;
+    }
+  ) => void;
+}
 
 export type CustomElement = {
   /** 加此属性后可以缩进一次 */
