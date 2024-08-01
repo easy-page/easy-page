@@ -24,3 +24,10 @@ export const isSelectAll = (editor: Editor, range: Partial<BaseRange>) => {
     range.focus?.offset === getLastNodeOffset(lastNode)
   );
 };
+
+export const isSelectNone = (editor: Editor, range: Partial<BaseRange>) => {
+  return (
+    isEqual(range.anchor?.path, range.focus?.path) &&
+    isEqual(range.focus?.offset, range.anchor?.offset)
+  );
+};

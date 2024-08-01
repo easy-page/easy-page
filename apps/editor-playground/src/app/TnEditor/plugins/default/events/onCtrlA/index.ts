@@ -41,7 +41,7 @@ export const onCtrlA: TnEditorEventPlugin = {
      * - 第一次按全选
      * - 如果当前 str 不存在，则直接进行下一步的全选
      *  */
-    if (curNode && !hasSelectAllCurNode(editor, curNode)) {
+    if (curNode && nodeStr && !hasSelectAllCurNode(editor, curNode)) {
       stopEventAfterCallback(
         event,
         () => editor.select(curNode?.path)
@@ -69,10 +69,15 @@ export const onCtrlA: TnEditorEventPlugin = {
      * - 第二次选择，第一层级元素添加选中
      * - 当前如已经是第一层，则跳过这一个步骤
      * */
-    if (!firstLevelParentNode.selected && firstLevelNodePath) {
+    if (
+      !firstLevelParentNode.selected &&
+      firstLevelNodePath &&
+      !isFirstLevelNode
+    ) {
       stopEventAfterCallback(event, () => {
-        editor.select(firstLevelNodePath);
         // editor.select(firstLevelNodePath, { disableClearSelected: true });
+
+        editor.select(firstLevelNodePath, { disableClearSelected: true });
         addBlockProperties(
           editor,
           { selected: true },
@@ -80,6 +85,9 @@ export const onCtrlA: TnEditorEventPlugin = {
             at: firstLevelNodePath,
           }
         );
+        // editor.withoutNormalizing(() => {
+
+        // });
       });
       console.log('4444444');
       return;
@@ -108,6 +116,7 @@ export const onCtrlA: TnEditorEventPlugin = {
     //     }
     //   );
     // });
+    console.log('55555555');
     Transforms.setNodes(
       editor,
       { selected: true },
