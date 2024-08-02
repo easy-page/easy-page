@@ -25,6 +25,8 @@ export type CustomElement = {
   level?: number;
   /** 元素是否被全选，添加此属性，标记选中 */
   selected?: boolean;
+  /** 元素的属性量级 */
+  size?: number;
   type: ElementTypeEnum;
   children: (CustomElement | FormattedText)[];
 };

@@ -8,6 +8,13 @@ export const autoformatRules: AutoformatHandler[] = [
     type: ElementTypeEnum.Ul,
     properties: { level: 1 },
   },
+
+  {
+    match: '[]',
+    triggerChar: ' ',
+    properties: {},
+    type: ElementTypeEnum.TODO,
+  },
   {
     match: '###',
     triggerChar: ' ',

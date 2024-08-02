@@ -16,6 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@easy-page/antd-ui": ["packages/easy-page-antd-ui/src/index.ts"],
+      "@easy-page-slate": ["packages/easy-page-slate/src/index.ts"],
+      "@easy-page-slate-react": ["packages/easy-page-slate-react/src/index.ts"],
       "@easy-page/antd-ui/style.css": [
         "dist/packages/easy-page-antd-ui/style.css"
       ],

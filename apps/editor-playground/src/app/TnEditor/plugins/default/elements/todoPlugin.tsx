@@ -7,21 +7,20 @@ import { Draggable } from '../../../components/Draggable';
 import { TnEditorRenderPlugin } from '../../interfaces/plugin';
 import { splitChildren } from '../../utils/splitChildren';
 
-export const HEADING_ELEMENT = 'heading';
+export const TODO_ELEMENT = 'todo';
 
-export const headingPlugin: TnEditorRenderPlugin = {
-  elementType: HEADING_ELEMENT,
+export const todoPlugin: TnEditorRenderPlugin = {
+  elementType: TODO_ELEMENT,
   render: ({ element, attributes, children }) => {
     console.log('attributes:', element, children);
     const { elementChildren, textChildren } = splitChildren(children);
-    const { size = 0 } = element;
     return (
       <Draggable>
         <div className="text-block-wrapper" {...attributes}>
-          <div
-            className="text-block"
-            style={{ fontSize: 20 - size * 2, fontWeight: 700 }}
-          >
+          <div className="text-block">
+            <span>
+              <input type="checkbox" />
+            </span>
             {textChildren}
           </div>
           <div className="text-children ml-4">{elementChildren}</div>

@@ -12,7 +12,6 @@
  */
 
 import { Editor } from 'slate';
-import { TnEditorRenderPlugin } from './plugin';
 import { EventType } from '../../constants';
 
 export interface EventPluginBaseInfo {

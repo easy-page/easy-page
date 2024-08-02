@@ -1,13 +1,13 @@
 import { TNEditorEventPlugin } from '../../../interfaces';
-import { EventType } from '../../../../constants';
-import { unsetSelectAll } from '../../../../slate/transform/unsetSelectAll';
+import { EventType, SPECIAL_KEYS } from '../../../../constants';
 import { EventId } from '../../constant';
+import { unsetSelectAll } from '../../../../slate/transform/unsetSelectAll';
 
 export const onKeyboardEvent: TNEditorEventPlugin<
-  React.MouseEvent<HTMLDivElement, MouseEvent>
+  React.KeyboardEvent<HTMLDivElement>
 > = {
   match: function (event): boolean {
-    return true;
+    return !SPECIAL_KEYS.includes(event.key);
   },
   handler: function (event, editor): void {
     unsetSelectAll(editor);
@@ -15,5 +15,5 @@ export const onKeyboardEvent: TNEditorEventPlugin<
   id: EventId.OnKeyboardEvent,
   name: '鼠标释放',
   priority: 0,
-  eventType: EventType.OnMouseUp,
+  eventType: EventType.OnKeyDown,
 };

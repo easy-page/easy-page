@@ -12,6 +12,7 @@ export enum ElementTypeEnum {
   Ul = 'ul',
   Ol = 'ol',
   Code = 'code',
+  TODO = 'todo',
 }
 
 /** 最深层 */

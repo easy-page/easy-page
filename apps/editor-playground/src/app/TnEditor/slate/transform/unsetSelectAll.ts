@@ -1,4 +1,4 @@
-import { Editor, Transforms } from 'slate';
+import { Editor, Transforms, Location } from 'slate';
 import { CustomElement } from '../../interface';
 import { isBlockElement } from '../utils';
 
@@ -6,25 +6,28 @@ import { isBlockElement } from '../utils';
  * - 清理掉所有选中属性
  */
 export const unsetSelectAll = (editor: Editor) => {
-  const selectedNodes = editor
-    .nodes({
-      match: (n) => {
-        console.log('nnnnnnnnasdad:', n);
-        return (
-          Boolean((n as CustomElement).selected) && isBlockElement(n, editor)
-        );
-      },
-    })
-    .return();
+  const selectedNodes = editor.nodes({
+    match: (n) => {
+      return (
+        Boolean((n as CustomElement).selected) && isBlockElement(n, editor)
+      );
+    },
+  });
 
-  console.log('selectedNodes:', selectedNodes);
+  const curNodes = selectedNodes.next();
+
+  console.log('执行匹配到被选择元素', curNodes);
 
   // const hasSelectedProperties = selecte;
-  if (selectedNodes.value) {
-    Transforms.unsetNodes(editor, ['selected'], {
-      at: [],
-      match: (n) =>
-        isBlockElement(n, editor) && Boolean((n as CustomElement)?.selected),
+  if (curNodes.value) {
+    editor.withoutNormalizing(() => {
+      Transforms.unsetNodes(editor, ['selected'], {
+        at: [],
+        match: (n) =>
+          isBlockElement(n, editor) && Boolean((n as CustomElement)?.selected),
+      });
+      const path = curNodes.value?.[1] || [];
+      // editor.select();
     });
   }
 };

@@ -3,15 +3,20 @@ import { createEditor, CustomTypes, Editor } from 'slate';
 import { withReact } from 'slate-react';
 import { PluginManager, TnEditorRenderPlugin } from './plugins';
 import { TnProvider } from './store';
-
 import { BaseTnEditor } from './BaseEditor';
 import './index.less';
-import { onTabDown } from './plugins/default';
+import {
+  onCommandI,
+  onTabDown,
+  onCommandB,
+  onCtrlA,
+  onCommandU,
+  onCommandShiftX,
+} from './plugins/default';
 import { withAutoformats, autoformatRules } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
 import { withInsertBreak } from './slate/overrides/withInsertBreak';
-import { onCtrlA } from './plugins/default/events/onCtrlA';
 import { withSelection } from './slate/overrides/withSelection';
 import { withApply } from './slate/overrides/withApply';
 import { onMouseUp } from './plugins/default/events/onMouseUp';
@@ -55,7 +60,16 @@ export const TnEditor = ({
     editor.children = initialValue;
     editor.pluginManager = new PluginManager({
       elementPlugins,
-      eventPlugins: [onTabDown, onCtrlA, onMouseUp, onKeyboardEvent],
+      eventPlugins: [
+        onTabDown,
+        onCtrlA,
+        onMouseUp,
+        onKeyboardEvent,
+        onCommandB,
+        onCommandI,
+        onCommandU,
+        onCommandShiftX,
+      ],
     });
     return editor;
   }, []);
