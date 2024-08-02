@@ -1,5 +1,5 @@
 import { Ancestor, BasePoint, Editor, Path } from 'slate';
-import { TnEditorEventPlugin } from '../../../interfaces';
+import { TNEditorEventPlugin } from '../../../interfaces';
 import { EventId } from '../../constant';
 import {
   indentWithMoveNodes,
@@ -11,6 +11,7 @@ import { isListElement, isTextElement } from '../../../../slate';
 import { indentWithAllList } from './utils/indentWithAllList';
 import { getCurNodeInfo } from '../utils/getCurNodeInfo';
 import { stopEventAfterCallback } from '../utils/indx';
+import { EventType } from '../../../../constants';
 
 export type IndentOptions = {
   curNode: Ancestor;
@@ -19,9 +20,10 @@ export type IndentOptions = {
   lastNode: BasePoint | undefined;
 };
 
-export const onTabDown: TnEditorEventPlugin = {
+export const onTabDown: TNEditorEventPlugin = {
   id: EventId.OnTabDown,
   name: '缩进 | 取消缩进',
+  eventType: EventType.OnKeyDown,
   match(event) {
     console.log('eventHandlers:', event.key);
     return event.key === 'Tab';

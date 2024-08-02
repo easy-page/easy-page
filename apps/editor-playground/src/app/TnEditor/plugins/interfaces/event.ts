@@ -13,29 +13,28 @@
 
 import { Editor } from 'slate';
 import { TnEditorRenderPlugin } from './plugin';
+import { EventType } from '../../constants';
 
-export type TnEditorEventPluginBaseInfo = {
-	/** 插件 ID */
-	id: string;
-	/** 插件名，用于日后插件市场显示 */
-	name: string;
+export interface EventPluginBaseInfo {
+  /** 插件 ID */
+  id: string;
+  /** 插件名，用于日后插件市场显示 */
+  name: string;
 
-	/** 匹配到后执行的优先级，若多个事件都匹配，则弹窗让用户抉择选择，并可以记录选择结果 */
-	priority: number;
-};
+  /** 匹配到后执行的优先级，若多个事件都匹配，则弹窗让用户抉择选择，并可以记录选择结果 */
+  priority: number;
 
-export type EventHandler = (
-	event: React.KeyboardEvent<HTMLDivElement>,
-	editor: Editor,
-	options: {
-		elementPlugins: Record<string, TnEditorRenderPlugin>;
-	}
-) => void;
+  /** 事件类型 */
+  eventType: EventType;
+}
 
-export type TnEditorEventPlugin = TnEditorEventPluginBaseInfo & {
-	/** 匹配函数 */
-	match: (event: React.KeyboardEvent<HTMLDivElement>) => boolean;
+export type EventHandler<Event> = (event: Event, editor: Editor) => void;
 
-	/** 处理函数 */
-	handler: EventHandler;
-};
+export interface TNEditorEventPlugin<T = React.KeyboardEvent<HTMLDivElement>>
+  extends EventPluginBaseInfo {
+  /** 匹配函数 */
+  match: (event: T) => boolean;
+
+  /** 处理函数 */
+  handler: EventHandler<T>;
+}

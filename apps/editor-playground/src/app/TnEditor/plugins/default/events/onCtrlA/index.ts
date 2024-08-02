@@ -2,13 +2,14 @@
 import { Transforms, Node } from 'slate';
 
 import { addBlockProperties } from '../../../../slate/transform';
-import { TnEditorEventPlugin } from '../../../interfaces';
+import { TNEditorEventPlugin } from '../../../interfaces';
 import { EventId } from '../../constant';
 import { getCurNodeInfo } from '../utils/getCurNodeInfo';
 import { stopEventAfterCallback } from '../utils/stopEventAfterCall';
 import { hasSelectAllCurNode } from './utils';
 import { CustomElement } from '../../../../interface';
 import { ReactEditor } from 'slate-react';
+import { EventType } from '../../../../constants';
 
 const getSelection = (root: Document | ShadowRoot): Selection | null => {
   if ((root as any).getSelection != null) {
@@ -20,16 +21,15 @@ const getSelection = (root: Document | ShadowRoot): Selection | null => {
 /**
  * 非常重要 TODO: 当我有非常大量的节点的时候，进行全选，会不会有问题！！！
  */
-export const onCtrlA: TnEditorEventPlugin = {
+export const onCtrlA: TNEditorEventPlugin = {
   id: EventId.OnCtrlA,
   name: '全选',
+  eventType: EventType.OnKeyDown,
   match(event) {
     return event.metaKey && event.code === 'KeyA';
   },
   priority: 1,
-  handler(event, editor, { elementPlugins }) {
-    const selection = editor.selection;
-
+  handler(event, editor) {
     const { curNode } = getCurNodeInfo(editor);
     console.log(
       'stop selection:',
@@ -93,40 +93,40 @@ export const onCtrlA: TnEditorEventPlugin = {
       return;
     }
     /** 第三次选择， 选择全文 */
-    // stopEventAfterCallback(event, () => {
-    //   const root = ReactEditor.findDocumentOrShadowRoot(editor);
-    //   const domSelection = getSelection(root);
-    //   const range = ReactEditor.toSlateRange(editor, domSelection!, {
-    //     exactMatch: false,
-    //     suppressThrow: true,
-    //   });
-    //   if (range) {
-    //     editor.select(range, { disableClearSelected: true });
-    //   }
-
-    //   Transforms.setNodes(
-    //     editor,
-    //     { selected: true },
-    //     {
-    //       at: [],
-    //       match(node, path) {
-    //         console.log('nodenode:', node, path);
-    //         return path.length === 1;
-    //       },
-    //     }
-    //   );
-    // });
-    console.log('55555555');
-    Transforms.setNodes(
-      editor,
-      { selected: true },
-      {
-        at: [],
-        match(node, path) {
-          console.log('nodenode:', node, path);
-          return path.length === 1;
-        },
+    stopEventAfterCallback(event, () => {
+      const root = ReactEditor.findDocumentOrShadowRoot(editor);
+      const domSelection = getSelection(root);
+      const range = ReactEditor.toSlateRange(editor, domSelection!, {
+        exactMatch: false,
+        suppressThrow: true,
+      });
+      if (range) {
+        editor.select(range, { disableClearSelected: true });
       }
-    );
+
+      Transforms.setNodes(
+        editor,
+        { selected: true },
+        {
+          at: [],
+          match(node, path) {
+            console.log('nodenode:', node, path);
+            return path.length === 1;
+          },
+        }
+      );
+    });
+    console.log('55555555');
+    // Transforms.setNodes(
+    //   editor,
+    //   { selected: true },
+    //   {
+    //     at: [],
+    //     match(node, path) {
+    //       console.log('nodenode:', node, path);
+    //       return path.length === 1;
+    //     },
+    //   }
+    // );
   },
 };

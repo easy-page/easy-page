@@ -15,16 +15,20 @@ import {
   codePlugin,
 } from './TnEditor';
 import './app.less';
-import { HEADING_ELEMENT, headingPlugin } from './TnEditor/plugins/default/elements/headingPlugin';
+import {
+  HEADING_ELEMENT,
+  headingPlugin,
+} from './TnEditor/plugins/default/elements/headingPlugin';
+import { ElementTypeEnum } from './TnEditor/constants';
 
 export function App() {
   const initialValue: CustomElement[] = [
     {
-      type: 'p',
+      type: ElementTypeEnum.P,
 
       children: [
         {
-          text: 'xx', // 叶子
+          text: '', // 叶子
         },
       ],
     },

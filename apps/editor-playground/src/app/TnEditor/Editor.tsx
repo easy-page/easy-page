@@ -14,6 +14,8 @@ import { withInsertBreak } from './slate/overrides/withInsertBreak';
 import { onCtrlA } from './plugins/default/events/onCtrlA';
 import { withSelection } from './slate/overrides/withSelection';
 import { withApply } from './slate/overrides/withApply';
+import { onMouseUp } from './plugins/default/events/onMouseUp';
+import { onKeyboardEvent } from './plugins/default/events/onKeyboradEvent';
 
 export type TnEditorProps = {
   initialValue: Array<CustomTypes['Element']>;
@@ -53,7 +55,7 @@ export const TnEditor = ({
     editor.children = initialValue;
     editor.pluginManager = new PluginManager({
       elementPlugins,
-      eventPlugins: [onTabDown, onCtrlA],
+      eventPlugins: [onTabDown, onCtrlA, onMouseUp, onKeyboardEvent],
     });
     return editor;
   }, []);

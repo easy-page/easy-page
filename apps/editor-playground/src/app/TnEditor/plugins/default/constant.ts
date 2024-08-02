@@ -1,4 +1,6 @@
 export enum EventId {
   OnTabDown = 'onTabDown',
-  OnCtrlA = 'OnCtrlA',
+  OnMouseUp = 'onMouseUp',
+  OnCtrlA = 'onCtrlA',
+  OnKeyboardEvent = 'OnKeyboardEvent',
 }

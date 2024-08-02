@@ -1,29 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RenderElementProps } from 'slate-react';
 import { IPluginManager } from './interfaces/pluginManager';
 import { TnEditorRenderPlugin } from './interfaces/plugin';
-import { TnEditorEventPlugin } from './interfaces/event';
+import { TNEditorEventPlugin } from './interfaces/event';
 import { Editor } from 'slate';
-import { SelectHoc } from '../components/HocComponents/SelectHoc';
+import { EventType } from '../constants';
 
 export type PluginManagerOptions = {
   /** key 为 element 的 type */
   elementPlugins: Record<string, TnEditorRenderPlugin>;
-  eventPlugins: TnEditorEventPlugin[];
+  eventPlugins: TNEditorEventPlugin<any>[];
 };
 export class PluginManager implements IPluginManager {
   public elementPlugins: Record<string, TnEditorRenderPlugin>;
-  public eventPlugins: TnEditorEventPlugin[];
+  public eventPlugins: TNEditorEventPlugin<any>[];
   constructor({ elementPlugins, eventPlugins }: PluginManagerOptions) {
     this.elementPlugins = elementPlugins;
     this.eventPlugins = eventPlugins;
   }
 
-  handleEvent = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-    editor: Editor
+  handleEvent = <T = React.KeyboardEvent<HTMLDivElement>,>(
+    event: T,
+    editor: Editor,
+    options?: {
+      eventType: EventType;
+    }
   ) => {
+    const eventType = options?.eventType || EventType.OnKeyDown;
     const eventHandlers = this.eventPlugins
-      .filter((e) => e.match(event))
+      .filter((e) => e.match(event) && eventType === e.eventType)
       .sort((a, b) => a.priority - b.priority);
 
     console.log('eventHandlers:', eventHandlers);
@@ -31,9 +36,9 @@ export class PluginManager implements IPluginManager {
     if (eventHandlers.length === 0) {
       return;
     }
-    const handler = eventHandlers[0];
-    return handler.handler(event, editor, {
-      elementPlugins: this.elementPlugins,
+    eventHandlers.forEach((each) => {
+      console.log(`执行:${each.name} 插件，事件：${each.eventType}`);
+      each.handler(event, editor);
     });
   };
 

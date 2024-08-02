@@ -10,6 +10,7 @@ import { useEditorEmpty, useEditorRef } from './hooks';
 import classNames from 'classnames';
 import { isEmptyContent } from './slate';
 import { CustomElement } from './interface';
+import { EventType } from './constants';
 
 export type TnEditorProps = {
   /** 每个编辑器实例有自己的 id */
@@ -51,6 +52,12 @@ export const BaseTnEditor = ({
         <Editable
           renderElement={editor.pluginManager.renderElement}
           renderLeaf={renderLeaf}
+          onMouseUp={(event) => {
+            editor.pluginManager.handleEvent(event, editor, {
+              eventType: EventType.OnMouseUp,
+            });
+            console.log('event:', event);
+          }}
           onKeyDown={(event) => {
             editor.pluginManager.handleEvent(event, editor);
             console.log('event:', event);
