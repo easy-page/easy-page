@@ -13,16 +13,22 @@ export const todoPlugin: TnEditorRenderPlugin = {
   elementType: TODO_ELEMENT,
   render: ({ element, attributes, children }) => {
     console.log('attributes:', element, children);
+    console.log('attributes:', element, children);
+    const { extraDom = '' } = element;
     const { elementChildren, textChildren } = splitChildren(children);
     return (
       <Draggable>
         <div className="text-block-wrapper" {...attributes}>
-          <div className="text-block">
-            <span>
-              <input type="checkbox" />
-            </span>
-            {textChildren}
-          </div>
+          {extraDom === 'checkbox' ? (
+            <div className="text-block">
+              <span>
+                <input type="checkbox" />
+              </span>
+              {textChildren}
+            </div>
+          ) : (
+            ''
+          )}
           <div className="text-children ml-4">{elementChildren}</div>
         </div>
       </Draggable>
