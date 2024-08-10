@@ -8,10 +8,12 @@ import {
 } from '@easy-page/react-ui';
 import { FieldUIConfig } from '@easy-page/react-ui/interface';
 import { UI_COMPONENTS } from '../common/constant';
+import { ChildFormBaseProps } from '../components';
 import {
-  ChildFormBaseProps,
-} from '../components';
-import { CreateChildFormOptions, CreateContainerOption, CustomComponent } from './interface';
+  CreateChildFormOptions,
+  CreateContainerOption,
+  CustomComponent,
+} from './interface';
 
 class NodeUtil extends CommonNodeUtil {
   private getCustomNodeUIConfig(
@@ -31,7 +33,12 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
+    component: CustomComponent<
+      FieldType,
+      PageState,
+      PageProps,
+      EffectResultType
+    >,
     options: NodeWithChildrenOption<
       FieldType,
       PageState,
@@ -61,8 +68,18 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
-    options?: CreateContainerOption<FieldType, PageState, PageProps, EffectResultType>
+    component: CustomComponent<
+      FieldType,
+      PageState,
+      PageProps,
+      EffectResultType
+    >,
+    options?: CreateContainerOption<
+      FieldType,
+      PageState,
+      PageProps,
+      EffectResultType
+    >
   ) {
     const {
       childrenUIConfig,
@@ -73,7 +90,7 @@ class NodeUtil extends CommonNodeUtil {
     } = options || {};
     const curNode = this.doCreateNode(
       id,
-      { ...rest, },
+      { ...rest },
       this.getCustomNodeUIConfig(component, {
         ...fieldUIConfig,
         layout: {
@@ -96,7 +113,12 @@ class NodeUtil extends CommonNodeUtil {
   >(
     id: string,
     name: string,
-    component: CustomComponent<FieldType, PageState, PageProps, EffectResultType>,
+    component: CustomComponent<
+      FieldType,
+      PageState,
+      PageProps,
+      EffectResultType
+    >,
     options: NodeWithChildrenOption<
       FieldType,
       PageState,
@@ -137,10 +159,16 @@ class NodeUtil extends CommonNodeUtil {
     EffectResultType = any
   >(
     id: string,
-    options: CreateChildFormOptions<FieldType, PageState, PageProps, EffectResultType>,
+    options: CreateChildFormOptions<
+      FieldType,
+      PageState,
+      PageProps,
+      EffectResultType
+    >,
     fieldUIConfig?: FieldUIConfig
   ): NodeInfo<FieldType, PageState, PageProps, EffectResultType> {
-    const { childFormContext, childFormContainer, name, ...restOptions } = options;
+    const { childFormContext, childFormContainer, name, ...restOptions } =
+      options;
     const curFieldUIConfig = fieldUIConfig || {};
 
     curFieldUIConfig.ui = curFieldUIConfig.ui || UI_COMPONENTS.CHILD_FORM;
