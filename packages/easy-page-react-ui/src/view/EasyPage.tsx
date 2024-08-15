@@ -169,6 +169,7 @@ export class EasyPage<
 
   componentWillUnmount(): void {
     console.log('解析组件时间- easy page unmount');
+    this.store.dispose();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -30,7 +30,11 @@ export class DevStateDeugger {
   private debuggerId: string;
   constructor({ formId }: DevStateDeuggerOptions) {
     this.formId = formId;
-    this.debuggerId = generateId(formId);
+    this.debuggerId = `${formId}_store`;
+  }
+
+  dispose() {
+    (window as any)[this.debuggerId] = {};
   }
 
   getFieldKey(id: string) {
@@ -40,7 +44,9 @@ export class DevStateDeugger {
   printDefaultValueLog(id: string) {
     const fieldKey = this.getFieldKey(id);
     const store = this.getStore();
+
     const fieldValueLogs = store[fieldKey] as DefaultValueInfo[];
+
     console.table(fieldValueLogs);
   }
 
@@ -72,6 +78,7 @@ export class DevStateDeugger {
   printLogs(id: string) {
     const logs = this.getStore();
     const fieldLogs = (logs[id] || []) as LoggerInfo[];
+    console.log('logs store:', logs, id, fieldLogs);
     console.table(
       fieldLogs.map((e) => {
         return {

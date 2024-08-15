@@ -41,13 +41,13 @@ export const CheckBox = connector(
       frameworkProps,
       value,
       onChange,
-      customLabel: userCustomLabel,
+      customLabel: configLabel,
       ...baseProps
     } = props;
     const { nodeInfo, effectedResult } = frameworkProps;
     const { name, id } = nodeInfo;
     const customLabel =
-      effectedResult?.checkboxProps?.customLabel || userCustomLabel;
+      effectedResult?.checkboxProps?.customLabel || configLabel;
     return (
       <AntdCheckBox
         value={id}
