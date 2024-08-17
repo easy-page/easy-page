@@ -203,6 +203,48 @@ export function connector(Element: React.JSXElementConstructor<any>) {
           .map((e) => e.effectedKeys || [])
           .flat()
           .concat(DefaultEffectedKeys);
+        const effectWhenKeys = (when?.effectedKeys || []).concat(
+          DefaultEffectedKeys
+        );
+        if (nodeInfo.id === 'dataType') {
+          console.log(
+            '监控到dataType 数据变化：',
+            nodeInfo.id,
+            uiType,
+            '结果：',
+            effectWhenKeys
+          );
+        }
+        showDisposer =
+          effectWhenKeys.length > 0
+            ? reaction(
+                () => store?.getEffectedData(effectWhenKeys),
+                (args, preArgs) => {
+                  const res = when?.show?.({
+                    initRun: false,
+                    value: store?.getState(nodeInfo.id),
+                    pageProps: store?.getPageProps(),
+                    pageState: store?.getAllState(),
+                    effectedData: args,
+                    defaultValues: store?.getDefaultValues(),
+                  });
+                  if (effectWhenKeys.includes('chooseOperation')) {
+                    console.log(
+                      '监控到变化：',
+                      args,
+                      nodeInfo.id,
+                      uiType,
+                      '结果：',
+                      res
+                    );
+                  }
+                  if (res !== undefined) {
+                    setVisible(res);
+                  }
+                }
+              )
+            : null;
+
         stateDisposer =
           effectActionKeys.length > 0
             ? reaction(
@@ -218,28 +260,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                     effectedData: args,
                     initRun: false,
                   });
-                }
-              )
-            : null;
-        const effectWhenKeys = (when?.effectedKeys || []).concat(
-          DefaultEffectedKeys
-        );
-        showDisposer =
-          effectWhenKeys.length > 0
-            ? reaction(
-                () => store?.getEffectedData(effectWhenKeys),
-                (args, preArgs) => {
-                  const res = when?.show?.({
-                    initRun: false,
-                    value: store?.getState(nodeInfo.id),
-                    pageProps: store?.getPageProps(),
-                    pageState: store?.getAllState(),
-                    effectedData: args,
-                    defaultValues: store?.getDefaultValues(),
-                  });
-                  if (res !== undefined) {
-                    setVisible(res);
-                  }
                 }
               )
             : null;
@@ -276,6 +296,9 @@ export function connector(Element: React.JSXElementConstructor<any>) {
         }
       }
       return () => {
+        if (nodeInfo.when?.effectedKeys?.includes('chooseOperation')) {
+          console.log('监控到组件写在：', nodeInfo.id, uiType, '结果：');
+        }
         stateDisposer?.();
         showDisposer?.();
         effectManager.cancelCurrentPromise();
