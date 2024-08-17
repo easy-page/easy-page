@@ -189,7 +189,7 @@ export class EasyPage<
   }
 
   private isForm() {
-    return this.props.pageType === 'form';
+    return this.props.pageType !== 'page';
   }
 
   /**

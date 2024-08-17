@@ -206,15 +206,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
         const effectWhenKeys = (when?.effectedKeys || []).concat(
           DefaultEffectedKeys
         );
-        if (nodeInfo.id === 'dataType') {
-          console.log(
-            '监控到dataType 数据变化：',
-            nodeInfo.id,
-            uiType,
-            '结果：',
-            effectWhenKeys
-          );
-        }
+
         showDisposer =
           effectWhenKeys.length > 0
             ? reaction(
@@ -228,16 +220,7 @@ export function connector(Element: React.JSXElementConstructor<any>) {
                     effectedData: args,
                     defaultValues: store?.getDefaultValues(),
                   });
-                  if (effectWhenKeys.includes('chooseOperation')) {
-                    console.log(
-                      '监控到变化：',
-                      args,
-                      nodeInfo.id,
-                      uiType,
-                      '结果：',
-                      res
-                    );
-                  }
+
                   if (res !== undefined) {
                     setVisible(res);
                   }
@@ -296,9 +279,6 @@ export function connector(Element: React.JSXElementConstructor<any>) {
         }
       }
       return () => {
-        if (nodeInfo.when?.effectedKeys?.includes('chooseOperation')) {
-          console.log('监控到组件写在：', nodeInfo.id, uiType, '结果：');
-        }
         stateDisposer?.();
         showDisposer?.();
         effectManager.cancelCurrentPromise();
