@@ -1,5 +1,4 @@
-import { UlElement } from '../../../components/UlElement';
-
+import { UlElement } from '../../../components/elements/UlElement';
 import { TnEditorRenderPlugin } from '../../interfaces/plugin';
 
 export const UL_ELEMENT = 'ul';

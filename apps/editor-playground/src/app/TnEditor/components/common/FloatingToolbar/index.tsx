@@ -4,7 +4,6 @@ import * as RUToolbar from '@radix-ui/react-toolbar';
 
 import { flip, offset } from '@floating-ui/core';
 import { Tooltip } from 'antd';
-import { useComposedRef } from '../../hooks/useComposedRef';
 import classNames from 'classnames';
 
 import {
@@ -15,7 +14,7 @@ import {
   TextAlignLeftIcon,
   TextAlignRightIcon,
   UnderlineIcon,
-  Link2Icon
+  Link2Icon,
 } from '@radix-ui/react-icons';
 import './index.less';
 import {
@@ -29,10 +28,8 @@ import {
 } from './utils/getRangeDirection';
 import { PortalBody } from '../PortalBody';
 import React from 'react';
-import { useEditorRef } from '../../hooks';
-import { toggleLeafStyle } from '../../actions';
-import { toggleProperties } from '../../actions/toggleProperties';
-
+import { toggleLeafStyle } from '../../../actions';
+import { useComposedRef, useEditorRef } from '../../../hooks';
 export type BaseFloatingToolbarProps = {
   state?: FloatingToolbarState;
   children?: any;
@@ -146,7 +143,11 @@ export const FloatingToolbar = React.forwardRef<
             value="underline"
             aria-label="下划线"
             onClick={() => {
-              toggleLeafStyle(editor, { textDecoration: 'underline', textUnderlineOffset: '0.2em', textDecorationSkipInk: 'none' });
+              toggleLeafStyle(editor, {
+                textDecoration: 'underline',
+                textUnderlineOffset: '0.2em',
+                textDecorationSkipInk: 'none',
+              });
             }}
           >
             <UnderlineIcon />
@@ -168,7 +169,6 @@ export const FloatingToolbar = React.forwardRef<
             <StrikethroughIcon />
           </RUToolbar.ToggleItem>
         </Tooltip>
-
 
         <Tooltip title="链接（⌘ + K）">
           <RUToolbar.ToggleItem

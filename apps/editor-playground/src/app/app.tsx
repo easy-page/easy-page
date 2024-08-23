@@ -2,18 +2,7 @@
 import styles from './app.module.less';
 import { TnEditor } from './TnEditor/Editor';
 import { CustomElement } from './TnEditor/interface';
-import {
-  TEXT_ELEMENT,
-  textPlugin,
-  UL_ELEMENT,
-  ulPlugin,
-  LI_ELEMENT,
-  liPlugin,
-  OL_ELEMENT,
-  olPlugin,
-  CODE_ELEMENT,
-  codePlugin,
-} from './TnEditor';
+import { TEXT_ELEMENT, textPlugin, UL_ELEMENT, ulPlugin } from './TnEditor';
 import './app.less';
 import {
   HEADING_ELEMENT,
@@ -45,9 +34,6 @@ export function App() {
         elementPlugins={{
           [TEXT_ELEMENT]: textPlugin,
           [UL_ELEMENT]: ulPlugin,
-          [LI_ELEMENT]: liPlugin,
-          [OL_ELEMENT]: olPlugin,
-          [CODE_ELEMENT]: codePlugin,
           [HEADING_ELEMENT]: headingPlugin,
           [TODO_ELEMENT]: todoPlugin,
         }}

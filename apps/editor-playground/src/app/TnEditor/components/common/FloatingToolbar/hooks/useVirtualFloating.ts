@@ -11,7 +11,7 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { createVirtualElement } from '../utils/createVirtualElement';
-import { useIsomorphicLayoutEffect } from '../../../hooks';
+import { useIsomorphicLayoutEffect } from '../../../../hooks';
 
 export interface UseVirtualFloatingOptions extends Partial<UseFloatingProps> {
   getBoundingClientRect?: () => ClientRectObject;

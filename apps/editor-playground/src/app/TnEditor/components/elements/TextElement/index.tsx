@@ -1,19 +1,15 @@
 import classNames from 'classnames';
 import { RenderElementProps } from 'slate-react';
-import { splitChildren } from '../../plugins/utils/splitChildren';
-import { Draggable } from '../Draggable';
-import { useEditorRef, useIndentTips } from '../../hooks';
-import { TextElement } from '../../interface';
-import { Tips } from '../Tips';
-import { getCurNodeInfo } from '../../plugins/default/events/utils/getCurNodeInfo';
+import { useIndentTips, useEditorRef } from '../../../hooks';
+import { CustomElement } from '../../../interface';
+import { getCurNodeInfo } from '../../../plugins/default/events/utils/getCurNodeInfo';
+import { splitChildren } from '../../../plugins/utils/splitChildren';
+import { TnElement, Tips } from '../../common';
 
-export const TextComponent = ({
-  element,
-  attributes,
-  children,
-}: RenderElementProps) => {
+export const TextComponent = (props: RenderElementProps) => {
+  const { element, attributes, children } = props;
   const { elementChildren, textChildren } = splitChildren(children);
-  const node = element as TextElement;
+  const node = element as CustomElement;
   const { indent, indentTip, showAction, showText } = useIndentTips(node);
 
   const editor = useEditorRef();
@@ -21,13 +17,8 @@ export const TextComponent = ({
   const msg = lastNode ? '当前已到达最大缩进层级' : '无法缩进当前内容块';
 
   return (
-    <Draggable>
-      <div
-        className={classNames('text-block-wrapper relative mb-1 pl-1', {
-          'bg-[#D8E0FB] rounded': node.selected,
-        })}
-        {...attributes}
-      >
+    <TnElement {...props}>
+      <div className={classNames('text-block-wrapper')} {...attributes}>
         <div
           className={classNames('text-block', {
             'ml-4': !indentTip && indent,
@@ -40,6 +31,6 @@ export const TextComponent = ({
         <div className="text-children ml-4">{elementChildren}</div>
         {showText && <Tips msg={msg} />}
       </div>
-    </Draggable>
+    </TnElement>
   );
 };

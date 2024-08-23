@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
+import { TextComponent } from '../../../components';
 import { TnEditorRenderPlugin } from '../../interfaces/plugin';
 
-import { TextComponent } from '../../../components/TextElement';
 export const TEXT_ELEMENT = 'p';
 
 export const textPlugin: TnEditorRenderPlugin = {
