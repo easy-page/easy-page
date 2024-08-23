@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Editable, Slate } from 'slate-react';
-import { PluginManager } from './plugins';
 import { FloatingToolbar, Leaf } from './components';
 import { EditorSelectionEffect } from './effects';
 import './index.css';
