@@ -31,15 +31,13 @@ export const onCtrlA: TNEditorEventPlugin = {
   priority: 1,
   handler(event, editor) {
     const { curNode } = getCurNodeInfo(editor);
-    console.log(
-      'stop selection:',
-      curNode,
-      hasSelectAllCurNode(editor, curNode)
-    );
+
     const nodeStr = curNode?.node ? Node.string(curNode?.node) : '';
+    console.log('curNodecurNode:', curNode);
     /**
      * - 第一次按全选
      * - 如果当前 str 不存在，则直接进行下一步的全选
+     * - 还得判断是否是第一层，且被选中
      *  */
     if (curNode && nodeStr && !hasSelectAllCurNode(editor, curNode)) {
       stopEventAfterCallback(
@@ -47,12 +45,12 @@ export const onCtrlA: TNEditorEventPlugin = {
         () => editor.select(curNode?.path)
         // editor.select(curNode?.path, { disableClearSelected: true })
       );
-      console.log('11111111');
+      console.log('【全选】第一次全选，选择当前内容');
       return;
     }
 
     if (!curNode) {
-      console.log('22222222');
+      console.log('【全选】无当前节点，啥也不做');
       return;
     }
 
@@ -60,7 +58,7 @@ export const onCtrlA: TNEditorEventPlugin = {
     const isFirstLevelNode = curNode.path.length === 1;
     const firstLevelParentNodeInfo = editor.node(firstLevelNodePath);
     if (!firstLevelParentNodeInfo) {
-      console.log('3333333333');
+      console.log('【全选】无第一层父元素，啥也不做');
       return;
     }
     const firstLevelParentNode = firstLevelParentNodeInfo[0] as CustomElement;
@@ -89,34 +87,51 @@ export const onCtrlA: TNEditorEventPlugin = {
 
         // });
       });
-      console.log('4444444');
+      console.log('【全选】选中当前元素的最外层父亲');
       return;
     }
     /** 第三次选择， 选择全文 */
-    stopEventAfterCallback(event, () => {
-      const root = ReactEditor.findDocumentOrShadowRoot(editor);
-      const domSelection = getSelection(root);
-      const range = ReactEditor.toSlateRange(editor, domSelection!, {
-        exactMatch: false,
-        suppressThrow: true,
-      });
-      if (range) {
-        editor.select(range, { disableClearSelected: true });
-      }
+    // stopEventAfterCallback(event, () => {
+    //   const el = ReactEditor.toDOMNode(editor, editor)
+    //   const root = el.getRootNode()
+    //   // const root = ReactEditor.findDocumentOrShadowRoot(editor);
+    //   // console.log('rootroot:', root);
+    //   // const domSelection = getSelection(root);
+    //   // console.log('rootroot:', domSelection);
+    //   // const range = ReactEditor.toSlateRange(editor, domSelection!, {
+    //   //   exactMatch: false,
+    //   //   suppressThrow: true,
+    //   // });
+    //   // console.log('rangerangerange:', range);
+    //   // if (range) {
 
-      Transforms.setNodes(
-        editor,
-        { selected: true },
-        {
-          at: [],
-          match(node, path) {
-            console.log('nodenode:', node, path);
-            return path.length === 1;
-          },
-        }
-      );
-    });
-    console.log('55555555');
+    //   // }
+    //   // editor.select(range, { disableClearSelected: true });
+
+    //   Transforms.setNodes(
+    //     editor,
+    //     { selected: true },
+    //     {
+    //       at: [],
+    //       match(node, path) {
+    //         console.log('nodenode:', node, path);
+    //         return path.length === 1;
+    //       },
+    //     }
+    //   );
+    // });
+    Transforms.setNodes(
+      editor,
+      { selected: true },
+      {
+        at: [],
+        match(node, path) {
+          console.log('nodenode:', node, path);
+          return path.length === 1;
+        },
+      }
+    );
+    console.log('【全选】选择全文，不阻止默认事件选择');
     // Transforms.setNodes(
     //   editor,
     //   { selected: true },

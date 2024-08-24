@@ -4,8 +4,7 @@ import { getCurNode } from '../../query/getCurNode';
 import { CustomElement } from '../../../interface';
 import { DEFAULT_ELEMENT_TYPE } from '../../../constants';
 import { getPropertiesOfNode } from '../../query/getNodeProperties';
-import { replaceNode, unsetBlockProperties } from '../../transform';
-import { ReactEditor } from 'slate-react';
+import { unsetBlockProperties } from '../../transform';
 
 const doBackwords = (
   curNode: CustomElement,
@@ -26,7 +25,7 @@ const doBackwords = (
       /** 不然删除完，编辑器就没有聚焦了 */
       editor.select([]);
     }, 0);
-    console.log('走 111111');
+    console.log('【删除】: 删除所有内容，聚焦编辑器');
     return;
   }
   const nodeText = Node.string(curNode);
@@ -34,7 +33,7 @@ const doBackwords = (
 
   if (nodeText) {
     console.log('has node text:', nodeText, 'delete text');
-    console.log('走 2222222');
+    console.log('【删除】: 删除文本内容');
     return deleteBackward(unit);
   }
 
@@ -48,8 +47,9 @@ const doBackwords = (
   const [parentNode, parentNodePath] =
     Editor.parent(editor as any, nodePath) || [];
   const parentElement = parentNode as CustomElement;
-  console.log('走 6789098765： ===》', node.type);
+
   if (activeProperties.length > 0 && node.type === DEFAULT_ELEMENT_TYPE) {
+    console.log('【删除】: 删除节点属性');
     // 如果节点存在属性，则删除所有属性，即：除了 type 和 children 以外的所有属性、并且将类型改为默认的：p
     unsetBlockProperties(editor, [...activeProperties], {
       at: nodePath,
@@ -57,7 +57,7 @@ const doBackwords = (
     return deleteBackward(unit);
   }
   if (activeProperties.length > 0 && node.type !== DEFAULT_ELEMENT_TYPE) {
-    // 如果节点存在属性，则删除所有属性，即：除了 type 和 children 以外的所有属性、并且将类型改为默认的：p
+    console.log('【删除】: 将节点类型改变成默认类型');
     unsetBlockProperties(editor, [...activeProperties], {
       at: nodePath,
     });
@@ -71,30 +71,33 @@ const doBackwords = (
   }
   if (activeProperties.length === 0 && node.type === DEFAULT_ELEMENT_TYPE) {
     if (!parentNode || !parentNodePath) {
-      console.log('no parent node');
-      console.log('走 666666666');
+      console.log(
+        '【删除】: 类型和属性都已清空，且无父元素，则不操作，走默认流程'
+      );
       /** 不存在父节点，则不做操作 */
       return deleteBackward(unit);
     }
 
     if (parentElement.children?.length > 1) {
-      console.log('parent has multi children, remove current');
-      console.log('走 777777777');
+      console.log(
+        '【删除】: 类型和属性都已清空，父节点存在多个子元素，删除当前子元素'
+      );
       // 如果存在多个 child，则删除当前 children
       Transforms.removeNodes(editor, {
         at: nodePath,
       });
       return;
     } else {
-      console.log('走 88888888888888888888');
+      console.log('【删除】: 类型和属性都已清空，父节点只有一个');
       // 看 parent 节点是否有属性
       const parentActiveProperties = getPropertiesOfNode(parentElement);
       if (
         parentActiveProperties.length > 0 ||
         parentElement.type !== DEFAULT_ELEMENT_TYPE
       ) {
-        console.log('parent is other type, remove type');
-        console.log('走 9999999999999999');
+        console.log(
+          '【删除】: 类型和属性都已清空，父节点只有一个，删除父元素的各种属性，置为默认类型'
+        );
         unsetBlockProperties(editor, parentActiveProperties, {
           at: parentNodePath,
         });
@@ -111,8 +114,7 @@ const doBackwords = (
       }
     }
 
-    console.log('continue next');
-    console.log('走 1000000');
+    console.log('【删除】: 继续向上删除');
 
     doBackwords(parentElement, parentNodePath, {
       editor,

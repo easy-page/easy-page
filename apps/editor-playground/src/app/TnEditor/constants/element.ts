@@ -1,5 +1,3 @@
-export const DEFAULT_ELEMENT_TYPE = 'p';
-
 export enum UL_LIST_ICON {
   FilledCircle = 'filledCircle',
   OutlineCircle = 'OutlineCircle',
@@ -17,3 +15,4 @@ export enum ElementTypeEnum {
 
 /** 最深层 */
 export const MAX_DEEP_LEVEL = 13;
+export const DEFAULT_ELEMENT_TYPE = ElementTypeEnum.P;
