@@ -46,7 +46,7 @@ export const UlElement = (props: RenderElementProps) => {
           <div contentEditable={false} className="mr-1 select-none">
             <div className="bullet-dot-style text-[#1456F0]">{Icon}</div>
           </div>
-          <div className={classNames('list-content pr-1')} {...attributes}>
+          <div className={classNames('list-content pr-1')}>
             {textChildren}
             {showText && <Tips msg={'无法缩进当前内容块'} />}
           </div>

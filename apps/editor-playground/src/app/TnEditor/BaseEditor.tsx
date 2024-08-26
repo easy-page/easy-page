@@ -12,6 +12,7 @@ import { CustomElement } from './interface';
 import { EventType } from './constants';
 import { replaceWithNormalNode } from './slate/transform';
 import { getCurNodeInfo } from './plugins/default/events/utils/getCurNodeInfo';
+import { ElementToolbar } from './components/common/ElementToolbar';
 
 export type TnEditorProps = {
   /** 每个编辑器实例有自己的 id */
@@ -50,6 +51,7 @@ export const BaseTnEditor = ({
         initialValue={initialValue}
       >
         <FloatingToolbar editorId={editorId} />
+        <ElementToolbar />
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}

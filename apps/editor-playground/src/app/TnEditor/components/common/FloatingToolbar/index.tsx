@@ -102,6 +102,7 @@ export const FloatingToolbar = React.forwardRef<
   BaseFloatingToolbarProps
 >(({ className, editorId, ...props }, componentRef) => {
   const editor = useEditorRef(editorId);
+
   // const editor = useSlate();
   return (
     <BaseFloatingToolbar

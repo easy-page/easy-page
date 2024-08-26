@@ -3,11 +3,11 @@ import { TnElement } from '../../common/TnElement';
 import { splitChildren } from '../../../plugins/utils/splitChildren';
 
 export const TodoElement = (props: RenderElementProps) => {
-  const { attributes, children } = props;
+  const { children } = props;
   const { elementChildren, textChildren } = splitChildren(children);
   return (
     <TnElement {...props}>
-      <div className="text-block-wrapper" {...attributes}>
+      <div className="text-block-wrapper">
         <div className="text-block">
           <span>
             <input type="checkbox" />

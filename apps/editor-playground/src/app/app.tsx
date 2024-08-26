@@ -13,12 +13,13 @@ import {
   TODO_ELEMENT,
   todoPlugin,
 } from './TnEditor/plugins/default/elements/todoPlugin';
+import { generateId } from '@easy-page/antd-ui';
 
 export function App() {
   const initialValue: CustomElement[] = [
     {
       type: ElementTypeEnum.P,
-
+      id: generateId('cs'),
       children: [
         {
           text: '', // 叶子

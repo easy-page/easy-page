@@ -7,7 +7,7 @@ import { splitChildren } from '../../../plugins/utils/splitChildren';
 import { TnElement, Tips } from '../../common';
 
 export const TextComponent = (props: RenderElementProps) => {
-  const { element, attributes, children } = props;
+  const { element, children } = props;
   const { elementChildren, textChildren } = splitChildren(children);
   const node = element as CustomElement;
   const { indent, indentTip, showAction, showText } = useIndentTips(node);
@@ -18,7 +18,7 @@ export const TextComponent = (props: RenderElementProps) => {
 
   return (
     <TnElement {...props}>
-      <div className={classNames('text-block-wrapper')} {...attributes}>
+      <div className={classNames('text-block-wrapper')}>
         <div
           className={classNames('text-block', {
             'ml-4': !indentTip && indent,

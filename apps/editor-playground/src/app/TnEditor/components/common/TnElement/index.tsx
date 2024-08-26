@@ -1,6 +1,7 @@
 import { RenderElementProps } from 'slate-react';
 import classNames from 'classnames';
 import { CustomElement } from '../../../interface';
+// import { ElementToolbar } from '../ElementToolbar';
 
 export type TnElementProps = RenderElementProps;
 
@@ -10,7 +11,11 @@ export type TnElementProps = RenderElementProps;
  * @param param0
  * @returns
  */
-export const TnElement = ({ children, element }: TnElementProps) => {
+export const TnElement = ({
+  children,
+  element,
+  attributes,
+}: TnElementProps) => {
   const node = element as CustomElement;
   return (
     <div className="tn-element">
@@ -18,6 +23,8 @@ export const TnElement = ({ children, element }: TnElementProps) => {
         className={classNames('relative mb-1 pl-1', {
           'bg-[#D8E0FB] rounded': node.selected,
         })}
+        data-block-id={element.id}
+        {...attributes}
       >
         {children}
       </div>
