@@ -21,6 +21,7 @@ import { withSelection } from './slate/overrides/withSelection';
 import { withApply } from './slate/overrides/withApply';
 import { onMouseUp } from './plugins/default/events/onMouseUp';
 import { onKeyboardEvent } from './plugins/default/events/onKeyboradEvent';
+import { withHistory } from './slate/overrides/withHistory';
 
 export type TnEditorProps = {
   initialValue: Array<CustomTypes['Element']>;
@@ -46,6 +47,7 @@ export const TnEditor = ({
   const editor = useMemo(() => {
     const editor = createEditorWithHoc(
       [
+        withHistory,
         withApply,
         withSelection,
         withInsertBreak,

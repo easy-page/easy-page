@@ -672,6 +672,7 @@ export const Editable = (props: EditableProps) => {
           case 'deleteByCut':
           case 'deleteByDrag': {
             Editor.deleteFragment(editor);
+            props.customAfterDOMBeforeInput?.(editor);
             break;
           }
 
@@ -1295,6 +1296,7 @@ export const Editable = (props: EditableProps) => {
                   if (selection) {
                     if (Range.isExpanded(selection)) {
                       Editor.deleteFragment(editor);
+                      props.customAfterDOMBeforeInput?.(editor);
                     } else {
                       const node = Node.parent(editor, selection.anchor.path);
                       if (Editor.isVoid(editor, node)) {
