@@ -27,6 +27,8 @@ export type CustomElement = {
   selected?: boolean;
   /** 元素的属性量级 */
   size?: number;
+  // TODO 完善枚举
+  extraDom?: string;
   type: ElementTypeEnum;
   children: (CustomElement | FormattedText)[];
 };
