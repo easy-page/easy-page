@@ -8,15 +8,14 @@ import { getCurNodeInfo } from '../utils/getCurNodeInfo';
 import { stopEventAfterCallback } from '../utils/stopEventAfterCall';
 import { hasSelectAllCurNode } from './utils';
 import { CustomElement } from '../../../../interface';
-import { ReactEditor } from 'slate-react';
 import { EventType } from '../../../../constants';
 
-const getSelection = (root: Document | ShadowRoot): Selection | null => {
-  if ((root as any).getSelection != null) {
-    return (root as any).getSelection();
-  }
-  return document.getSelection();
-};
+// const getSelection = (root: Document | ShadowRoot): Selection | null => {
+//   if ((root as any).getSelection != null) {
+//     return (root as any).getSelection();
+//   }
+//   return document.getSelection();
+// };
 
 /**
  * 非常重要 TODO: 当我有非常大量的节点的时候，进行全选，会不会有问题！！！
@@ -51,6 +50,11 @@ export const onCtrlA: TNEditorEventPlugin = {
 
     if (!curNode) {
       console.log('【全选】无当前节点，啥也不做');
+      stopEventAfterCallback(
+        event,
+        () => ({})
+        // editor.select(curNode?.path, { disableClearSelected: true })
+      );
       return;
     }
 

@@ -7,9 +7,11 @@ export const onKeyboardEvent: TNEditorEventPlugin<
   React.KeyboardEvent<HTMLDivElement>
 > = {
   match: function (event): boolean {
-    return !SPECIAL_KEYS.includes(event.key);
+    const isSelectAll = event.metaKey && event.key === 'a';
+    return !SPECIAL_KEYS.includes(event.key) && !isSelectAll;
   },
   handler: function (event, editor): void {
+    console.log('【全选】清空所有');
     unsetSelectAll(editor);
   },
   id: EventId.OnKeyboardEvent,

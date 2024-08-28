@@ -51,7 +51,7 @@ export const BaseTnEditor = ({
         initialValue={initialValue}
       >
         <FloatingToolbar editorId={editorId} />
-        <ElementToolbar />
+        {/* <ElementToolbar /> */}
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}
@@ -63,6 +63,9 @@ export const BaseTnEditor = ({
                   replaceWithNormalNode(editor, { curNode });
                 }
               }
+            }}
+            onMouseMove={(event) => {
+              console.log('eventevent:', event);
             }}
             onMouseUp={(event) => {
               editor.pluginManager.handleEvent(event, editor, {
