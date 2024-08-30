@@ -13,7 +13,8 @@
 //   position: absolute;
 // }
 
-.todo-checkbox {
+.todo-content::before {
+  content: ' ';
   display: inline-block;
   line-height: normal;
   font-size: 16px;
@@ -27,15 +28,15 @@
   position: relative;
   border-radius: 4px;
   border: 1px solid black;
-  // top: 2px;
+  top: 2px;
   // pointer-events: none; /* 点击事件传递到父元素 */
   cursor: pointer;
 }
-.todo-checkbox:hover {
+.todo-content:hover::before {
   border-color: #2955e7;
 }
 
-.todo-checkbox-done {
+.task-done::before {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEwLjU4OSAzLjkwM2wuODA4LjgwOGEuMzUuMzUgMCAwMTAgLjQ5NUw2LjE4IDEwLjQyNWEuMzUuMzUgMCAwMS0uNDk1IDBMMi43MDMgNy40NDRhLjM1LjM1IDAgMDEwLS40OTVsLjgwOC0uODA4YS4zNS4zNSAwIDAxLjQ5NSAwbDEuOTI1IDEuOTI0IDQuMTYzLTQuMTYzYS4zNS4zNSAwIDAxLjQ5NSAweiIgZmlsbD0iIzMzNzBGRiIvPjwvc3ZnPg==);
   background-size: contain;
 }

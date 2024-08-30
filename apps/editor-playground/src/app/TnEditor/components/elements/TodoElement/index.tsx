@@ -11,22 +11,33 @@ export const TodoElement = (props: RenderElementProps) => {
   return (
     <TnElement
       wrapperClassName="todo-block-wrapper"
-      blockNodeClassName="todo-block relative pl-[24px] flex flex-row items-center"
+      blockNodeClassName="todo-block relative pl-[24px]"
       nodeChildrenClassName="todo-children ml-4"
       CustomText={({ children: textChildren }) => (
         <>
-          <div
+          {/* <input
+            className="todo-checkbox"
+            type="checkbox"
             contentEditable={false}
-            onClick={() => {
-              addBlockProperties(editor, {
-                checked: !element.checked,
-              });
-            }}
-            className={classNames('todo-checkbox', {
-              'todo-checkbox-done': element.checked,
+          /> */}
+
+          <div
+            className={classNames('todo-content', {
+              'task-done': element.checked,
             })}
-          ></div>
-          {textChildren}
+            onClick={(e) => {
+              console.log('click eeeee:', e);
+              const rect = e.currentTarget.getBoundingClientRect();
+              if (rect.left > e.clientX) {
+                // 点击了伪元素
+                addBlockProperties(editor, {
+                  checked: !element.checked,
+                });
+              }
+            }}
+          >
+            {textChildren}
+          </div>
         </>
       )}
       {...props}
