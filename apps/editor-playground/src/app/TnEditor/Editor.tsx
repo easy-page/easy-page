@@ -50,7 +50,7 @@ export const TnEditor = ({
         withInsertNode,
         withHistory,
         withApply,
-        withSelection,
+        // withSelection,
         withInsertBreak,
         withBackwords,
         withAutoformats({

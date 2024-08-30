@@ -124,7 +124,7 @@ export type EditableProps = {
   scrollSelectionIntoView?: (editor: ReactEditor, domRange: DOMRange) => void;
   as?: React.ElementType;
   disableDefaultStyles?: boolean;
-  customAfterDOMBeforeInput: (editor: ReactEditor) => void;
+  customAfterDOMBeforeInput?: (editor: ReactEditor) => void;
 } & React.TextareaHTMLAttributes<HTMLDivElement>;
 
 /**
