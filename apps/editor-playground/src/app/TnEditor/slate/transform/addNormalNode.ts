@@ -1,6 +1,7 @@
 import { ElementTypeEnum } from '../../constants';
 import { CustomEditor } from '../../interface';
 import { NodeInfo } from '../../plugins/default/events/utils/getCurNodeInfo';
+import { generateElementId } from '@easy-page-slate';
 
 export const addNormalNode = (
   editor: CustomEditor,
@@ -18,6 +19,7 @@ export const addNormalNode = (
       {
         type: ElementTypeEnum.P,
         children: [{ text: '' }],
+        id: generateElementId(),
       },
       { at: newNodePath }
     );

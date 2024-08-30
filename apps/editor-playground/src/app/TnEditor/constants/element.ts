@@ -8,7 +8,6 @@ export enum ElementTypeEnum {
   P = 'p',
   Heading = 'heading',
   Ul = 'ul',
-  Ol = 'ol',
   Code = 'code',
   TODO = 'todo',
 }

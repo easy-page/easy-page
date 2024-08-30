@@ -26,7 +26,7 @@ export const unsetSelectAll = (editor: Editor) => {
         match: (n) =>
           isBlockElement(n, editor) && Boolean((n as CustomElement)?.selected),
       });
-      const path = curNodes.value?.[1] || [];
+      // const path = curNodes.value?.[1] || [];
       // editor.select();
     });
   }

@@ -13,7 +13,7 @@ import {
   onCommandU,
   onCommandShiftX,
 } from './plugins/default';
-import { withAutoformats, autoformatRules } from './slate';
+import { withAutoformats, autoformatRules, withInsertNode } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
 import { withInsertBreak } from './slate/overrides/withInsertBreak';
@@ -47,6 +47,7 @@ export const TnEditor = ({
   const editor = useMemo(() => {
     const editor = createEditorWithHoc(
       [
+        withInsertNode,
         withHistory,
         withApply,
         withSelection,
@@ -83,6 +84,7 @@ export const TnEditor = ({
       id={editorId}
       beforeInput=""
       editor={editor}
+      floatRef={null}
       editorRef={editorRef}
     >
       <BaseTnEditor

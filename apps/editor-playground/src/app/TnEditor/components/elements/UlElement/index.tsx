@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { UL_LIST_ICON } from '../../../constants';
 import { useIndentTips } from '../../../hooks';
 import { CustomElement } from '../../../interface';
-import { splitChildren } from '../../../plugins/utils/splitChildren';
 import { Tips } from '../../common/Tips';
 import { TnElement } from '../../common/TnElement';
 
@@ -28,21 +27,21 @@ const getIcon = (element: CustomElement) => {
 };
 
 export const UlElement = (props: RenderElementProps) => {
-  const { children, element, attributes } = props;
-  const { textChildren, elementChildren } = splitChildren(children);
-  console.log('elementelementelement handle done:', elementChildren);
+  const { element } = props;
   const node = element as CustomElement;
   const Icon = getIcon(node);
   const { indentClass, showText } = useIndentTips(node);
+  console.log('indentClassindentClass:', indentClass);
   return (
-    <TnElement {...props}>
-      <div className={classNames('list-wrapper bullet-list')}>
-        <div
-          className={classNames(
-            'list list-style-group-1 flex flex-row mb-2',
-            indentClass
-          )}
-        >
+    <TnElement
+      wrapperClassName="list-wrapper bullet-list"
+      blockNodeClassName={classNames(
+        'list list-style-group-1 flex flex-row mb-2',
+        indentClass
+      )}
+      nodeChildrenClassName="list-children ml-4"
+      CustomText={({ children: textChildren }) => (
+        <>
           <div contentEditable={false} className="mr-1 select-none">
             <div className="bullet-dot-style text-[#1456F0]">{Icon}</div>
           </div>
@@ -50,9 +49,9 @@ export const UlElement = (props: RenderElementProps) => {
             {textChildren}
             {showText && <Tips msg={'无法缩进当前内容块'} />}
           </div>
-        </div>
-        <div className="list-children ml-4">{elementChildren}</div>
-      </div>
-    </TnElement>
+        </>
+      )}
+      {...props}
+    />
   );
 };

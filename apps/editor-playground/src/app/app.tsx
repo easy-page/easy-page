@@ -13,13 +13,13 @@ import {
   TODO_ELEMENT,
   todoPlugin,
 } from './TnEditor/plugins/default/elements/todoPlugin';
-import { generateId } from '@easy-page/antd-ui';
+import { generateElementId } from '@easy-page-slate';
 
 export function App() {
   const initialValue: CustomElement[] = [
     {
       type: ElementTypeEnum.P,
-      id: generateId('cs'),
+      id: generateElementId(),
       children: [
         {
           text: '', // 叶子
@@ -28,7 +28,7 @@ export function App() {
     },
   ];
   return (
-    <div className="p-10 w-full h-full flex items-center">
+    <div className="w-full h-full flex items-center">
       <TnEditor
         initialValue={initialValue}
         placeholder="请输入"

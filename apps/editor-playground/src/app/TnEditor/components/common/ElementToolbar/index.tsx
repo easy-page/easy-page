@@ -1,64 +1,54 @@
 import { PlusOutlined } from '@ant-design/icons';
-import classNames from 'classnames';
-import { flip, offset } from '@floating-ui/core';
-import {
-  useElementFloatingToolbar,
-  useElementFloatingToolbarState,
-} from './hooks/useElementFloatingToolbarState';
-import { autoUpdate, useFloating } from '@floating-ui/react';
-import { useState } from 'react';
+import { TnElementRef } from '../../../store';
+import { getElementInfo } from './utils/getRefInfo';
+import { useEffect, useMemo, useState } from 'react';
+import { Button, Popover } from 'antd';
+import { ElementFloatIcon } from './icons';
 
 export type ElementToolbarProps = {
   className?: string;
+  refInfo: TnElementRef | null;
 };
-export const ElementToolbar = ({ className }: ElementToolbarProps) => {
-  // const floatingToolbarState = useElementFloatingToolbarState({
-  //   floatingOptions: {
-  //     placement: 'left-start',
-  //     middleware: [
-  //       offset(12),
-  //       flip({
-  //         padding: 12,
-  //         fallbackPlacements: ['left-end'],
-  //       }),
-  //     ],
-  //   },
-  // });
-  // const {
-  //   ref: floatingRef,
-  //   props: rootProps,
-  //   hidden,
-  // } = useElementFloatingToolbar(floatingToolbarState);
-  // console.log('rootPropsrootProps:', rootProps);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const { refs, floatingStyles } = useFloating({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    whileElementsMounted: autoUpdate,
-  });
-
+export const ElementToolbar = ({ className, refInfo }: ElementToolbarProps) => {
+  const elementInfo = useMemo(() => getElementInfo(refInfo), [refInfo]);
+  console.log('elementInfoeleme11ntInfo:', elementInfo);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  }, [refInfo]);
+  if (!elementInfo) {
+    return null;
+  }
   return (
-    <>
-      <button ref={refs.setReference}>Button</button>
-      <div
-        ref={refs.setFloating}
-        style={{ ...floatingStyles }}
-        className={classNames(className, {})}
+    <div
+      style={{
+        position: 'absolute',
+        left: elementInfo?.x - 40,
+        top: elementInfo?.y - 4,
+        opacity: elementInfo ? 1 : 0,
+        zIndex: 50,
+        transition: 'left 0.1s ease, top 0.1s ease, opacity 0.1s ease',
+      }}
+    >
+      <Popover
+        arrow={false}
+        open={open}
+        placement="left"
+        content={<div>123213</div>}
       >
-        <div className=" left-[-40px] top-0">
-          <div
-            style={{
-              opacity: 1,
-            }}
-            className={classNames(
-              'flex items-center p-1 rounded cursor-pointer border'
-            )}
-          >
+        <Button
+          onMouseOver={() => {
+            setOpen(true);
+          }}
+          className={'flex items-center py-1 px-2'}
+        >
+          {elementInfo.isEmpty ? (
             <PlusOutlined />
-          </div>
-        </div>
-      </div>
-    </>
+          ) : (
+            ElementFloatIcon[elementInfo.elementType]
+          )}
+        </Button>
+      </Popover>
+    </div>
   );
 };

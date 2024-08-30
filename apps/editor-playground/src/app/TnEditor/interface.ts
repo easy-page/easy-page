@@ -32,6 +32,9 @@ export type CustomElement = {
   type: ElementTypeEnum;
   // 每个节点唯一 ID，用于悬浮定位
   id: string;
+
+  /** 是否被选中，用于任务类型组件 */
+  checked?: boolean;
   children: (CustomElement | FormattedText)[];
 };
 

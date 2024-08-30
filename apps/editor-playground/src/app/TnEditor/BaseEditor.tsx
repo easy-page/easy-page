@@ -12,6 +12,9 @@ import { CustomElement } from './interface';
 import { EventType } from './constants';
 import { replaceWithNormalNode } from './slate/transform';
 import { getCurNodeInfo } from './plugins/default/events/utils/getCurNodeInfo';
+import { useTnStore } from './store';
+import { throttle } from 'lodash';
+import { getFloatingRef } from './utils/getFloatingRef';
 import { ElementToolbar } from './components/common/ElementToolbar';
 
 export type TnEditorProps = {
@@ -33,11 +36,28 @@ export const BaseTnEditor = ({
   }, []);
 
   const { setIsEmpty, isEmpty } = useEditorEmpty(isEmptyContent(editor));
+  const setFloatRef = useTnStore().set.floatRef();
+  const floatRef = useTnStore().get.floatRef();
+  const editorElementRefs = useTnStore().get.editorElementRefs();
+
+  console.log('floatRef:', floatRef);
+  const calcFloatRef = throttle(
+    useCallback(
+      (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const refInfo = getFloatingRef(e, editorElementRefs);
+        console.log('refInforefInfo:', editorElementRefs, refInfo);
+        setFloatRef(refInfo);
+      },
+      [setFloatRef, editorElementRefs]
+    ),
+    100
+  );
 
   return (
     <div
+      onMouseMove={calcFloatRef}
       className={classNames(
-        'w-full h-full flex flex-col pl-64 items-center justify-center',
+        'w-full h-full flex flex-col py-10 px-64 items-center justify-center relative',
         {
           'empty-first-line': isEmpty,
         }
@@ -51,7 +71,7 @@ export const BaseTnEditor = ({
         initialValue={initialValue}
       >
         <FloatingToolbar editorId={editorId} />
-        {/* <ElementToolbar /> */}
+        <ElementToolbar refInfo={floatRef} />
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}
@@ -64,9 +84,7 @@ export const BaseTnEditor = ({
                 }
               }
             }}
-            onMouseMove={(event) => {
-              console.log('eventevent:', event);
-            }}
+            onMouseMove={(event) => {}}
             onMouseUp={(event) => {
               editor.pluginManager.handleEvent(event, editor, {
                 eventType: EventType.OnMouseUp,

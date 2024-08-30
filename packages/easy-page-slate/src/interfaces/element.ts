@@ -10,6 +10,7 @@ import { Ancestor, Descendant, Editor, ExtendedType, Node, Path } from '..';
 
 export interface BaseElement {
   children: Descendant[];
+  id?: string;
 }
 
 export type Element = ExtendedType<'Element', BaseElement>;
