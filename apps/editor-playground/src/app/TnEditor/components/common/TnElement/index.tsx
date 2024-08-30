@@ -15,7 +15,7 @@ export type TnElementProps = RenderElementProps & {
   nodeChildrenClassName?: string;
   nodeChildrenStyle?: React.CSSProperties;
   addAfter?: React.ReactNode;
-  CustomText?: React.FC<{ children: React.ReactNode }>;
+  addBeforeText?: React.ReactNode;
 };
 
 /**
@@ -30,7 +30,7 @@ export const TnElement = ({
   nodeChildrenClassName,
   nodeChildrenStyle,
   blockNodeStyle,
-  CustomText,
+  addBeforeText,
   children,
   element,
   addAfter,
@@ -67,7 +67,8 @@ export const TnElement = ({
             }
           })}
         >
-          {CustomText ? <CustomText>{textChildren}</CustomText> : textChildren}
+          {addBeforeText}
+          {textChildren}
         </div>
         <div
           className={classNames('block-node-children', nodeChildrenClassName)}

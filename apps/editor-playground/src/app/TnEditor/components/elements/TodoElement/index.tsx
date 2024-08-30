@@ -13,22 +13,19 @@ export const TodoElement = (props: RenderElementProps) => {
       wrapperClassName="todo-block-wrapper"
       blockNodeClassName="todo-block relative pl-[24px] flex flex-row items-center"
       nodeChildrenClassName="todo-children ml-4"
-      CustomText={({ children: textChildren }) => (
-        <>
-          <div
-            contentEditable={false}
-            onClick={() => {
-              addBlockProperties(editor, {
-                checked: !element.checked,
-              });
-            }}
-            className={classNames('todo-checkbox', {
-              'todo-checkbox-done': element.checked,
-            })}
-          ></div>
-          {textChildren}
-        </>
-      )}
+      addBeforeText={
+        <div
+          contentEditable={false}
+          onClick={() => {
+            addBlockProperties(editor, {
+              checked: !element.checked,
+            });
+          }}
+          className={classNames('select-none todo-checkbox', {
+            'todo-checkbox-done': element.checked,
+          })}
+        ></div>
+      }
       {...props}
     ></TnElement>
   );
