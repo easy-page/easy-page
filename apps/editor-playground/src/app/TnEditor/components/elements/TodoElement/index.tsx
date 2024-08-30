@@ -19,38 +19,28 @@ export const TodoElement = (props: RenderElementProps) => {
       wrapperClassName="todo-block-wrapper"
       blockNodeClassName="todo-block relative pl-[24px]"
       nodeChildrenClassName="todo-children ml-4"
-      CustomText={({ children: textChildren }) => (
-        <>
-          {/* <input
-            className="todo-checkbox"
-            type="checkbox"
-            contentEditable={false}
-          /> */}
-
-          <div
-            className={classNames('todo-content', {
-              'task-done': element.checked,
-            })}
-            // onSelect={(e) => {
-            //   console.log('1213123123123');
-            //   e.stopPropagation();
-            //   e.preventDefault();
-            // }}
-            onClick={(e) => {
-              console.log('click eeeee:', e);
-              const rect = e.currentTarget.getBoundingClientRect();
-              if (rect.left > e.clientX) {
-                // 点击了伪元素
-                addBlockProperties(editor, {
-                  checked: !element.checked,
-                });
-              }
-            }}
-          >
-            {textChildren}
-          </div>
-        </>
-      )}
+      addBeforeText={
+        <div
+          className={classNames('todo-content inline-flex', {
+            'task-done': element.checked,
+          })}
+          // onSelect={(e) => {
+          //   console.log('1213123123123');
+          //   e.stopPropagation();
+          //   e.preventDefault();
+          // }}
+          onClick={(e) => {
+            console.log('click eeeee:', e);
+            const rect = e.currentTarget.getBoundingClientRect();
+            if (rect.left > e.clientX) {
+              // 点击了伪元素
+              addBlockProperties(editor, {
+                checked: !element.checked,
+              });
+            }
+          }}
+        ></div>
+      }
       {...props}
     ></TnElement>
   );
