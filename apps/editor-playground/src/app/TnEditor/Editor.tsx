@@ -64,14 +64,14 @@ export const TnEditor = ({
     editor.pluginManager = new PluginManager({
       elementPlugins,
       eventPlugins: [
-        onTabDown,
-        onCtrlA,
-        onMouseUp,
-        onKeyboardEvent,
-        onCommandB,
-        onCommandI,
-        onCommandU,
-        onCommandShiftX,
+        // onTabDown,
+        // onCtrlA,
+        // onMouseUp,
+        // onKeyboardEvent,
+        // onCommandB,
+        // onCommandI,
+        // onCommandU,
+        // onCommandShiftX,
       ],
     });
     return editor;
