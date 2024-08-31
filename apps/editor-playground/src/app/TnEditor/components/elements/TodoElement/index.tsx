@@ -34,9 +34,9 @@ export const TodoElement = (props: RenderElementProps) => {
             const rect = e.currentTarget.getBoundingClientRect();
             if (rect.left > e.clientX) {
               // 点击了伪元素
-              addBlockProperties(editor, {
-                checked: !element.checked,
-              });
+              // addBlockProperties(editor, {
+              //   checked: !element.checked,
+              // });
             }
           }}
         ></div>

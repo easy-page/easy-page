@@ -42,9 +42,9 @@ export const BaseTnEditor = ({
   const calcFloatRef = throttle(
     useCallback(
       (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const refInfo = getFloatingRef(e, editorElementRefs);
+        // const refInfo = getFloatingRef(e, editorElementRefs);
         // console.log('refInforefInfo:', editorElementRefs, refInfo);
-        setFloatRef(refInfo);
+        // setFloatRef(refInfo);
       },
       [setFloatRef, editorElementRefs]
     ),
