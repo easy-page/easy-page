@@ -31,7 +31,7 @@ export class PluginManager implements IPluginManager {
       .filter((e) => e.match(event) && eventType === e.eventType)
       .sort((a, b) => a.priority - b.priority);
 
-    console.log('eventHandlers:', eventHandlers);
+    // console.log('eventHandlers:', eventHandlers);
     // TODO 当相同优先级有多个 handler 时候，弹窗让用户抉择，目前选择 1 个执行。
     if (eventHandlers.length === 0) {
       return;

@@ -37,15 +37,13 @@ export const BaseTnEditor = ({
 
   const { setIsEmpty, isEmpty } = useEditorEmpty(isEmptyContent(editor));
   const setFloatRef = useTnStore().set.floatRef();
-  const floatRef = useTnStore().get.floatRef();
   const editorElementRefs = useTnStore().get.editorElementRefs();
 
-  console.log('floatRef:', floatRef);
   const calcFloatRef = throttle(
     useCallback(
       (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const refInfo = getFloatingRef(e, editorElementRefs);
-        console.log('refInforefInfo:', editorElementRefs, refInfo);
+        // console.log('refInforefInfo:', editorElementRefs, refInfo);
         setFloatRef(refInfo);
       },
       [setFloatRef, editorElementRefs]
@@ -71,7 +69,7 @@ export const BaseTnEditor = ({
         initialValue={initialValue}
       >
         <FloatingToolbar editorId={editorId} />
-        <ElementToolbar refInfo={floatRef} />
+        <ElementToolbar />
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}

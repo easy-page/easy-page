@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { TnElementRef } from '../../../store';
+import { useTnStore } from '../../../store';
 import { getElementInfo } from './utils/getRefInfo';
 import { useEffect, useMemo, useState } from 'react';
 import { Button, Popover } from 'antd';
@@ -7,11 +7,10 @@ import { ElementFloatIcon } from './icons';
 
 export type ElementToolbarProps = {
   className?: string;
-  refInfo: TnElementRef | null;
 };
-export const ElementToolbar = ({ className, refInfo }: ElementToolbarProps) => {
+export const ElementToolbar = ({ className }: ElementToolbarProps) => {
+  const refInfo = useTnStore().get.floatRef();
   const elementInfo = useMemo(() => getElementInfo(refInfo), [refInfo]);
-  console.log('elementInfoeleme11ntInfo:', elementInfo);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(false);

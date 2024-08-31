@@ -130,7 +130,7 @@ export const onCtrlA: TNEditorEventPlugin = {
       {
         at: [],
         match(node, path) {
-          console.log('nodenode:', node, path);
+          // console.log('nodenode:', node, path);
           return path.length === 1;
         },
       }
