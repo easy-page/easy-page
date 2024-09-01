@@ -37,7 +37,7 @@ export const TnElement = ({
   attributes,
 }: TnElementProps) => {
   const node = element as CustomElement;
-  console.log('nodenode:', node);
+  // console.log('nodenode:', node);
   const setRefs = useEditorElementRefs();
   const elementRef = useRef<HTMLDivElement>(null);
   const isEmpty = useMemo(() => isEmptyNode(node), [node]);

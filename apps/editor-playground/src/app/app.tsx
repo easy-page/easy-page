@@ -14,6 +14,8 @@ import {
   todoPlugin,
 } from './TnEditor/plugins/default/elements/todoPlugin';
 import { generateElementId } from '@easy-page-slate';
+import { Checkbox } from 'antd';
+import { useState } from 'react';
 
 export function App() {
   const initialValue: CustomElement[] = [
@@ -27,8 +29,18 @@ export function App() {
       ],
     },
   ];
+  const [checked, setChecked] = useState(false);
   return (
     <div className="w-full h-full flex items-center">
+      {/* <div className="p-[120px] outline-none w-full" contentEditable>
+        <div>
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          ></Checkbox>
+          <div autoFocus>12</div>
+        </div>
+      </div> */}
       <TnEditor
         initialValue={initialValue}
         placeholder="请输入"

@@ -140,7 +140,7 @@ export const withBackwords = (editor: Editor) => {
   };
 
   editor.apply = (nodes) => {
-    console.log('adasdassdassdasdsa:', nodes);
+    // console.log('adasdassdassdasdsa:', nodes);
     apply(nodes);
   };
   return editor;

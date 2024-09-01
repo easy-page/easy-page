@@ -45,7 +45,6 @@ const BaseFloatingToolbar = ({
   ...props
 }: BaseFloatingToolbarProps) => {
   const rangeDirection = getDriectRangeDirection();
-  console.log('rangeDirection:', rangeDirection);
   const floatingToolbarState = useFloatingToolbarState({
     ...state,
     floatingOptions: {
@@ -74,8 +73,6 @@ const BaseFloatingToolbar = ({
     props: rootProps,
     hidden,
   } = useFloatingToolbar(floatingToolbarState);
-
-  console.log('rootProps:', rootProps, hidden);
 
   const ref = useComposedRef<HTMLDivElement>(componentRef, floatingRef);
 

@@ -37,16 +37,14 @@ export const BaseTnEditor = ({
 
   const { setIsEmpty, isEmpty } = useEditorEmpty(isEmptyContent(editor));
   const setFloatRef = useTnStore().set.floatRef();
-  const floatRef = useTnStore().get.floatRef();
   const editorElementRefs = useTnStore().get.editorElementRefs();
 
-  console.log('floatRef:', floatRef);
   const calcFloatRef = throttle(
     useCallback(
       (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const refInfo = getFloatingRef(e, editorElementRefs);
-        console.log('refInforefInfo:', editorElementRefs, refInfo);
-        setFloatRef(refInfo);
+        // const refInfo = getFloatingRef(e, editorElementRefs);
+        // console.log('refInforefInfo:', editorElementRefs, refInfo);
+        // setFloatRef(refInfo);
       },
       [setFloatRef, editorElementRefs]
     ),
@@ -70,31 +68,31 @@ export const BaseTnEditor = ({
         }}
         initialValue={initialValue}
       >
-        <FloatingToolbar editorId={editorId} />
-        {/* <ElementToolbar refInfo={floatRef} /> */}
+        {/* <FloatingToolbar editorId={editorId} /> */}
+        <ElementToolbar />
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}
-            renderLeaf={renderLeaf}
-            customAfterDOMBeforeInput={() => {
-              if (editor.children?.length === 1) {
-                const { curNode } = getCurNodeInfo(editor);
-                if (curNode) {
-                  replaceWithNormalNode(editor, { curNode });
-                }
-              }
-            }}
-            onMouseMove={(event) => {}}
-            onMouseUp={(event) => {
-              editor.pluginManager.handleEvent(event, editor, {
-                eventType: EventType.OnMouseUp,
-              });
-              console.log('event:', event);
-            }}
-            onKeyDown={(event) => {
-              editor.pluginManager.handleEvent(event, editor);
-              console.log('event:', event);
-            }}
+            // renderLeaf={renderLeaf}
+            // customAfterDOMBeforeInput={() => {
+            //   if (editor.children?.length === 1) {
+            //     const { curNode } = getCurNodeInfo(editor);
+            //     if (curNode) {
+            //       replaceWithNormalNode(editor, { curNode });
+            //     }
+            //   }
+            // }}
+            // onMouseMove={(event) => {}}
+            // onMouseUp={(event) => {
+            //   editor.pluginManager.handleEvent(event, editor, {
+            //     eventType: EventType.OnMouseUp,
+            //   });
+            //   console.log('event:', event);
+            // }}
+            // onKeyDown={(event) => {
+            //   editor.pluginManager.handleEvent(event, editor);
+            //   console.log('event:', event);
+            // }}
             className="w-full h-full pb-2 pt-8 px-8 outline-none"
           />
           <div className="first-line-placeholder">

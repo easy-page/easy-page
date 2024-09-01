@@ -122,12 +122,12 @@ export const withReact = <T extends BaseEditor>(
   // This attempts to reset the NODE_TO_KEY entry to the correct value
   // as apply() changes the object reference and hence invalidates the NODE_TO_KEY entry
   e.apply = (op: Operation) => {
-    console.log('this is my apply:', op);
+    // console.log('this is my apply:', op);
     const matches: [Path, Key][] = [];
     const pathRefMatches: [PathRef, Key][] = [];
 
     const pendingDiffs = EDITOR_TO_PENDING_DIFFS.get(e);
-    console.log('pendingDiffs:', pendingDiffs);
+    // console.log('pendingDiffs:', pendingDiffs);
     if (pendingDiffs?.length) {
       const transformed = pendingDiffs
         .map((textDiff) => transformTextDiff(textDiff, op))
@@ -137,7 +137,7 @@ export const withReact = <T extends BaseEditor>(
     }
 
     const pendingSelection = EDITOR_TO_PENDING_SELECTION.get(e);
-    console.log('pendingSelection:', pendingSelection);
+    // console.log('pendingSelection:', pendingSelection);
     if (pendingSelection) {
       EDITOR_TO_PENDING_SELECTION.set(
         e,
@@ -154,7 +154,7 @@ export const withReact = <T extends BaseEditor>(
       EDITOR_TO_PENDING_ACTION.set(e, at ? { ...pendingAction, at } : null);
     }
 
-    console.log('pendingAction:', pendingAction);
+    // console.log('pendingAction:', pendingAction);
 
     switch (op.type) {
       case 'insert_text':

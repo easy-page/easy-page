@@ -10,7 +10,7 @@ import { isBatchingDirtyPaths } from './batch-dirty-paths';
 import { updateDirtyPaths } from './update-dirty-paths';
 
 export const apply: WithEditorFirstArg<Editor['apply']> = (editor, op) => {
-  console.log('pppppppppp:', op);
+  // console.log('pppppppppp:', op);
   for (const ref of Editor.pathRefs(editor)) {
     PathRef.transform(ref, op);
   }

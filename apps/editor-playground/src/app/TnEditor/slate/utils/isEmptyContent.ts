@@ -10,7 +10,7 @@ export const isEmptyContent = (
   }
 ) => {
   const nodes = editor.children || [];
-  console.log('isEmptyContent nodes:', nodes);
+  // console.log('isEmptyContent nodes:', nodes);
 
   // 检查节点的长度
   if (nodes.length === 0) return true;
