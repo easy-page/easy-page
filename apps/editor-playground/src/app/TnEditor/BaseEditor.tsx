@@ -69,7 +69,7 @@ export const BaseTnEditor = ({
         initialValue={initialValue}
       >
         {/* <FloatingToolbar editorId={editorId} /> */}
-        {/* <ElementToolbar /> */}
+        <ElementToolbar />
         <div className="flex flex-row relative w-full h-full">
           <Editable
             renderElement={editor.pluginManager.renderElement}
