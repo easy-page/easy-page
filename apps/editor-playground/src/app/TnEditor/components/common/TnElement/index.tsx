@@ -16,7 +16,6 @@ export type TnElementProps = RenderElementProps & {
   nodeChildrenStyle?: React.CSSProperties;
   addAfter?: React.ReactNode;
   addBeforeText?: React.ReactNode;
-  // CustomText?: React.FC<{ children: React.ReactNode }>;
 };
 
 /**

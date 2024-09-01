@@ -16,12 +16,10 @@ export const TodoElement = (props: RenderElementProps) => {
       addBeforeText={
         <div
           contentEditable={false}
-          onClick={(e) => {
+          onClick={() => {
             addBlockProperties(editor, {
               checked: !element.checked,
             });
-            e.stopPropagation();
-            e.preventDefault();
           }}
           className={classNames('select-none todo-checkbox', {
             'todo-checkbox-done': element.checked,
