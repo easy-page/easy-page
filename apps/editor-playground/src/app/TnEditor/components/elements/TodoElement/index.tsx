@@ -38,6 +38,8 @@ export const TodoElement = (props: RenderElementProps) => {
               //   checked: !element.checked,
               // });
             }
+            e.stopPropagation();
+            e.preventDefault();
           }}
         ></div>
       }

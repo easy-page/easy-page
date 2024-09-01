@@ -835,10 +835,10 @@ export const Editable = (props: EditableProps) => {
     // a leaky polyfill that only fires on keypresses or clicks. Instead, we
     // want to fire for any change to the selection inside the editor.
     // (2019/11/04) https://github.com/facebook/react/issues/5785
-    window.document.addEventListener(
-      'selectionchange',
-      scheduleOnDOMSelectionChange
-    );
+    // window.document.addEventListener(
+    //   'selectionchange',
+    //   scheduleOnDOMSelectionChange
+    // );
 
     // Listen for dragend and drop globally. In Firefox, if a drop handler
     // initiates an operation that causes the originally dragged element to
@@ -1111,6 +1111,7 @@ export const Editable = (props: EditableProps) => {
             )}
             onClick={useCallback(
               (event: React.MouseEvent<HTMLDivElement>) => {
+                console.log('>>>>>> on edit click');
                 if (
                   ReactEditor.hasTarget(editor, event.target) &&
                   !isEventHandled(event, attributes.onClick) &&

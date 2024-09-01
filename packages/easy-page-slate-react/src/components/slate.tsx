@@ -68,7 +68,7 @@ export const Slate = (props: {
       if (onChange) {
         onChange(editor.children);
       }
-      console.log('>>>>>>>> on context change');
+      console.log('>>>>>>>> on context change:', options?.operation);
       switch (options?.operation?.type) {
         case 'set_selection':
           onSelectionChange?.(editor.selection);
