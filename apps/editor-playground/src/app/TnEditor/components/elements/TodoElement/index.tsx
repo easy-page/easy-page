@@ -11,7 +11,7 @@ export const TodoElement = (props: RenderElementProps) => {
   return (
     <TnElement
       wrapperClassName="todo-block-wrapper"
-      blockNodeClassName="todo-block relative pl-[24px] flex flex-row items-center"
+      blockNodeClassName="todo-block relative pl-[24px] items-center"
       nodeChildrenClassName="todo-children ml-4"
       addBeforeText={
         <div
