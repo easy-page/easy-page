@@ -18,6 +18,14 @@ export const autoformatRules: AutoformatHandler[] = [
     type: ElementTypeEnum.TODO,
   },
   {
+    match: '【】',
+    triggerChar: ' ',
+    properties: {
+      extraDom: 'checkbox',
+    },
+    type: ElementTypeEnum.TODO,
+  },
+  {
     match: '###',
     triggerChar: ' ',
     properties: {

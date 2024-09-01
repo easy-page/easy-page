@@ -17,7 +17,6 @@ import { withAutoformats, autoformatRules, withInsertNode } from './slate';
 import { withBackwords } from './slate/overrides/withBackwords';
 import { createEditorWithHoc } from './slate/overrides/createEditorWithHoc';
 import { withInsertBreak } from './slate/overrides/withInsertBreak';
-import { withSelection } from './slate/overrides/withSelection';
 import { withApply } from './slate/overrides/withApply';
 import { onMouseUp } from './plugins/default/events/onMouseUp';
 import { onKeyboardEvent } from './plugins/default/events/onKeyboradEvent';
@@ -64,14 +63,14 @@ export const TnEditor = ({
     editor.pluginManager = new PluginManager({
       elementPlugins,
       eventPlugins: [
-        // onTabDown,
-        // onCtrlA,
-        // onMouseUp,
-        // onKeyboardEvent,
-        // onCommandB,
-        // onCommandI,
-        // onCommandU,
-        // onCommandShiftX,
+        onTabDown,
+        onCtrlA,
+        onMouseUp,
+        onKeyboardEvent,
+        onCommandB,
+        onCommandI,
+        onCommandU,
+        onCommandShiftX,
       ],
     });
     return editor;

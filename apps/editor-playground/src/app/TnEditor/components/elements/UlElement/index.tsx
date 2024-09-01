@@ -40,17 +40,12 @@ export const UlElement = (props: RenderElementProps) => {
         indentClass
       )}
       nodeChildrenClassName="list-children ml-4"
-      CustomText={({ children: textChildren }) => (
-        <>
-          <div contentEditable={false} className="mr-1 select-none">
-            <div className="bullet-dot-style text-[#1456F0]">{Icon}</div>
-          </div>
-          <div className={classNames('list-content pr-1')}>
-            {textChildren}
-            {showText && <Tips msg={'无法缩进当前内容块'} />}
-          </div>
-        </>
-      )}
+      addBeforeText={
+        <div contentEditable={false} className="mr-1 select-none">
+          <div className="bullet-dot-style text-[#1456F0]">{Icon}</div>
+        </div>
+      }
+      addAfterText={showText && <Tips msg={'无法缩进当前内容块'} />}
       {...props}
     />
   );
