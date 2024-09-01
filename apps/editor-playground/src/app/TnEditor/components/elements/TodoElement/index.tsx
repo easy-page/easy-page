@@ -4,43 +4,28 @@ import classNames from 'classnames';
 import { useEditorRef } from '../../../hooks';
 import './index.less';
 import { addBlockProperties } from '../../../slate/transform';
-import { useEffect } from 'react';
 
 export const TodoElement = (props: RenderElementProps) => {
   const { element } = props;
   const editor = useEditorRef();
-  useEffect(() => {
-    return () => {
-      console.log('zujian bei xiezai l ');
-    };
-  }, []);
   return (
     <TnElement
       wrapperClassName="todo-block-wrapper"
-      blockNodeClassName="todo-block relative pl-[24px]"
+      blockNodeClassName="todo-block relative pl-[24px] items-center"
       nodeChildrenClassName="todo-children ml-4"
       addBeforeText={
         <div
-          className={classNames('todo-content inline-flex', {
-            'task-done': element.checked,
-          })}
-          // onSelect={(e) => {
-          //   console.log('1213123123123');
-          //   e.stopPropagation();
-          //   e.preventDefault();
-          // }}
+          contentEditable={false}
           onClick={(e) => {
-            console.log('click eeeee:', e);
-            const rect = e.currentTarget.getBoundingClientRect();
-            if (rect.left > e.clientX) {
-              // 点击了伪元素
-              // addBlockProperties(editor, {
-              //   checked: !element.checked,
-              // });
-            }
+            addBlockProperties(editor, {
+              checked: !element.checked,
+            });
             e.stopPropagation();
             e.preventDefault();
           }}
+          className={classNames('select-none todo-checkbox', {
+            'todo-checkbox-done': element.checked,
+          })}
         ></div>
       }
       {...props}
