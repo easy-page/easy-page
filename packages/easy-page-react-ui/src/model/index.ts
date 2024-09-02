@@ -129,10 +129,9 @@ export class EasyPageStore<
   @computed getEffectedData(keys: string[]) {
     const result: Record<string, unknown> = {};
     keys.forEach((each) => {
-      result[each] = toJS(
+      result[each] =
         this.pageState[each as keyof PageState] ??
-          this.pageProps[each as keyof PageProps]
-      );
+        this.pageProps[each as keyof PageProps];
     });
 
     return result;
