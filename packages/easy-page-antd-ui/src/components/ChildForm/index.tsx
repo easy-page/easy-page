@@ -13,6 +13,7 @@ import {
   FormUtil,
   ValidateOnChange,
   connector,
+  getChangedKeys,
 } from '@easy-page/react-ui';
 import { reaction } from 'mobx';
 import { EditableConfig } from '@easy-page/react-ui/interface';
@@ -167,15 +168,29 @@ export const ChildForm = connector(
     >({});
     useEffect(() => {
       setChildFormContextData(store?.getEffectedData(childFormContext || []));
+      if (nodeInfo.id === 'subActivity') {
+        console.log('【设置】子活动 context');
+      }
 
       const disposer = reaction(
         () => store?.getEffectedData(childFormContext || []),
         (args, preArgs) => {
+          if (nodeInfo.id === 'subActivity') {
+            console.log('【设置】更新子活动 context:', args, preArgs);
+          }
+          const changedKeys = getChangedKeys(args, preArgs);
+          if (changedKeys.length === 0) {
+            console.log('【设置】更新子活动 context:，无变化');
+            return;
+          }
           setChildFormContextData(args);
         }
       );
 
       return () => {
+        if (nodeInfo.id === 'subActivity') {
+          console.log('【设置】卸载子活动 context');
+        }
         disposer?.();
         onChange({
           ...value,
