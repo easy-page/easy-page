@@ -151,21 +151,22 @@ export class EasyPage<
     this.dom = this.uiEngine.parse() as React.ReactNode;
   }
 
-  componentDidMount(): void {
-    // setTimeout(() => {
-    //   console.warn(
-    //     '解析组件时间-开始：',
-    //     new Date().getTime(),
-    //     new Date().toLocaleString()
-    //   );
-    //   this.setState({ ...this.state, timeStamp: new Date().getTime() });
-    //   console.warn(
-    //     '解析组件时间-结束：',
-    //     new Date().getTime(),
-    //     new Date().toLocaleString()
-    //   );
-    // }, 0);
-  }
+  // componentDidMount 空的这个会导致组件卸载
+  // componentDidMount(): void {
+  //   // setTimeout(() => {
+  //   //   console.warn(
+  //   //     '解析组件时间-开始：',
+  //   //     new Date().getTime(),
+  //   //     new Date().toLocaleString()
+  //   //   );
+  //   //   this.setState({ ...this.state, timeStamp: new Date().getTime() });
+  //   //   console.warn(
+  //   //     '解析组件时间-结束：',
+  //   //     new Date().getTime(),
+  //   //     new Date().toLocaleString()
+  //   //   );
+  //   // }, 0);
+  // }
 
   componentWillUnmount(): void {
     console.log('解析组件时间- easy page unmount');
@@ -189,7 +190,7 @@ export class EasyPage<
   }
 
   private isForm() {
-    return this.props.pageType === 'form';
+    return this.props.pageType !== 'page';
   }
 
   /**

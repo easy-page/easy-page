@@ -49,7 +49,6 @@ export const RadioGroup = connector(
       // className,
       ...baseProps
     } = props;
-    console.log('rrrrr baseProps:', baseProps);
     // const { status } = useContext(FormItemInputContext);
     // const hasError = status === 'error';
     return (
