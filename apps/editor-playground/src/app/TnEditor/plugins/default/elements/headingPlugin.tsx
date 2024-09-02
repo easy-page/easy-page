@@ -12,4 +12,5 @@ export const headingPlugin: TnEditorRenderPlugin = {
   },
   id: 'heading_plugin',
   name: '标题插件',
+  replaceWithDefault: true,
 };

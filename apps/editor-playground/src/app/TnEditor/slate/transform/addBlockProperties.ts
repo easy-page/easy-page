@@ -8,8 +8,6 @@ export const addBlockProperties = (
   properties: Omit<CustomElement, 'children' | 'type' | 'id'>,
   options?: {
     at?: Location;
-    /** 根据节点 ID 进行添加属性 */
-    id?: string;
   }
 ) => {
   if (!properties || Object.keys(properties).length === 0) {
@@ -24,9 +22,6 @@ export const addBlockProperties = (
         }
       : {
           match: (n) => {
-            if (options?.id) {
-              return (n as CustomElement).id === options?.id;
-            }
             return isBlockElement(n, editor);
           },
         }

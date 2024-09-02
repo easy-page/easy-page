@@ -19,6 +19,7 @@ const doBackwords = (
     deleteBackward: (unit: TextUnit) => void;
   }
 ) => {
+  console.log('【删除】进入删除');
   if (!curNode || !nodePath || nodePath.length === 0) {
     deleteBackward(unit);
     setTimeout(() => {

@@ -5,3 +5,4 @@ export * from './withoutNormalizing';
 export * from './addIndent';
 export * from './replaceWithNormalNode';
 export * from './addNormalNode';
+export * from './insertNormalNode';

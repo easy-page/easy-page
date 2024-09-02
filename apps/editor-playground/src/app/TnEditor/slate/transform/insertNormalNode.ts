@@ -3,7 +3,7 @@ import { ElementTypeEnum } from '../../constants';
 import { CustomEditor } from '../../interface';
 import { NodeInfo } from '../../plugins/default/events/utils/getCurNodeInfo';
 
-export const replaceWithNormalNode = (
+export const insertWithNormalNode = (
   editor: CustomEditor,
   {
     curNode,
@@ -16,12 +16,11 @@ export const replaceWithNormalNode = (
     /**
      * - 如果这里：curNode.path[0] + 1，那在删除的时候，就没有这个元素了。
      */
-    const newNodePath = curNode.path[0] !== undefined ? [curNode.path[0]] : [];
+    const newNodePath =
+      curNode.path[0] !== undefined ? [curNode.path[0] + 1] : [];
     if (newNodePath.length === 0) {
       return [];
     }
-    // 删除当前节点
-    editor.removeNodes({ at: curNode.path });
 
     // 添加一个新的节点
     editor.insertNodes(

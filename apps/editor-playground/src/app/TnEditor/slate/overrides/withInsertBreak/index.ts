@@ -1,10 +1,10 @@
 import { Editor } from 'slate';
 
-import { isListElement } from '../../utils';
 import { isEmptyTextNode } from '../../utils/isEmptyTextNode';
 import { getCurNodeInfo } from '../../../plugins/default/events/utils/getCurNodeInfo';
 import { replaceWithNormalNode } from '../../transform/replaceWithNormalNode';
-import { addNormalNode } from '../../transform';
+import { DEFAULT_ELEMENT_TYPE } from '../../../constants';
+import { insertWithNormalNode } from '../../transform';
 
 export const withInsertBreak = (editor: Editor) => {
   const { insertBreak } = editor;
@@ -16,19 +16,19 @@ export const withInsertBreak = (editor: Editor) => {
       return;
     }
 
-    /**
-     * - 当前行非列表元素，直接插入空元素
-     */
-    if (!isListElement(curNode.node)) {
-      console.log('【回车】当前非列表元素');
-      addNormalNode(editor, { curNode });
+    const plugins = editor.pluginManager.elementPlugins[curNode.node.type];
+    if (plugins.replaceWithDefault) {
+      insertWithNormalNode(editor, { curNode });
       return;
     }
 
     /**
-     * - 当前行是列表空元素，按回车，则插入默认元素
+     * - 当前若不是默认类型，并且是空的，则按回车用默认元素代替
      */
-    if (isListElement(curNode.node) && isEmptyTextNode(curNode.node)) {
+    if (
+      curNode.node?.type !== DEFAULT_ELEMENT_TYPE &&
+      isEmptyTextNode(curNode.node)
+    ) {
       console.log('【回车】替换当前元素');
       replaceWithNormalNode(editor, { curNode });
       return;

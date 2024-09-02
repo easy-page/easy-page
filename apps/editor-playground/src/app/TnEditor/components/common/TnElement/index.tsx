@@ -17,6 +17,7 @@ export type TnElementProps = RenderElementProps & {
   addAfter?: React.ReactNode;
   addBeforeText?: React.ReactNode;
   addAfterText?: React.ReactNode;
+  textContentClass?: React.ReactNode;
   // CustomText?: React.FC<{ children: React.ReactNode }>;
 };
 
@@ -37,6 +38,7 @@ export const TnElement = ({
   children,
   element,
   addAfter,
+  textContentClass,
   attributes,
 }: TnElementProps) => {
   const node = element as CustomElement;
@@ -71,7 +73,10 @@ export const TnElement = ({
           })}
         >
           {addBeforeText}
-          {textChildren}
+          {/** pr-1 如果不写，在 ul 里会看不到光标 */}
+          <div className={classNames('text-content', textContentClass)}>
+            {textChildren}
+          </div>
           {addAfterText}
         </div>
         <div

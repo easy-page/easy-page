@@ -28,6 +28,12 @@ export interface TnEditorRenderPlugin extends TnBasePlugin {
   /** 匹配元素，渲染组件，一个 type 类型，只能用一个插件来渲染 */
   elementType: string;
 
+  /**
+   * - 如果当前元素在按回车换行时，是否用默认的 P 元素替代
+   * - 设置为 true，则替换
+   */
+  replaceWithDefault?: boolean;
+
   /** 匹配后，渲染元素 */
   render: (props: RenderElementProps) => JSX.Element;
 

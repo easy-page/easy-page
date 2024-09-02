@@ -24,6 +24,7 @@ export default {
       yellow: '#e6c302',
       darkgray: '#273444',
       gray: '#8492a6',
+      
       lightgray: '#d3dce6',
     },
     fontFamily: {

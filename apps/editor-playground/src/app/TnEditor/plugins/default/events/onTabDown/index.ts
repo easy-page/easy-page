@@ -7,7 +7,7 @@ import {
   indentWithPropertiesAndMoveNodes,
   indentWithTips,
 } from './utils';
-import { isListElement, isTextElement } from '../../../../slate';
+import { isIndentElement, isTextElement } from '../../../../slate';
 import { indentWithAllList } from './utils/indentWithAllList';
 import { getCurNodeInfo } from '../utils/getCurNodeInfo';
 import { stopEventAfterCallback } from '../utils/indx';
@@ -63,7 +63,7 @@ export const onTabDown: TNEditorEventPlugin = {
       return;
     }
 
-    if (isTextElement(lastNode.node) && isListElement(curNode.node)) {
+    if (isTextElement(lastNode.node) && isIndentElement(curNode.node)) {
       // 3.上一个元素是文本，当前元素是列表
       stopEventAfterCallback(event, () =>
         indentWithMoveNodes({ editor, curNodeInfo })
@@ -72,7 +72,7 @@ export const onTabDown: TNEditorEventPlugin = {
       return;
     }
 
-    if (!isListElement(curNode.node) && !isListElement(lastNode.node)) {
+    if (!isIndentElement(curNode.node) && !isIndentElement(lastNode.node)) {
       // 4. 上一个不是列表，当前元素也不是列表
       stopEventAfterCallback(event, () =>
         indentWithProperties({ editor, curNodeInfo })
@@ -80,7 +80,7 @@ export const onTabDown: TNEditorEventPlugin = {
       console.log('缩进 66666666');
       return;
     }
-    if (isListElement(lastNode.node) && isTextElement(curNode.node)) {
+    if (isIndentElement(lastNode.node) && isTextElement(curNode.node)) {
       // 上一个元素是列表，当前元素是文本
       stopEventAfterCallback(event, () =>
         indentWithPropertiesAndMoveNodes({
@@ -91,7 +91,7 @@ export const onTabDown: TNEditorEventPlugin = {
       console.log('缩进 7777777');
       return;
     }
-    if (isListElement(lastNode.node) && isListElement(curNode.node)) {
+    if (isIndentElement(lastNode.node) && isIndentElement(curNode.node)) {
       // 上一个元素是列表，当前元素是文本
       stopEventAfterCallback(event, () =>
         indentWithAllList({
@@ -103,9 +103,9 @@ export const onTabDown: TNEditorEventPlugin = {
       return;
     }
     if (
-      !isListElement(lastNode.node) &&
+      !isIndentElement(lastNode.node) &&
       !isTextElement(lastNode.node) &&
-      isListElement(curNode.node)
+      isIndentElement(curNode.node)
     ) {
       /**
        * - 上一个元素非列表且非文本(超链接算文本)

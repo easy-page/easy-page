@@ -39,6 +39,8 @@ export const UlElement = (props: RenderElementProps) => {
         'list list-style-group-1 flex flex-row mb-2',
         indentClass
       )}
+      /** pr-1 如果不写，在 ul 里会看不到光标 */
+      textContentClass=" pr-1"
       nodeChildrenClassName="list-children ml-4"
       addBeforeText={
         <div contentEditable={false} className="mr-1 select-none">

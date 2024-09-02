@@ -4,4 +4,4 @@ export * from './isBlockElement';
 export * from './isEmptyContent';
 export * from './isFirstNode';
 export * from './isTextElement';
-export * from './isListElement';
+export * from './isIndentElement';
