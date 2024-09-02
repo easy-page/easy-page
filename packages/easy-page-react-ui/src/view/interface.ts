@@ -33,7 +33,8 @@ export type EasyPageEffect<PageState> = {
 
 export type EasyPageOnChangeContext<PageState> = {
   value: Partial<PageState>;
-  values: Record<string, any>;
+  /** 这样会卡顿，用户通过  formUtil 自行获取 */
+  // values: Record<string, any>;
   oriFormData: Partial<PageState>;
   formUtil?: FormUtil<PageState> | null;
 };

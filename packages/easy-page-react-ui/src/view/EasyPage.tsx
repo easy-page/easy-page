@@ -151,21 +151,22 @@ export class EasyPage<
     this.dom = this.uiEngine.parse() as React.ReactNode;
   }
 
-  componentDidMount(): void {
-    // setTimeout(() => {
-    //   console.warn(
-    //     '解析组件时间-开始：',
-    //     new Date().getTime(),
-    //     new Date().toLocaleString()
-    //   );
-    //   this.setState({ ...this.state, timeStamp: new Date().getTime() });
-    //   console.warn(
-    //     '解析组件时间-结束：',
-    //     new Date().getTime(),
-    //     new Date().toLocaleString()
-    //   );
-    // }, 0);
-  }
+  // componentDidMount 空的这个会导致组件卸载
+  // componentDidMount(): void {
+  //   // setTimeout(() => {
+  //   //   console.warn(
+  //   //     '解析组件时间-开始：',
+  //   //     new Date().getTime(),
+  //   //     new Date().toLocaleString()
+  //   //   );
+  //   //   this.setState({ ...this.state, timeStamp: new Date().getTime() });
+  //   //   console.warn(
+  //   //     '解析组件时间-结束：',
+  //   //     new Date().getTime(),
+  //   //     new Date().toLocaleString()
+  //   //   );
+  //   // }, 0);
+  // }
 
   componentWillUnmount(): void {
     console.log('解析组件时间- easy page unmount');
@@ -340,24 +341,25 @@ export class EasyPage<
       },
       /** 用于表单的 onChange 到外部 */
       __internal_props_handleChange: (val: Partial<PageState>) => {
-        const formData =
-          this.formUtil?.getFormData({
-            showChildren: this.props.showChildren,
-          }) || {};
-        const oriFormData = this.formUtil?.getOriginFormData() || {};
-        const context: EasyPageOnChangeContext<PageState> = {
-          value: val,
-          values: formData,
-          oriFormData,
-          formUtil: this.formUtil,
-        };
-        this.handleUserEffects(context);
-        return this.props.onChange?.({
-          ...context,
-          hasChanged(key) {
-            return Object.keys(val).includes(key as any);
-          },
-        });
+        /**
+         * - 在子表单嵌套场景下，持续的获取：getFormData 会卡顿，因此暴露出去用户自行决定是否获取。
+         */
+
+        setTimeout(() => {
+          const oriFormData = this.formUtil?.getOriginFormData() || {};
+          const context: EasyPageOnChangeContext<PageState> = {
+            value: val,
+            oriFormData,
+            formUtil: this.formUtil,
+          };
+          this.handleUserEffects(context);
+          this.props.onChange?.({
+            ...context,
+            hasChanged(key) {
+              return Object.keys(val).includes(key as any);
+            },
+          });
+        }, 0);
       },
       ...((uiConfig[componentName as keyof typeof uiConfig] || {}) as any),
       ...extraProps,

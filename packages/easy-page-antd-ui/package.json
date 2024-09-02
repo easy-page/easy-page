@@ -23,7 +23,7 @@
   "dependencies": {
     "classnames": "^2.5.1",
     "lodash": "^4.17.21",
-    "@easy-page/react-ui": "^1.0.42"
+    "@easy-page/react-ui": "^1.0.49"
   },
   "devDependencies": {
     "@ant-design/icons": "^5.2.6",
