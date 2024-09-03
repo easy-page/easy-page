@@ -12,17 +12,13 @@ export const autoformatRules: AutoformatHandler[] = [
   {
     match: '[]',
     triggerChar: ' ',
-    properties: {
-      extraDom: 'checkbox',
-    },
+
     type: ElementTypeEnum.TODO,
   },
   {
     match: '【】',
     triggerChar: ' ',
-    properties: {
-      extraDom: 'checkbox',
-    },
+
     type: ElementTypeEnum.TODO,
   },
   {

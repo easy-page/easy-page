@@ -27,8 +27,6 @@ export type CustomElement = {
   selected?: boolean;
   /** 元素的属性量级 */
   size?: number;
-  // TODO 完善枚举
-  extraDom?: string;
   type: ElementTypeEnum;
   // 每个节点唯一 ID，用于悬浮定位
   id: string;

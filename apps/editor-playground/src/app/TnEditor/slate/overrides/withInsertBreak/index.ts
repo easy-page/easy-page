@@ -4,7 +4,7 @@ import { isEmptyTextNode } from '../../utils/isEmptyTextNode';
 import { getCurNodeInfo } from '../../../plugins/default/events/utils/getCurNodeInfo';
 import { replaceWithNormalNode } from '../../transform/replaceWithNormalNode';
 import { DEFAULT_ELEMENT_TYPE } from '../../../constants';
-import { insertWithNormalNode } from '../../transform';
+import { insertCurNode, insertWithNormalNode } from '../../transform';
 
 export const withInsertBreak = (editor: Editor) => {
   const { insertBreak } = editor;
@@ -33,6 +33,17 @@ export const withInsertBreak = (editor: Editor) => {
       replaceWithNormalNode(editor, { curNode });
       return;
     }
+
+    if (plugins.replaceWithDefaultProperties) {
+      const config = plugins.replaceWithDefaultProperties;
+      insertCurNode(editor, {
+        curNode,
+        excludeProperties: config.exclude,
+        includeProperties: config.include,
+      });
+      return;
+    }
+
     insertBreak();
   };
 

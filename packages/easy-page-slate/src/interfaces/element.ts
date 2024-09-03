@@ -25,6 +25,7 @@ export interface ElementInterface {
    * Check if a value implements the `Element` interface.
    */
   isElement: (value: any) => value is Element;
+  isTnElement: (value: any) => value is Element;
 
   /**
    * Check if a value is an array of `Element` objects.
@@ -73,6 +74,14 @@ export const Element: ElementInterface = {
   },
 
   isElement,
+
+  /**
+   * - 和 isElement 的区别是不需要 children
+   * - 只要有 type 就是
+   */
+  isTnElement: (value: any) => {
+    return Boolean(value.type);
+  },
 
   isElementList(value: any): value is Element[] {
     return Array.isArray(value) && value.every((val) => Element.isElement(val));

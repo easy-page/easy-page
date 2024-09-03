@@ -1,4 +1,5 @@
 import { RenderElementProps } from 'slate-react';
+import { CustomElement } from '../../interface';
 
 export interface TnBasePlugin {
   /** 插件 ID */
@@ -33,6 +34,18 @@ export interface TnEditorRenderPlugin extends TnBasePlugin {
    * - 设置为 true，则替换
    */
   replaceWithDefault?: boolean;
+
+  /**
+   * - 如果当前元素在按回车换行时，元素相同，属性可选择不要哪些属性
+   * - 若和 replaceWithDefault 同时设置，replaceWithDefault 优先级更高
+   * @param props
+   * @returns
+   */
+  replaceWithDefaultProperties?: {
+    exclude?: (keyof CustomElement)[];
+    /** 如果和 exclude 一起配置，则 include 优先级更高 */
+    include?: (keyof CustomElement)[];
+  };
 
   /** 匹配后，渲染元素 */
   render: (props: RenderElementProps) => JSX.Element;

@@ -10,6 +10,9 @@ export const todoPlugin: TnEditorRenderPlugin = {
   render: (props) => {
     return <TodoElement {...props} />;
   },
+  replaceWithDefaultProperties: {
+    exclude: ['checked'],
+  },
   id: 'todo_plugin',
   name: 'TODO 插件',
 };

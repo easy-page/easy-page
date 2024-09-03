@@ -6,3 +6,4 @@ export * from './addIndent';
 export * from './replaceWithNormalNode';
 export * from './addNormalNode';
 export * from './insertNormalNode';
+export * from './insertCurNode';

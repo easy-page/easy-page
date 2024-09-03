@@ -78,7 +78,11 @@ export const BaseTnEditor = ({
               if (editor.children?.length === 1) {
                 const { curNode } = getCurNodeInfo(editor);
                 if (curNode) {
-                  replaceWithNormalNode(editor, { curNode });
+                  /** 删除当前节点，并在当前节点做替换 */
+                  replaceWithNormalNode(editor, {
+                    curNode,
+                    inCurrentNode: true,
+                  });
                 }
               }
             }}

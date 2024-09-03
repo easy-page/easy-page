@@ -30,7 +30,6 @@ export const TodoElement = (props: RenderElementProps) => {
         <div
           contentEditable={false}
           onClick={(e) => {
-            console.log('ererqwerewr:e', e);
             const path = findNodePath(editor, element);
             if (path) {
               addBlockProperties(
