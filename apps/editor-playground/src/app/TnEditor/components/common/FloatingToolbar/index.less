@@ -7,7 +7,7 @@ button {
 .ToolbarRoot {
 	display: flex;
 	padding: 10px;
-	width: 60%;
+	width: 25%;
 	min-width: max-content;
 	border-radius: 6px;
 	background-color: white;
@@ -85,4 +85,17 @@ button {
 .ToolbarButton:hover {
 	background-color: var(--violet-10);
 	color: white;
+}
+.ToolbarToggleItem{
+	svg:nth-of-type(2){
+		transition: transform 0.5s ease; 
+	}
+}
+.ToolbarToggleItem:hover{
+	svg:nth-of-type(2){
+		transform: rotate(180deg);
+	}
+}
+.active{
+	color: #356dee;
 }

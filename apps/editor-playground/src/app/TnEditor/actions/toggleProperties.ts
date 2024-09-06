@@ -39,7 +39,7 @@ const getPropertiesToAdd = (
 /** 修改节点属性， 除了 type 以外 */
 export const toggleProperties = (
 	editor: Editor,
-	properties: Omit<CustomElement, 'children' | 'type'>
+	properties: Omit<CustomElement, 'children' | 'type' | 'id'>
 ) => {
 	if (!editor.selection) {
 		return;

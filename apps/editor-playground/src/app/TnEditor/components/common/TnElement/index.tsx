@@ -1,6 +1,6 @@
 import { RenderElementProps } from 'slate-react';
 import classNames from 'classnames';
-import { CustomElement } from '../../../interface';
+import { AlignEnum, CustomElement } from '../../../interface';
 import { useEditorElementRefs } from '../../../store';
 import React, { useMemo, useRef } from 'react';
 import { isEmptyNode } from '../../../slate/utils/isEmptyNode';
@@ -57,6 +57,9 @@ export const TnElement = ({
         <div
           className={classNames('block-node', blockNodeClassName, {
             isEmpty: isEmpty,
+            'flex justify-center': element.align === AlignEnum.Center,
+            'flex justify-start': element.align === AlignEnum.Left,
+            'flex justify-end': element.align === AlignEnum.Right,
           })}
           style={blockNodeStyle}
           data-block-id={element.id}

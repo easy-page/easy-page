@@ -16,6 +16,12 @@ export interface CustomEditor extends BaseEditor, ReactEditor, HistoryEditor {
   ) => void;
 }
 
+export enum AlignEnum {
+  Left = 'left',
+  Center = 'center',
+  Right = 'right',
+}
+
 export type CustomElement = {
   /** 加此属性后可以缩进一次 */
   indent?: boolean;
@@ -30,7 +36,7 @@ export type CustomElement = {
   type: ElementTypeEnum;
   // 每个节点唯一 ID，用于悬浮定位
   id: string;
-
+  align?: AlignEnum;
   /** 是否被选中，用于任务类型组件 */
   checked?: boolean;
   children: (CustomElement | FormattedText)[];
