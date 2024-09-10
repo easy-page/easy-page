@@ -220,9 +220,10 @@ export const ChildForm = connector(
           const formUtils = curValue.formUtils || {};
           formUtils[id] = formRef;
           const val = {
-            ...value,
+            ...curValue,
             formUtils,
           };
+
           store.debugger?.addOnChange(nodeInfo.id, val, {
             triggerSence: TriggerChangeSence.FromChildFormRefChange,
           });
@@ -265,7 +266,7 @@ export const ChildForm = connector(
           const { childForms } = curValue;
           const newId = generateId(childFormIdPrefix);
           const val = {
-            ...value,
+            ...curValue,
             childForms: [
               ...childForms,
               {

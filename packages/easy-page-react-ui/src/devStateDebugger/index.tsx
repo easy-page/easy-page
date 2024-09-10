@@ -41,14 +41,14 @@ export class DevStateDeugger {
     return `${id}_value_log`;
   }
 
-  printDefaultValueLog(id: string) {
+  printDefaultValueLog = (id: string) => {
     const fieldKey = this.getFieldKey(id);
     const store = this.getStore();
 
     const fieldValueLogs = store[fieldKey] as DefaultValueInfo[];
 
     console.table(fieldValueLogs);
-  }
+  };
 
   setValuesInfo(logsInfo: Record<string, DefaultValueInfo[]>) {
     (window as any)[this.debuggerId] = (window as any)[this.debuggerId] || {};
@@ -63,19 +63,19 @@ export class DevStateDeugger {
     });
   }
 
-  getStore() {
+  getStore = () => {
     return ((window as any)[this.debuggerId] || {}) as Record<
       string,
       LoggerInfo[] | DefaultValueInfo[]
     >;
-  }
+  };
 
-  setStore(id: string, loggs: LoggerInfo[]) {
+  setStore = (id: string, loggs: LoggerInfo[]) => {
     (window as any)[this.debuggerId] = (window as any)[this.debuggerId] || {};
     (window as any)[this.debuggerId][id] = loggs;
-  }
+  };
 
-  printLogs(id: string) {
+  printLogs = (id: string) => {
     const logs = this.getStore();
     const fieldLogs = (logs[id] || []) as LoggerInfo[];
     console.log('logs store:', logs, id, fieldLogs);
@@ -87,9 +87,9 @@ export class DevStateDeugger {
         };
       })
     );
-  }
+  };
 
-  prepareValue(val: any) {
+  prepareValue = (val: any) => {
     if (Array.isArray(val)) {
       return [...val];
     }
@@ -97,9 +97,9 @@ export class DevStateDeugger {
       return { ...val };
     }
     return val;
-  }
+  };
 
-  addOnChange(
+  addOnChange = (
     id: string,
     value: any,
     {
@@ -107,7 +107,7 @@ export class DevStateDeugger {
     }: {
       triggerSence: string;
     }
-  ) {
+  ) => {
     /** key 为字段 id， value 为 onChange 日志，最多存十条 */
     const logs = this.getStore();
     const fieldLogs = (logs[id] || []) as LoggerInfo[];
@@ -121,7 +121,7 @@ export class DevStateDeugger {
       triggerSence,
     });
     this.setStore(id, fieldLogs);
-  }
+  };
 }
 
 export * from './const';
