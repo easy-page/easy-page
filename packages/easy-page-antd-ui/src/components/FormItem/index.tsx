@@ -105,7 +105,11 @@ const getLabel = (options: {
   }
   const curTooltip =
     typeof tooltip === 'string' ? (
-      <Tooltip style={{ display: 'inline' }} title={tooltip}>
+      <Tooltip
+        style={{ display: 'inline' }}
+        rootClassName="whitespace-pre-line"
+        title={tooltip}
+      >
         <QuestionCircleOutlined />
       </Tooltip>
     ) : (

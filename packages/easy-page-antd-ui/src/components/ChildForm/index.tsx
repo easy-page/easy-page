@@ -217,6 +217,7 @@ export const ChildForm = connector(
         }}
         setChildFormRef={(formRef: FormUtil<any>, id: string) => {
           const curValue = store.getState(nodeInfo.id);
+          console.log('set child form ref:', nodeInfo.id, curValue);
           const formUtils = curValue.formUtils || {};
           formUtils[id] = formRef;
           const val = {
