@@ -90,12 +90,49 @@ button {
 	svg:nth-of-type(2){
 		transition: transform 0.5s ease; 
 	}
-}
-.ToolbarToggleItem:hover{
-	svg:nth-of-type(2){
+
+	.highlightIcon{
+		border-radius: 4px;
+		width: 20px;
+		height: 20px;
+		display: inline-block;
+		// background-color: rgba(255, 246, 122, 0.8);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid red;
+	}
+	.textColorIcon:hover{
+		background-color: rgba(31, 35, 41, 0.12);
+	}
+	
+	.rotateIcon{
 		transform: rotate(180deg);
 	}
 }
+
 .active{
 	color: #356dee;
 }
+
+.textColor{
+	border: 1px solid #D7D9DB;
+	width: 25px;
+	height: 25px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 3px;
+}
+.transparent{
+	border: 1px solid #D7D9DB;
+}
+.bgColor{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius: 4px;
+	margin-right: 3px;
+}
+

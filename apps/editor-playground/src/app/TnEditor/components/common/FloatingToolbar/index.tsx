@@ -31,16 +31,11 @@ import { PortalBody } from '../PortalBody';
 import React, { useState } from 'react';
 import { toggleLeafStyle } from '../../../actions';
 import { useComposedRef, useEditorRef } from '../../../hooks';
-import { H1 } from '../icons/H1';
-import { H2 } from '../icons/H2';
-import { H3 } from '../icons/H3';
-import { H4 } from '../icons/H4';
-import { H5 } from '../icons/H5';
-import { H6 } from '../icons/H6';
-import { TextAlignMent } from '../icons/TextAlignMent';
+import { TextAlignMent } from './icons/TextAlignMent';
 import { AlignEnum } from '../../../interface';
 import { addBlockProperties } from '../../../slate/transform';
-import { Code } from '../icons/Code';
+import { DropdownCom } from './Dropdown';
+import { Code, Fill, H1, H2, H3, H4, H5, H6, TextColor } from './icons';
 
 export type BaseFloatingToolbarProps = {
   state?: FloatingToolbarState;
@@ -163,6 +158,8 @@ export const FloatingToolbar = React.forwardRef<
   const editor = useEditorRef(editorId);
   const [active, setActive] = useState(0);
   const [textAlignActive, setTextAlignActive] = useState(0);
+  const [isTextShow, setTextIsShow] = useState(false);
+  const [isTextColorShow, setTextColorIsShow] = useState(false);
 
   const items: MenuProps['items'] = titleArr.map((item, index) => {
     return {
@@ -212,6 +209,8 @@ export const FloatingToolbar = React.forwardRef<
     }
   );
 
+ 
+
   return (
     <BaseFloatingToolbar
       {...props}
@@ -229,6 +228,7 @@ export const FloatingToolbar = React.forwardRef<
             info: { source: 'trigger' | 'menu' }
           ) => {
             console.log('onOpenChange', open);
+            setTextIsShow(open);
           }}
         >
           <RUToolbar.ToggleItem
@@ -240,7 +240,12 @@ export const FloatingToolbar = React.forwardRef<
             }}
           >
             {titleArr[active].com}
-            <ChevronDownIcon className="arrow ml-1" />
+            <ChevronDownIcon
+              className={classNames(
+                'arrow ml-1',
+                isTextShow ? 'rotateIcon' : ''
+              )}
+            />
           </RUToolbar.ToggleItem>
         </Dropdown>
       </RUToolbar.ToggleGroup>
@@ -271,7 +276,9 @@ export const FloatingToolbar = React.forwardRef<
             <ChevronDownIcon className="arrow ml-1" />
           </RUToolbar.ToggleItem>
         </Dropdown>
+        
       </RUToolbar.ToggleGroup>
+
 
       <RUToolbar.Separator className="ToolbarSeparator" />
 
@@ -355,8 +362,8 @@ export const FloatingToolbar = React.forwardRef<
         <Tooltip title="代码（Ctrl + ⌘ + C）">
           <RUToolbar.ToggleItem
             className="ToolbarToggleItem"
-            value="link"
-            aria-label="链接"
+            value="code"
+            aria-label="代码"
             onClick={() => {
               // toggleLeafStyle(editor, { textDecoration: 'underline', textUnderlineOffset: '0.2em', textDecorationSkipInk: 'none' });
             }}
@@ -364,18 +371,11 @@ export const FloatingToolbar = React.forwardRef<
             <Code />
           </RUToolbar.ToggleItem>
         </Tooltip>
+        <DropdownCom icon={<TextColor />} value="textColor" label="字体颜色"/>
+        <DropdownCom icon={<Fill />} value="elementFillColor" label="字体背景颜色"/>
       </RUToolbar.ToggleGroup>
 
       <RUToolbar.Separator className="ToolbarSeparator" />
-
-      {/* <RUToolbar.Link
-        className="ToolbarLink"
-        href="#"
-        target="_blank"
-        style={{ marginRight: 10 }}
-      >
-        Edited 2 hours ago
-      </RUToolbar.Link> */}
     </BaseFloatingToolbar>
   );
 });
