@@ -25,6 +25,8 @@ export type BaseFormItemProps = AntdFormItemProps & {
   /** 可读模式下显示 */
   // customView?: React.FC<Omit<FormItemProps, 'customExtra'>>
   disabled?: boolean;
+  /** 当字段处于 disabled 时，不进行验证 */
+  notValidWhenDisabled?: boolean;
 };
 
 export type FormItemEffectType = {
@@ -48,9 +50,11 @@ const convertValidator = ({
   defaultValues,
   store,
   nodeInfo,
+  notValidWhenDisabled,
   handleChange,
 }: {
   rules?: Rule[];
+  notValidWhenDisabled?: boolean;
   validate?: Validate<any, any, any>;
   store: EasyPageStore<any, any>;
   nodeInfo: SchemaNodeInfo<Record<string, any>, Record<string, any>>;
@@ -70,6 +74,9 @@ const convertValidator = ({
       value: any,
       callback: (errorMsg?: string) => void
     ) {
+      if (notValidWhenDisabled) {
+        return Promise.resolve({ success: true });
+      }
       // console.log('aaa:', nodeInfo.id);
       /** 只传递副作用值 */
       const res = await validate?.({
@@ -176,6 +183,7 @@ export const FormItem = connector(
       required,
       validateTrigger,
       disabled,
+      notValidWhenDisabled,
       ...baseProps
     } = props;
     const {
@@ -229,6 +237,7 @@ export const FormItem = connector(
         rules={convertValidator({
           required,
           rules,
+          notValidWhenDisabled,
           defaultValues: store.getDefaultValues(),
           nodeInfo,
           validate: nodeInfo.validate,
