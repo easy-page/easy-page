@@ -42,7 +42,7 @@ declare module '@easy-page/react-ui/interface' {
 export const RadioGroup = connector(
   React.memo((props: RadioGroupProps) => {
     const {
-      frameworkProps: _,
+      frameworkProps: { effectedResult = {} },
       onChange,
       value,
       handleChange,
@@ -70,6 +70,7 @@ export const RadioGroup = connector(
           });
         }}
         {...baseProps}
+        {...effectedResult}
       />
     );
   })
