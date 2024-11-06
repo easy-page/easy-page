@@ -172,6 +172,10 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             formUtil?.setField(id, result.fieldValue, {
               validate: result.validate ?? true,
             });
+
+            if (handleChange) {
+              handleChange({ [id]: result.fieldValue });
+            }
           }
 
           /** 如果 editable 变化了，需要刷新 upt */
