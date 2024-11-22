@@ -5,7 +5,7 @@ export const demandName = nodeUtil.createField(
   '',
 
   {
-    value: '',
+    value: '1',
   },
   {
     input: {
