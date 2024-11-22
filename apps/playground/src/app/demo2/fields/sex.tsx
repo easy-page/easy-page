@@ -1,9 +1,14 @@
-import { Empty, RadioEffectedType, nodeUtil } from '@easy-page/antd-ui';
+import {
+  Empty,
+  RadioEffectedType,
+  RadioGroupEffectType,
+  nodeUtil,
+} from '@easy-page/antd-ui';
 
 export const sex = nodeUtil
-  .createField<string, any>(
-    'inputIdsWay',
-    '录入方式',
+  .createField<string, any, any, RadioGroupEffectType>(
+    'sex',
+    '性别',
     {
       value: `test_1`,
       mode: 'single',
@@ -14,6 +19,20 @@ export const sex = nodeUtil
         }
         return { success: true };
       },
+      actions: [
+        {
+          initRun: true,
+          effectedKeys: ['name'],
+          action: ({ effectedData, initRun }) => {
+            console.log('initRuninitRun:', initRun);
+            const name = effectedData['name'];
+            if (name === '1') {
+              return { effectResult: { disabled: true } };
+            }
+            return { effectResult: {} };
+          },
+        },
+      ],
     }
     // {
     //   layout: {
@@ -26,10 +45,8 @@ export const sex = nodeUtil
   .appendChildren([
     nodeUtil.createNode('test_1', {
       name: '录入 ID',
-      when: {
-        show(context) {
-          return false;
-        },
-      },
+    }),
+    nodeUtil.createNode('test_12', {
+      name: '录入 ID2',
     }),
   ]);

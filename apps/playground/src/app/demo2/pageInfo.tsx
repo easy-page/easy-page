@@ -19,9 +19,8 @@ const pageUtil = new PageUtil({
 });
 
 pageUtil.addFields([
-  check2,
-  desc,
-  customField,
+  demandName,
+  sex,
   // desc1(),
   // goods,
   // hobby,

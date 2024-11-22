@@ -9,7 +9,8 @@ import { getDefaultVisible } from './getDefaultVisible';
 import { TriggerChangeSence } from '../devStateDebugger/const';
 import { DefaultPageProps } from '../types';
 
-const DefaultEffectedKeys: Array<keyof DefaultPageProps<any>> = ['editable'];
+/** 保证 editable 的默认刷新，会需要用户在：context 上 useMemo 上下文变化，否则会引起额外的刷新，导致副作用执行异常 */
+const DefaultEffectedKeys: Array<keyof DefaultPageProps<any>> = [];
 /**
  * - 处理一些通用逻辑
  * - 处理一些特化逻辑

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Form, Select } from 'antd';
 import { DemoTemplate } from '../components/DemoTemplate';
 import { Demo2 } from '../demo2';
 
