@@ -173,10 +173,12 @@ export function connector(Element: React.JSXElementConstructor<any>) {
             formUtil?.setField(id, result.fieldValue, {
               validate: result.validate ?? true,
             });
-
-            if (handleChange) {
-              handleChange({ [id]: result.fieldValue });
-            }
+            /**
+             * - 如果在此处添加 onChange，会导致副作用循环。理论上，只有正常的字段值变化才能通知。这种不允许通知
+             */
+            // if (handleChange) {
+            //   handleChange({ [id]: result.fieldValue });
+            // }
           }
 
           /** 如果 editable 变化了，需要刷新 upt */
