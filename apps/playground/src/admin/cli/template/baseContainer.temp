@@ -1,6 +1,0 @@
-${{mappingImport}}
-${{import}}
-
-export const ${{name}} = ${{mappingInfo}}.containersMap[${{componentId}}]().appendChildren([
-  ${{children}}
-])

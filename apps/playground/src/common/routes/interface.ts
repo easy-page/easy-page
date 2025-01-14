@@ -1,1 +1,0 @@
-export type ToPageHandler<T> = (params: T, target: '_self' | '_blank') => void;

@@ -1,7 +1,0 @@
-import { SubFormIds } from '@/common/constants/fieldMaps'
-import { SubFormType } from '../../../common'
-${{import}}
-
-export const ${{name}}: Partial<Record<SubFormIds, SubFormType>> = {
-  ${{children}}
-}

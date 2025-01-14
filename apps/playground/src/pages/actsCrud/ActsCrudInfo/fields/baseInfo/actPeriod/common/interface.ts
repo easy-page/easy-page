@@ -1,1 +1,0 @@
-export type Period = [string, string];

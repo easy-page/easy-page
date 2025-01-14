@@ -1,7 +1,0 @@
-import { CategoryCode } from "@/common/apis"
-
-export const ${{actType-allUppercase}}_FACTOR_CODES = [
-  ${{factor}}
-]
-
-export const ${{actType-allUppercase}}_CATEGORIES = [CategoryCode.Poi, CategoryCode.Sku]

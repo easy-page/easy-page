@@ -1,5 +1,0 @@
-${{import}}
-
-export const ${{name}} = [
-  ${{children}}
-]

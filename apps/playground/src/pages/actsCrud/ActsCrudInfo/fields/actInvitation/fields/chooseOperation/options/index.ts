@@ -1,6 +1,0 @@
-export * from './appendPoi'
-export * from './limit'
-export * from './noLimit'
-export * from './noOperation'
-export * from './removePoi'
-export * from './replaceAll'

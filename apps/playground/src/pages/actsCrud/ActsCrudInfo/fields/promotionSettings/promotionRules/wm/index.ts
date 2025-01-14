@@ -1,6 +1,0 @@
-export * from './discountPriceRange'
-export * from './discountPriceRateRange'
-export * from './stock'
-export * from './subsidy'
-export * from './facePeople'
-export * from './priceLimit'

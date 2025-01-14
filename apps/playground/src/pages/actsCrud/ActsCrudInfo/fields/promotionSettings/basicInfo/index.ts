@@ -1,5 +1,0 @@
-export * from './actName'
-export * from './canApplyGoodNumber'
-export * from './dayStock'
-export * from './orderLimit'
-export * from './targetUser'
