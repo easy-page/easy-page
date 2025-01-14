@@ -1,0 +1,291 @@
+---
+name: Tree
+title: 树形控件
+route: /components/Tree
+sidebar: true
+---
+
+import { Playground, PropsTable } from 'docz'
+import { TreeDoc, TreeDataDoc } from './demo/treeDoc'
+import Base from './demo/base'
+import BaseSource from '!raw-loader!./demo/base'
+import Lazy from './demo/lazy'
+import LazySource from '!raw-loader!./demo/lazy'
+import DisableNode from './demo/disableNode.tsx'
+import DisableNodeSource from '!raw-loader!./demo/disableNode.tsx'
+import DynamicNode from './demo/dynamicNode.tsx'
+import DynamicNodeSource from '!raw-loader!./demo/dynamicNode.tsx'
+import Events from './demo/events.tsx'
+import EventsSource from '!raw-loader!./demo/events.tsx'
+import CustomLabel from './demo/customLabel.tsx'
+import CustomLabelSource from '!raw-loader!./demo/customLabel.tsx'
+import HandleMethod from './demo/handleMethod.tsx'
+import HandleMethodSource from '!raw-loader!./demo/handleMethod.tsx'
+import ExpandNode from './demo/expandNode.tsx'
+import ExpandNodeSource from '!raw-loader!./demo/expandNode.tsx'
+import TreeCheckboxSelectedKeysDemo from './demo/checkboxSelectedKeys.tsx'
+import TreeCheckboxSelectedKeysDemoSource from '!raw-loader!./demo/checkboxSelectedKeys.tsx'
+import ParameterAlias from './demo/parameterAlias.tsx'
+import ParameterAliasSource from '!raw-loader!./demo/parameterAlias.tsx'
+import SearchTree from './demo/search.tsx'
+import SearchTreeSource from '!raw-loader!./demo/search.tsx'
+import DragTree from './demo/drag.tsx'
+import DragTreeSource from '!raw-loader!./demo/drag.tsx'
+
+import CustomIconTree from './demo/customIcon.tsx'
+import CustomIconTreeSource from '!raw-loader!./demo/customIcon.tsx'
+
+import ExpandedKeys from './demo/ExpandedKeys.tsx'
+import ExpandedKeysSource from '!raw-loader!./demo/ExpandedKeys.tsx'
+
+import HeightTree from './demo/height.tsx'
+import HeightTreeSource from '!raw-loader!./demo/height.tsx'
+
+import ConfigTree from './demo/config'
+import ConfigTreeSource from '!raw-loader!./demo/config'
+
+
+import DisabledTree from './demo/disabled'
+import DisabledTreeSource from '!raw-loader!./demo/disabled'
+
+import ExpendActionTree from './demo/expendAction'
+import ExpendActionSource from '!raw-loader!./demo/expendAction'
+
+import MultipleTree from './demo/multiple'
+import MultipleTreeSource from '!raw-loader!./demo/multiple'
+
+import CheckStrictlyTree from './demo/checkStrictly'
+import CheckStrictlyTreeSource from '!raw-loader!./demo/checkStrictly'
+
+import ParentDisableTree from './demo/parentDisable'
+import ParentDisableTreeSource from '!raw-loader!./demo/parentDisable'
+
+import AutoExpandParentTree from './demo/autoExpandParent'
+import AutoExpandParentTreeSource from '!raw-loader!./demo/autoExpandParent'
+
+import ControlledTree from './demo/controlled'
+import ControlledTreeSource from '!raw-loader!./demo/controlled'
+
+import BlockNode from './demo/blockNode'
+import BlockNodeSource from '!raw-loader!./demo/blockNode'
+
+
+import MockData from './demo/mockData'
+import MockDataSource from '!raw-loader!./demo/mockData'
+
+import Ads from '../../docs/components/ads'
+import Report from '../../docs/components/report'
+
+<Ads />
+<Report componentName="Alert" />
+
+# Tree（脉络图/树状图）
+用于展示层级关系，如组织结构、物品分类等。
+
+### 最佳用法
+
+适用于层级关系明确的信息设计。
+
+层级建议小于等于`4`。
+
+## 基础用法
+
+默认树形控件用法，设置默认选中节点，展开所有节点。
+
+<Playground of={BaseSource}>
+  <Base />
+</Playground>
+
+## 主要功能
+
+勾选对应项，配置对应功能展示。若要实现单独功能，请参考其余示例。
+<Playground of={ConfigTreeSource}>
+  <ConfigTree />
+</Playground>
+
+
+## 禁用节点
+
+通过数据结构中设置 `disabled`，可禁用当前节点。
+
+<Playground of={DisableNodeSource}>
+  <DisableNode />
+</Playground>
+
+## 禁用所有父节点
+
+通过数据结构中设置 `parentDisabled`，可禁用所有非叶子节点。
+
+注意：多选时，通过`onCheckChange` 获取当前选择的节点，单选时，通过`onNodeClick`获取当前选择的节点。
+
+<Playground of={ParentDisableTreeSource}>
+  <ParentDisableTree />
+</Playground>
+
+## 禁用树
+通过设置 `disabled`属性，可禁用整个树的节点。
+
+<Playground of={DisabledTreeSource}>
+  <DisabledTree />
+</Playground>
+
+## 节点别名设置
+
+通过 `nodeKey` `nodeLabel` `nodeChildren` 可设置数据中 key 的别名。
+
+<Playground of={ParameterAliasSource}>
+  <ParameterAlias />
+</Playground>
+
+## 自定义节点内容
+
+通过 `nodeRender` 函数设置节点内容。
+
+<Playground of={CustomLabelSource}>
+  <CustomLabel />
+</Playground>
+
+## 展开指定节点
+
+通过 `defaultExpandedKeys` 设置指定节点集合，展开节点。
+<Playground of={ExpandNodeSource}>
+  <ExpandNode />
+</Playground>
+
+
+## 自定义展开节点
+
+1.可通过 `expandedKeys` 自定义展开节点
+
+2.同时设置 `defaultExpandedKeys` 时，`expandedKeys` 的优先级较高
+
+<Playground of={ExpandedKeysSource}>
+  <ExpandedKeys />
+</Playground>
+
+## 多选树节点设置默认选中值
+
+通过 `showCheckbox` 展示 `Checkbox` 复选框，`selectedKeys` 设置默认选中节点。
+
+<Playground of={TreeCheckboxSelectedKeysDemoSource}>
+  <TreeCheckboxSelectedKeysDemo />
+</Playground>
+
+## 动态加载节点
+
+通过 `lazy` 开启懒加载，`lazyLoad` 设置懒加载函数，两者配合使用。
+
+<Playground of={LazySource}>
+  <Lazy />
+</Playground>
+
+## 事件触发
+通过 `onNodeClick` 触发节点被点击时的回调，`onNodeExpand` 触发节点被展开时的回调，`onNodeCollapse` 触发节点被收起时的回调，`onCheckChange` 触发节点选中项改变的回调。
+<Playground of={EventsSource}>
+  <Events />
+</Playground>
+
+## 获取/设置/清空/全选节点
+<Playground of={HandleMethodSource}>
+  <HandleMethod />
+</Playground>
+
+## 多选树父子不关联
+`showCheckbox`情况下，通过设置`checkStrictly`属性来设置父子节点是否关联，默认父子关联。
+<Playground of={CheckStrictlyTreeSource}>
+  <CheckStrictlyTree />
+</Playground>
+
+## 可搜索
+通过 `search` 设置为可搜索，可通过 `searchInput` 修改 `Input` 的相关属性
+
+> 搜索到的节点展开其父节点， 关闭其他节点，此处不会触发 `onNodeExpand` 和 `onNodeCollapse` 这两个事件
+
+> 暂时不支持懒加载数据节点的搜索
+
+<Playground of={SearchTreeSource}>
+  <SearchTree />
+</Playground>
+
+## 拖拽
+通过 `draggable` 设置为可拖拽，通过 `dropAllowed` 设置不可放置节点
+
+> 当数据量过大时，使用拖拽功能可能会有卡顿的问题。
+
+1.拖拽过程中可通过 `onDragging` 获取拖拽开始节点的 `id` ， 和拖拽结束的节点的 `id` 。
+
+2.拖拽结束可通过 `onDragEnd` 获取拖拽开始节点及其父节点的 `id`, 拖拽结束节点及其父节点的 `id`，方向等信息，可以在此事件中改变数据。
+
+
+<Playground of={DragTreeSource}>
+  <DragTree />
+</Playground>
+
+
+## 自定义图标
+
+1.可通过 `switcherIcon` 定义展开收起的图标，展开收起状态改变的时候自动转化图标90度
+
+2.可以设置 `data` 中每一项的 `icon` 属性设置每一项的前置图标
+
+<Playground of={CustomIconTreeSource}>
+  <CustomIconTree />
+</Playground>
+
+
+## 父节点展开/收起方式
+通过设置 `expendAction`属性，可以控制父节点展开/收起方式，默认是`click`。
+<Playground of={ExpendActionSource}>
+  <ExpendActionTree />
+</Playground>
+
+## 是否可多选树节点
+通过设置`multiple`属性，可以再非`Checkbox`时选择多个树节点，可以通过`onNodeClick`回调方法获取到选择的节点
+<Playground of={MultipleTreeSource}>
+  <MultipleTree />
+</Playground>
+
+##  强制受控
+多选`showCheckbox`情况下，通过`controlled`属性，可以设置是否强制受控，`true`的话，只有`onCheckChange`更新 `selectKeys` 才可以选中节点
+
+例如：`3-1`节点无法选中，注意：若是过滤叶子节点不可选中，则需要同时过滤掉父节点。
+<Playground of={ControlledTreeSource}>
+  <ControlledTree/>
+</Playground>
+
+## 是否自动展开父节点
+通过设置`autoExpandParent`属性，可以控制是否自动展开父节点，默认为`false`。
+
+<Playground of={AutoExpandParentTreeSource}>
+  <AutoExpandParentTree/>
+</Playground>
+
+## 限制高度
+
+通过对外层父元素增加高度限制 tree 的高度
+
+<Playground of={HeightTreeSource}>
+  <HeightTree />
+</Playground>
+
+## 占据整行
+
+通过`blockNode`属性可以控制节点占据整行，点击此行就可以选中节点
+
+<Playground of={BlockNodeSource}>
+  <BlockNode />
+</Playground>
+
+## 大数据量测试
+
+<Playground of={MockDataSource}>
+  <MockData />
+</Playground>
+
+## Props
+
+<PropsTable of={TreeDoc} />
+
+## TreeNodes Data Props
+
+<PropsTable of={TreeDataDoc} />

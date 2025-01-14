@@ -1,0 +1,36 @@
+export enum ContainerIds {
+  /** 邀请设置，查看场景容器 */
+  InvitationOfViewScene = 'invitationOfViewScene',
+  InvitationOfCreateScene = 'invitationOfCreateScene',
+  SubsidyInfo = 'subsidyInfo',
+  BasicInfo = 'basicInfoContainer',
+  PromotionSettings = 'promotionSettingsContainer',
+  BudgetControl = 'budgetControlContainer',
+  ApplyControl = 'applyControlContainer',
+  ActInvite = 'actInviteContainer',
+  SubSubsidy = 'subSubsidy',
+  SubQualify = 'subQualify',
+  SubPromotionRule = 'subPromotionRule',
+  SubBaseInfo = 'subBaseInfo',
+  ApplyReasonContainer = 'applyReasonContainer',
+  ChargeInfoContainer = 'chargeInfoContainer',
+  SubsidySettingsContainer = 'subsidySettingsContainer',
+}
+
+export const ContainerIdsText: Record<ContainerIds, string> = {
+  [ContainerIds.InvitationOfViewScene]: '邀请设置查看场景容器',
+  [ContainerIds.InvitationOfCreateScene]: '邀请设置创建或拷贝场景容器',
+  [ContainerIds.SubsidyInfo]: '补贴分担设置容器',
+  [ContainerIds.BasicInfo]: '基础信息容器',
+  [ContainerIds.PromotionSettings]: '优惠活动设置容器',
+  [ContainerIds.BudgetControl]: '预算管控容器',
+  [ContainerIds.ApplyControl]: '报名控制容器',
+  [ContainerIds.ActInvite]: '活动邀请容器',
+  [ContainerIds.SubSubsidy]: '补贴规则容器',
+  [ContainerIds.SubQualify]: '报名资质容器',
+  [ContainerIds.SubPromotionRule]: '优惠规则容器',
+  [ContainerIds.SubBaseInfo]: '基础信息容器',
+  [ContainerIds.ApplyReasonContainer]: '预算申请理由容器',
+  [ContainerIds.ChargeInfoContainer]: '补贴分摊-补贴信息容器',
+  [ContainerIds.SubsidySettingsContainer]: '补贴分摊卡片容器',
+}

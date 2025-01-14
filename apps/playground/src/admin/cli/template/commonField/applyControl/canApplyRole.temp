@@ -1,0 +1,6 @@
+import { canApplyRole } from '@/pages/actsCrud/ActsCrudInfo/fields'
+import { nodeUtil } from '@easy-page/antd-ui'
+
+export const ${{name}} = nodeUtil
+  .extends(canApplyRole, {
+  })

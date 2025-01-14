@@ -1,0 +1,1 @@
+export const ZSPT_S3 = 'https://s3plus.meituan.net/zspt-fe/zspt'

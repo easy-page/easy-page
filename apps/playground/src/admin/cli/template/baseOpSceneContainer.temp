@@ -1,0 +1,27 @@
+
+${{mappingImport}}
+import {
+  ActivityStatusEnum,
+  getOperationType,
+  isCreate,
+  isEdit,
+  isView,
+  OperationType,
+} from '@/common'
+import { AnyNodeInfoType, AnyNodesInfoType } from '@easy-page/antd-ui'
+${{import}}
+
+const ${{name}}Map: Record<OperationType, AnyNodesInfoType> = {
+  [OperationType.CREATE]: ${{create}},
+  [OperationType.COPY]: ${{copy}},
+  [OperationType.VIEW]: ${{view}},
+  [OperationType.EDIT]: ${{edit}},
+}
+
+const operationType = getOperationType() || OperationType.CREATE
+const ${{name}}Info = ${{name}}Map[operationType]
+
+export const ${{name}} = ${{mappingInfo}}.containersMap[${{componentId}}]().appendChildren([
+  ${{children}}
+  ...${{name}}Info
+])

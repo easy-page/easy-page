@@ -235,21 +235,13 @@ export function connector(Element: React.JSXElementConstructor<any>) {
               )
             : null;
 
-        if (nodeInfo.id === 'pns.chargeSidePnform') {
-          console.log('changedKeys: effectActionKeys', effectActionKeys);
-        }
         stateDisposer =
           effectActionKeys.length > 0
             ? reaction(
                 () => store?.getEffectedData([...new Set(effectActionKeys)]),
                 (args, preArgs) => {
                   const changedKeys = getChangedKeys(args, preArgs);
-                  console.log(
-                    'changedKeys: changedKeys',
-                    changedKeys,
-                    args,
-                    preArgs
-                  );
+
                   if (changedKeys.length === 0) {
                     return;
                   }

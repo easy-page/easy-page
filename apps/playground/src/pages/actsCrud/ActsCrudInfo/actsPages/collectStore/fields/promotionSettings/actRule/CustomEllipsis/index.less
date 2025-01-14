@@ -1,0 +1,16 @@
+.custom-ellipsis {
+  position: relative; /* 为伪元素定位提供参照 */
+  display: -webkit-box; /* 使用WebKit的弹性盒模型 */
+  -webkit-box-orient: vertical; /* 设置弹性盒模型的子元素为垂直排列 */
+  width: 100%;
+  overflow: hidden; /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 使用省略号表示被隐藏的文本 */
+  word-wrap: break-word; /* 防止长单词或URL撑破容器 */
+}
+
+.product-selection-table {
+  .roo-popup {
+    overflow: auto;
+    max-height: 300px;
+  }
+}

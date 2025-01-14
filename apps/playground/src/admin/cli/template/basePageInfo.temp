@@ -1,0 +1,10 @@
+import { PageUtil } from '@easy-page/antd-ui'
+${{import}}
+
+const pu = new PageUtil({ pageId: '${{name}}-container' })
+
+pu.addFields([
+  ${{children}}
+])
+
+export const ${{name}}PageInfo = pu.getPageInfo()

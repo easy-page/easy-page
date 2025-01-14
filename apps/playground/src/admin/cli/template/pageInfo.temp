@@ -1,0 +1,34 @@
+import { PageUtil } from '@easy-page/antd-ui'
+import {
+  confirmDialogManager,
+  ConfirmDialogManager,
+  ConfirmSceneEnum,
+  recordInfoField,
+  toolbar,
+} from '@/common/fields'
+import { BizLineEnum } from '@/common'
+import { PrimaryTitleEnum } from '../../fields'
+import { bizline } from '../../fields/common/baseInfo/bizline'
+import { submitVersion } from '../../fields/common/submitVersion'
+import { commonsgActInvite } from '../../fields/commonSg'
+import { anchor } from '../../fields/common/anchor'
+${{import}}
+
+const pu = new PageUtil({
+  pageId: '${{name}}-act',
+})
+
+pu.addFields([
+  recordInfoField('activity.id'),
+  bizline(${{bizLineEnum}}),
+  ${{component}}
+  toolbar({
+    name: '提交并新建活动',
+  }), //操作区
+  anchor([
+    ${{anchor}}
+  ]),
+  submitVersion,
+])
+
+export const ${{name}}PageInfo = pu.getPageInfo()

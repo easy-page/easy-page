@@ -1,0 +1,7 @@
+import { FieldIds } from '@/common/constants/fieldMaps'
+import { FiedIdsType } from '../../../common'
+${{import}}
+
+export const ${{name}}: Partial<Record<FieldIds, FiedIdsType>> = {
+ ${{children}}
+}

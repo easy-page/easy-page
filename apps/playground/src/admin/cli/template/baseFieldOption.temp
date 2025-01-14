@@ -1,0 +1,10 @@
+${{mappingImport}}
+import { nodeUtil } from '@easy-page/antd-ui'
+${{import}}
+
+export const ${{name}} = nodeUtil
+  .extends(
+    ${{mappingInfo}}.optionsMap[${{componentId}}]().appendChildren(
+      [${{children}}]
+    ), {}
+  )

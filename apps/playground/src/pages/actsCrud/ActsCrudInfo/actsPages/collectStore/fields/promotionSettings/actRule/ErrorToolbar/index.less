@@ -1,0 +1,108 @@
+.error-info-container {
+  border: 1px solid #edcdd1;
+  background-color: #f8e8e8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 655px;
+  color: #585a6e;
+}
+.error-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+}
+.error-info-text {
+  margin-left: 5px;
+}
+
+.error-info-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  .error-icon-img {
+    margin-top: 0 !important;
+  }
+}
+
+.erorr-operaton-last {
+  cursor: pointer;
+  position: relative;
+
+  &.disable-operation {
+    &::after {
+      border-color: #ccbdbe;
+    }
+  }
+
+  &::after {
+    content: ' ';
+    display: inline-block;
+    border-color: #585a6e;
+    height: 7px;
+    width: 7px;
+    border-width: 0px 0px 1.5px 1.5px;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 35%;
+    left: -10px;
+  }
+}
+
+.erorr-operaton-next {
+  cursor: pointer;
+  position: relative;
+
+  &.disable-operation {
+    &::after {
+      border-color: #ccbdbe;
+    }
+  }
+
+  &::after {
+    border-color: #585a6e;
+    content: ' ';
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+    border-width: 0px 0px 1.5px 1.5px;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) rotate(180deg);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) rotate(180deg);
+    position: absolute;
+    top: 35%;
+    right: -10px;
+  }
+}
+
+.erorr-operaton-next {
+  margin-left: 15px;
+}
+
+.disable-operation {
+  color: #ccbdbe;
+}
+
+.file-error-info-container {
+  border: 1px solid #edcdd1;
+  background-color: #f8e8e8;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+
+  width: 655px;
+}
+
+.file-error-info-items {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}

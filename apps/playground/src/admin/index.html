@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      // 步骤一：在 head 标签内，其他静态资源之前，以 script 内联方式引入以下的预缓存代码（以下这部分不能动）
+      !(function (win, doc, ns) {
+        win['_MeiTuanALogObject'] = ns
+        if (!win[ns]) {
+          var _LX = function () {
+            var t = function () {
+              var inst = function () {
+                inst.q.push([arguments, +new Date()])
+              }
+              inst.q = []
+              t.q.push([arguments, inst])
+              return inst
+            }
+            t.q = []
+            t.t = +new Date()
+            _LX.q.push([arguments, t])
+            return t
+          }
+          _LX.q = _LX.q || []
+          _LX.l = +new Date()
+          win[ns] = _LX
+        }
+      })(window, document, 'LXAnalytics')
+      // 灵犀预缓存代码代码结束（以上这部分不能动）
+
+      // 步骤二：灵犀初始化配置
+      LXAnalytics('config', {
+        defaultCategory: 'waimai_e', // 页面默认通道，将 channelIdentifier (字符串)替换为您的上报通道标识
+        appName: 'zspt-uoc', // 页面应用名，将 appIdentifier (字符串)替换为您在配置平台配置的应用标识
+      })
+    </script>
+    <link rel="dns-prefetch" href="//lx1.meituan.net" />
+    <link rel="dns-prefetch" href="//lx2.meituan.net" />
+    <link rel="dns-prefetch" href="//plx.meituan.com" />
+    <script>
+      'use strict'
+      !(function (u, d) {
+        var t = 'owl',
+          e = '_Owl_',
+          n = 'Owl',
+          r = 'start',
+          c = 'error',
+          p = 'on' + c,
+          f = u[p],
+          h = 'addEventListener',
+          l = 'attachEvent',
+          v = 'isReady',
+          b = 'dataSet'
+        ;(u[t] =
+          u[t] ||
+          function () {
+            try {
+              u[t].q = u[t].q || []
+              var e = [].slice.call(arguments)
+              e[0] === r
+                ? u[n] && u[n][r]
+                  ? u[n][r](e[1])
+                  : u[t].q.unshift(e)
+                : u[t].q.push(e)
+            } catch (e) {}
+          }),
+          (u[e] = u[e] || {
+            preTasks: [],
+            pageData: [],
+            use: function (e, t) {
+              this[v] ? u[n][e](t) : this.preTasks.push({ api: e, data: [t] })
+            },
+            run: function (t) {
+              if (!(t = this).runned) {
+                ;(t.runned = !0),
+                  (t[b] = []),
+                  (u[p] = function () {
+                    t[v] || t[b].push({ type: 'jsError', data: arguments }),
+                      f && f.apply(u, arguments)
+                  }),
+                  u[h] &&
+                    u[h]('unhandledrejection', function (e) {
+                      t[v] || t[b].push({ type: 'jsError', data: [e] })
+                    })
+                var e = function (e) {
+                  !t[v] && e && t[b].push({ type: 'resError', data: [e] })
+                }
+                u[h] ? u[h](c, e, !0) : u[l] && u[l](p, e)
+                var n = 'MutationObserver',
+                  r = u[n] || u['WebKit' + n] || u['Moz' + n],
+                  a = u.performance || u.WebKitPerformance,
+                  s = 'disableMutaObserver'
+                if (r && a && a.now)
+                  try {
+                    var i = -1,
+                      o = u.navigator.userAgent
+                    ;-1 < o.indexOf('compatible') && -1 < o.indexOf('MSIE')
+                      ? (new RegExp('MSIE (\\d+\\.\\d+);').test(o),
+                        (i = parseFloat(RegExp.$1)))
+                      : -1 < o.indexOf('Trident') &&
+                        -1 < o.indexOf('rv:11.0') &&
+                        (i = 11),
+                      -1 !== i && i <= 11
+                        ? (t[s] = !0)
+                        : (t.observer = new r(function (e) {
+                            t.pageData.push({
+                              mutations: e,
+                              startTime: a.now(),
+                            })
+                          })).observe(d, { childList: !0, subtree: !0 })
+                  } catch (e) {}
+                else t[s] = !0
+              }
+            },
+          }),
+          u[e].runned || u[e].run()
+      })(window, document)
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>统一招商</title>
+  </head>
+  <body>
+    <script src="//lx.meituan.net/lx.5.min.js" type="text/javascript"></script>
+    <div id="root"></div>
+
+    <script
+      crossorigin="anonymous"
+      src="https://s3.meituan.net/mnpm-cdn/@mtfe-mt-apm-web-1.12.1/owl_1.12.1.min.js"
+    ></script>
+    <!-- start Owl -->
+    <script>
+      const isDev = /127\.0\.0\.1|localhost|\.test\./.test(window.location.host)
+      // var devMode = AppConfig.$config.logDevMode;
+      // window.perf('init', {
+      //   project: devMode ? AppConfig.Perf.devProject : AppConfig.Perf.project
+      // });
+      /** https://cc.sankuai.com/project/detail/6483?tab=1 **/
+      owl('start', {
+        project: 'com.sankuai.yyactivity.zspt.front',
+        devMode: isDev, // 请根据环境来赋值，线上环境设为false，线下环境设为true(需要在控制台打印日志需要使用非压缩版本sdk)
+        pageUrl: window.location.href,
+        autoCatch: {
+          fetch: true,
+        },
+        enableLogTrace: true,
+        resource: {
+          enableStatusCheck: true,
+          sampleApi: 1,
+        },
+        page: {
+          sample: 1,
+          fstPerfAnalysis: true,
+          logSlowView: true,
+        },
+        error: {
+          formatUnhandledRejection: true,
+        },
+        ignoreList: {
+          js: ['ResizeObserver loop limit exceeded'],
+          ajax: [
+            'https?://dreport.meituan.net',
+            'https?://api.neixin.cn/dxlvs/open/v2/lgservers/json',
+          ],
+        },
+        onErrorPush: function (instance) {
+          return instance.updateTags({
+            release: '<%= VUE_APP_RELEASE %>',
+          })
+        },
+        onBatchPush: function (instance) {
+          if (
+            instance &&
+            instance.firstCategory === 'ajaxError' &&
+            instance.logContent === 'from: xhr abort'
+          ) {
+            return undefined
+          } else {
+            return instance
+          }
+        },
+        // perf相关配置项，不使用原Perf功能不需要
+        perf: {
+          project: 'zspt-uoc', // 如果需要开启perf的功能，必须有值。
+          version: '1.0.0', // web 应用版本
+          pathPath: '', // 如果需要手动控制上报页面path 可以通过 pagePath 固定页面上报的path
+          common: {
+            dev: false, // 在控制台打印调试 log(需要使用非压缩版本sdk)
+            delay: 1000, // 指标上报队列延时，会将产生上报数据后，一定延时时间内的数据，打包统一上报，减少请求上报次数
+          },
+          fsp2: {
+            disable: false,
+            sampleRate: 100, // 采样率
+            customTags: {}, // 秒开上报业务自定义Tag
+            debug: false, // 是否开启debug模式，在页面打印 18 宫格及最终秒开检测状态
+            useIgnore: false, // 是否开启过滤元素节点，当需要忽略页面中的节点时，需要手动设置 useIgnore 为 true，并在对应元素上添加 perf_ignore 属性
+          },
+          cache: {
+            disable: false,
+            sampleRate: 100,
+            useSendBeacon: true, // 当监听到页面 beforeunload 事件时，是否将上报队列中的数据，通过 navigator.sendBeacon API 上报，如果为 false，会将队列中的数据，通过 localStorage 缓存到本地, 在下次启动时，自动进行上报
+          },
+        },
+      })
+    </script>
+    <script type="module" src="./main.tsx"></script>
+  </body>
+</html>

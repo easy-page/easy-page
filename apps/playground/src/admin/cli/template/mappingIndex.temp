@@ -1,0 +1,12 @@
+import { ConfigsInfoMappingType } from '../../../common'
+import { ${{defaultValues}} } from '../lib/getDefaultValues'
+import { ${{editableConfig}} } from '../lib/getEditableConfig'
+import { ${{fieldsMap}} } from './fields'
+import { ${{subFormsMap}} } from './subForms'
+
+export const ${{name}}: ConfigsInfoMappingType = {
+  fieldsMap: ${{fieldsMap}},
+  subFormsMap: ${{subFormsMap}},
+  getDefaultValues: ${{defaultValues}},
+  getEditableConfig: ${{editableConfig}},
+}
